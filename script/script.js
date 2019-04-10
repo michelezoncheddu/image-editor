@@ -1,22 +1,25 @@
 'use strict';
 
-$(function() {
-	var canvas = document.getElementById('editor');
-	canvas.height = window.innerHeight * 0.8;
-	canvas.width = window.innerWidth * 0.8;
+function run() {
+	/** @type {HTMLCanvasElement} */
+	// @ts-ignore
+	const canvas = document.getElementById('editor');
+	canvas.height = window.innerHeight * 0.7;
+	canvas.width = window.innerWidth * 0.7;
 	$('#main').css('width', canvas.width);
 	var context = canvas.getContext('2d');
-	context.imageSmoothingQuality = 'High';
-	context.mozImageSmoothingEnabled = true;
-	context.webkitImageSmoothingEnabled = true;
-	context.msImageSmoothingEnabled = true;
+
+	context.imageSmoothingQuality = 'high';
 	context.imageSmoothingEnabled = true;
+	
+	context.fillStyle = "#262626"; // background color
+	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 
 	var angleInDegrees = 0;
 
 	var mouseDown = false;
-	var mouseReleased = true;
 	document.addEventListener('mousedown', onMouseDown, false);
+	document.addEventListener('mouseup', onMouseUp, false);
 	document.addEventListener('mousemove', onMouseMove, false);
 
 	function onMouseDown(evt) {
@@ -27,13 +30,17 @@ $(function() {
 		}
 	}
 
+	function onMouseUp(evt) {
+		mouseDown = false;
+	}
+
 	function onMouseMove(evt) {
-		if (mouseClicked) {
+		if (mouseDown) {
 			var pos = getMousePos(canvas, evt)
 			context.beginPath();
 			context.arc(pos.x, pos.y, 7.5, 0, Math.PI * 2, false);
 			context.lineWidth = 5;
-			context.strokeStyle = '#fff';
+			context.strokeStyle = '#FFFFFF';
 			context.stroke();
 		}
 	}
@@ -53,4 +60,4 @@ $(function() {
 		angleInDegrees -= 0.1;
 		drawRotated(canvas, image, angleInDegrees);
 	})
-})
+}

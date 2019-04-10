@@ -2,7 +2,8 @@
 
 function drawRotated(canvas, image, degrees) {
 	var context = canvas.getContext('2d');
-	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.clearRect(0, 0, canvas.width, canvas.height); // useless?
+	context.fillRect(0, 0, canvas.width, canvas.height); // draw backgruound
 	context.save();
 	context.translate(canvas.width / 2, canvas.height / 2); // rotate on center
 	context.rotate(degrees * Math.PI / 180);

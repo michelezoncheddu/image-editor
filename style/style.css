@@ -1,8 +1,12 @@
 
+body {
+	background-color: #535353; /* items: #DDDDDD */
+}
+
 #main {
 	margin: 0px auto;
 }
 
 #editor {
-	border: 1px solid red;
+	border: 0px solid #262626;
 }

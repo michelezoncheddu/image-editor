@@ -5,4 +5,7 @@
 .TemporaryItems
 .Trashes
 
+*.json
+
 img/
+node_modules/
