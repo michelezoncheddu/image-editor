@@ -1,19 +1,15 @@
 'use strict';
 
+/** @type {HTMLCanvasElement} */
+var canvas;
+var image = new Image();
+
 function run() {
-	/** @type {HTMLCanvasElement} */
 	// @ts-ignore
-	const canvas = document.getElementById('editor');
+	canvas = document.getElementById('editor');
 	canvas.height = window.innerHeight * 0.8;
 	canvas.width = window.innerWidth * 0.8;
 	$('#main').css('width', canvas.width);
-	var context = canvas.getContext('2d');
-
-	context.imageSmoothingQuality = 'high';
-	context.imageSmoothingEnabled = true;
-	
-	context.fillStyle = '#262626'; // background color
-	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 
 	var angleInDegrees = 0;
 	var initialPos = {
@@ -24,15 +20,25 @@ function run() {
 		x: 0,
 		y: 0
 	}
-
 	var mouseDown = false;
+
+	var context = canvas.getContext('2d');
+	context.imageSmoothingQuality = 'high';
+	context.imageSmoothingEnabled = true;
+
+	context.fillStyle = '#262626'; // background color
+	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
+
+	image.src = 'img/test_2.jpg';
+
+	window.addEventListener('resize', onResize);
 	document.addEventListener('mousedown', onMouseDown);
 	document.addEventListener('mouseup', onMouseUp);
 	document.addEventListener('mousemove', onMouseMove);
 
 	function onMouseDown(evt) {
 		if (!mouseDown) {
-			currPos = getMousePos(canvas, evt);
+			currPos = getMousePos(evt);
 			if (currPos.x >= 0 && currPos.x <= canvas.width && currPos.y >= 0 && currPos.y <= canvas.height) {
 				initialPos.x = currPos.x;
 				initialPos.y = currPos.y;
@@ -43,31 +49,28 @@ function run() {
 
 	function onMouseUp(evt) {
 		mouseDown = false;
-		currPos = getMousePos(canvas, evt);
+		currPos = getMousePos(evt);
 	}
 
 	function onMouseMove(evt) {
 		if (mouseDown)
-			currPos = getMousePos(canvas, evt);
+			currPos = getMousePos(evt);
 	}
 
-	var image = new Image();
-	image.src = 'img/test_2.jpg';
-
-	$('#clockwise').click(function() {
-		angleInDegrees += 0.1;
-	})
-	
-	$('#counterclockwise').click(function() {
-		angleInDegrees -= 0.1;
+	$('.icon').click(function() {
+		if ($(this).prop('id') == 'upload') // TODO: good string check?
+			return;
+		if ($(this).hasClass('active'))
+			$(this).removeClass('active');
+		else
+			$(this).addClass('active');
 	})
 
 	function draw() {
-		drawRotated(canvas, image, angleInDegrees);
-
+		drawRotated(angleInDegrees);
 		if (mouseDown) {
 			context.clearRect(0, 0, canvas.width, canvas.height);
-			drawRotated(canvas, image, angleInDegrees);
+			drawRotated(angleInDegrees);
 
 			// filler
 			context.globalAlpha = 0.4;
@@ -76,11 +79,11 @@ function run() {
 
 			// border
 			context.strokeStyle = '#FFFFFF';
-			context.lineWidth = 1.5;
+			context.lineWidth = 1;
 			context.strokeRect(initialPos.x, initialPos.y, currPos.x - initialPos.x, currPos.y - initialPos.y);
 
 			// lines
-			context.lineWidth = 1;
+			context.lineWidth = 0.75;
 			context.beginPath();
 			context.moveTo(initialPos.x + ((currPos.x - initialPos.x) / 3), initialPos.y);
 			context.lineTo(initialPos.x + ((currPos.x - initialPos.x) / 3), currPos.y);
@@ -94,12 +97,10 @@ function run() {
 		} else {
 			if (currPos.x == initialPos.x && currPos.y == initialPos.y) {
 				context.clearRect(0, 0, canvas.width, canvas.height);
-				drawRotated(canvas, image, angleInDegrees);
+				drawRotated(angleInDegrees);
 			}
 		}
-
 		requestAnimationFrame(draw);
 	}
-
 	draw();
 }

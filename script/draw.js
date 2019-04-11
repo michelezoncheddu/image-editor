@@ -1,18 +1,17 @@
 'use strict';
 
-function drawRotated(canvas, image, degrees) {
+function drawRotated(degrees) {
 	var context = canvas.getContext('2d');
-	context.clearRect(0, 0, canvas.width, canvas.height); // useless?
 	context.fillRect(0, 0, canvas.width, canvas.height); // draw backgruound
 	context.save();
 	context.translate(canvas.width / 2, canvas.height / 2); // rotate on center
 	context.rotate(degrees * Math.PI / 180);
 	context.translate(-canvas.width / 2, -canvas.height / 2);
-	drawImage(canvas, image);
+	drawImage();
 	context.restore();
 }
 
-function drawImage(canvas, image) {
+function drawImage() {
 	var context = canvas.getContext('2d');
 	var ratio = image.width / image.height;
 	var width = canvas.width;
