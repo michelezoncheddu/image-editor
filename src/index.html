@@ -12,17 +12,15 @@
 		<script type="text/javascript" src="script/script.js"></script>
 	</head>
 
-	<body onload="run()">
-		<div id="main">
-			<canvas id="editor">Please update your browser</canvas><br>
-			<div id="tools">
-				<input type='file' id="upload-hidden" onchange="readURL(this)" />
-				<label for="upload-hidden">
-					<image id="upload" class="icon" src="icons/upload.png" />
-				</label>
-				<image id="crop" class="icon" src="icons/crop.png" />
-				<image id="rotate" class="icon" src="icons/rotate.png" />
-			</div><br>
+	<body onload="init()">
+		<canvas id="image">Please update your browser</canvas>
+		<div id="tools">
+			<input type='file' id="upload-hidden" onchange="readURL(this)" />
+			<label for="upload-hidden">
+				<image id="upload" class="icon" src="icons/upload.png" />
+			</label>
+			<image id="crop" class="icon" src="icons/crop.png" />
+			<image id="rotate" class="icon" src="icons/rotate.png" />
 		</div>
 	</body>
 </html>
