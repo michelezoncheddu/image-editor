@@ -33,7 +33,7 @@ function init() {
 	context.fillStyle = '#262626'; // background color
 	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 
-	image.src = 'img/test_2.jpg';
+	image.src = 'test_images/test_2.jpg';
 
 	window.addEventListener('resize', onResize);
 	document.addEventListener('mousedown', onMouseDown);
@@ -41,8 +41,10 @@ function init() {
 	document.addEventListener('mousemove', onMouseMove);
 
 	$('.icon').click(function() {
-		if ($(this).prop('id') == 'upload') // TODO: good string check?
+		if ($(this).prop('id') == 'upload') { // TODO: good string check?
+			requestAnimationFrame(draw); // TODO: needed?
 			return;
+		}
 
 		// deselecting tool
 		if ($(this).hasClass('active')) {

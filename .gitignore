@@ -7,5 +7,5 @@
 
 *.json
 
-img/
 node_modules/
+test_images/
