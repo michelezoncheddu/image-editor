@@ -39,8 +39,14 @@ function init() {
 	document.addEventListener('mousemove', onMouseMove);
 
 	$('.icon').click(function() {
-		if ($(this).prop('id') == 'upload') // TODO: good string check?
+		if ($(this).prop('id') == 'upload') { // TODO: good string check?
+			var icons = document.getElementsByClassName('icon');
+			for (var i = 0; i < icons.length; i++)
+				if (icons[i].classList.contains('active'))
+					icons[i].classList.remove('active');
+			currTool = 'none';			
 			return;
+		}
 
 		// deselecting tool
 		if ($(this).hasClass('active')) {
