@@ -42,7 +42,10 @@ function init() {
 
 	$('.icon').click(function() {
 		if ($(this).prop('id') == 'upload') { // TODO: good string check?
-			requestAnimationFrame(draw); // TODO: needed?
+			var icons = document.getElementsByClassName('icon');
+			for (var i = 0; i < icons.length; i++)
+				icons[i].classList.remove('active');
+			currTool = 'none';
 			return;
 		}
 
@@ -54,10 +57,10 @@ function init() {
 			return;
 		}
 
-		var icon = document.getElementsByClassName('icon');
-		for (var i = 0; i < icon.length; i++) {
-			if (icon[i].classList.contains('active')) {
-				icon[i].classList.remove('active');
+		var icons = document.getElementsByClassName('icon');
+		for (var i = 0; i < icons.length; i++) {
+			if (icons[i].classList.contains('active')) {
+				icons[i].classList.remove('active');
 				break;
 			}
 		}
