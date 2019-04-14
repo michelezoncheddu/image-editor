@@ -33,8 +33,6 @@ function init() {
 	context.fillStyle = '#262626'; // background color
 	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 
-	image.src = 'test_images/test_2.jpg';
-
 	window.addEventListener('resize', onResize);
 	document.addEventListener('mousedown', onMouseDown);
 	document.addEventListener('mouseup', onMouseUp);
@@ -44,7 +42,8 @@ function init() {
 		if ($(this).prop('id') == 'upload') { // TODO: good string check?
 			var icons = document.getElementsByClassName('icon');
 			for (var i = 0; i < icons.length; i++)
-				icons[i].classList.remove('active');
+				if (icons[i].classList.contains('active'))
+					icons[i].classList.remove('active');
 			currTool = 'none';
 			return;
 		}
