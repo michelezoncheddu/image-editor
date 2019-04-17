@@ -14,7 +14,7 @@ function readURL(input) {
 		reader.onload = function(e) {
 			// @ts-ignore
 			image.src = e.target.result;
-			requestAnimationFrame(draw);
+			update();
 		};
 		reader.readAsDataURL(input.files[0]);
 	}
@@ -23,5 +23,9 @@ function readURL(input) {
 function onResize() {
 	canvas.height = window.innerHeight * 0.8;
 	canvas.width = window.innerWidth * 0.8;
+	update();
+}
+
+function update() {
 	requestAnimationFrame(draw);
 }

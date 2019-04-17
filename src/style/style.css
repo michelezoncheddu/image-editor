@@ -1,4 +1,3 @@
-
 body {
 	background-color: #535353;
 }
@@ -14,7 +13,7 @@ label {
 }
 
 #tools {
-	display: inline-flex;
+	display: flex;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0%);
