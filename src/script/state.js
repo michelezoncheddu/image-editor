@@ -4,6 +4,9 @@
 var canvas;
 var image = new Image();
 var context;
+var inside;
+
+var scaledWidth, scaledHeight;
 
 var angleInDegrees = 0;
 

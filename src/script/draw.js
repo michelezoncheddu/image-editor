@@ -2,11 +2,11 @@
 
 function draw() {
 	switch (currTool) {
-		case "none":
+		case 'none':
 		drawImage();
 		break;
 
-		case "crop":
+		case 'crop':
 		if (mouseDown) {
 			drawImage();
 	
@@ -51,7 +51,7 @@ function draw() {
 		}
 		break;
 
-		case "rotate":
+		case 'rotate':
 		drawImage();
 		break;
 
@@ -73,13 +73,22 @@ function drawImage() {
 	
 	// draw
 	var ratio = image.width / image.height;
-	var width = canvas.width;
-	var height = width / ratio;
-	if (height > canvas.height) {
-		height = canvas.height;
-		width = height * ratio;
+	scaledWidth = canvas.width;
+	scaledHeight = scaledWidth / ratio;
+	if (scaledHeight > canvas.height) {
+		scaledHeight = canvas.height;
+		scaledWidth = scaledHeight * ratio;
 	}
-	context.drawImage(image, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+
+	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)';
+
+	context.drawImage(image, (canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2, scaledWidth, scaledHeight);
+
+	// draw filter rectangle
+	context.globalCompositeOperation = 'saturation';
+	context.fillStyle = 'hsl(0, 50%, 50%)';
+	context.fillRect(0, 0, 500, 500);
+	context.globalCompositeOperation = 'source-over';
 
 	context.restore();
 }

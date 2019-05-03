@@ -1,13 +1,21 @@
 'use strict';
 
 function init() {
-	image.src = "test_images/test_2.jpg";
-
 	// @ts-ignore
 	canvas = document.getElementById('image');
 	canvas.height = window.innerHeight * 0.8;
 	canvas.width = window.innerWidth * 0.8;
 	$('#tools').css('top', canvas.height + (canvas.height / 20));
+
+	// TEST
+	image.src = 'test_images/test_2.jpg';
+	var ratio = image.width / image.height;
+	scaledWidth = canvas.width;
+	scaledHeight = scaledWidth / ratio;
+	if (scaledHeight > canvas.height) {
+		scaledHeight = canvas.height;
+		scaledWidth = scaledHeight * ratio;
+	}
 
 	context = canvas.getContext('2d');
 	context.imageSmoothingQuality = 'high';
@@ -20,6 +28,9 @@ function init() {
 	document.addEventListener('mousedown', onMouseDown);
 	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
+
+	canvas.onmouseenter = () => inside = true;
+	canvas.onmouseleave = () => inside = false;
 
 	$('.icon').click(function() {
 		if ($(this).prop('id') == 'upload') { // TODO: good string check?
@@ -52,11 +63,19 @@ function init() {
 	})
 
 	update();
+
+	// TEST
+	var slider = document.getElementById('myRange');
+	slider.oninput = function() {
+		// @ts-ignore
+		angleInDegrees = this.value;
+		update();
+	}
 }
 
 function onMouseDown(evt) {
 	currPos = getMousePos(evt);
-	if (currPos.x >= 0 && currPos.x <= canvas.width && currPos.y >= 0 && currPos.y <= canvas.height) {
+	if (inside) {
 		clickPos.x = currPos.x;
 		clickPos.y = currPos.y;
 		mouseDown = true;

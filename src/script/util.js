@@ -11,7 +11,7 @@ function getMousePos(evt) {
 function readURL(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
-		reader.onload = function(e) {
+		reader.onloadend = function(e) {
 			// @ts-ignore
 			image.src = e.target.result;
 			update();
