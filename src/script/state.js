@@ -1,27 +1,27 @@
 'use strict';
 
 /** @type {HTMLCanvasElement} */
-var canvas;
-var image = new Image();
-var context;
-var inside;
+var canvas,
+image = new Image(),
+context,
+inside,
 
-var scaledWidth, scaledHeight;
+scaledWidth, scaledHeight,
 
-var angleInDegrees = 0;
+angleInDegrees = 0,
 
-var mouseDown = false;
-var clickPos = {
+mouseDown = false,
+clickPos = {
 	x: 0,
 	y: 0
-}
-var releasePos = {
+},
+releasePos = {
 	x: 0,
 	y: 0
-}
-var currPos = {
+},
+currPos = {
 	x: 0,
 	y: 0
-}
+},
 
-var currTool = 'none';
+currTool = 'none';

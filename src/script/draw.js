@@ -80,15 +80,35 @@ function drawImage() {
 		scaledWidth = scaledHeight * ratio;
 	}
 
-	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)';
+	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)'; // compatibility problems
 
 	context.drawImage(image, (canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2, scaledWidth, scaledHeight);
 
 	// draw filter rectangle
-	context.globalCompositeOperation = 'saturation';
-	context.fillStyle = 'hsl(0, 50%, 50%)';
-	context.fillRect(0, 0, 500, 500);
-	context.globalCompositeOperation = 'source-over';
+	// context.globalCompositeOperation = 'saturation';
+	// context.fillStyle = 'hsl(0, 100%, 50%)';
+	// context.fillRect(0, 0, 500, 500);
+	// context.globalCompositeOperation = 'source-over';
+
+	// sepia filter
+	var deltaX = (canvas.width - scaledWidth) / 2;
+	var deltaY = (canvas.height - scaledHeight) / 2;
+	var imgData = context.getImageData(deltaX, deltaY, scaledWidth, scaledHeight),
+	pxData = imgData.data,
+	length = pxData.length;
+	for (var x = 0; x < length; x += 4) {
+		// convert to grayscale
+		var r = pxData[x],
+			g = pxData[x + 1],
+			b = pxData[x + 2],
+			sepiaR = r * .393 + g * .769 + b * .189,
+			sepiaG = r * .349 + g * .686 + b * .168,
+			sepiaB = r * .272 + g * .534 + b * .131;
+		pxData[x] = sepiaR;
+		pxData[x + 1] = sepiaG;
+		pxData[x + 2] = sepiaB;
+	}
+	context.putImageData(imgData, deltaX, deltaY);
 
 	context.restore();
 }

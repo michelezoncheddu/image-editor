@@ -43,14 +43,14 @@ function init() {
 			return;
 		}
 
-		// user clicked on the active tool
+		// user deselected the current tool
 		if ($(this).hasClass('active')) {
 			$(this).removeClass('active');
 			currTool = 'none';
 			return;
 		}
 
-		// user clicked on another tool
+		// user selected an another tool
 		var icons = document.getElementsByClassName('icon');
 		for (var i = 0; i < icons.length; i++) { // disable the current tool
 			if (icons[i].classList.contains('active')) {
@@ -65,7 +65,7 @@ function init() {
 	update();
 
 	// TEST
-	var slider = document.getElementById('myRange');
+	var slider = document.getElementById('rotateSlider');
 	slider.oninput = function() {
 		// @ts-ignore
 		angleInDegrees = this.value;
