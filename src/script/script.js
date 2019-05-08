@@ -9,7 +9,7 @@ function init() {
 
 	context = canvas.getContext('2d');
 	context.imageSmoothingQuality = 'high';
-	context.imageSmoothingEnabled = true;
+	// context.imageSmoothingEnabled = true; // maybe not needed
 
 	image.onload = function() {
 		setImageSize();
@@ -29,7 +29,9 @@ function init() {
 
 	$('.tool-button').click(toolSelector);
 
-	image.src = 'test_images/test_2.jpg';
+	image.src = 'test_images/verticale.jpg';
+
+	update();
 
 	var slider = document.getElementById('rotateTool');
 	slider.oninput = function() {
