@@ -16,6 +16,7 @@ function readURL(input) {
 			image.src = e.target.result;
 			update();
 		};
+		// alternative: onload() { image.src... image.onloadend => update() }
 		reader.readAsDataURL(input.files[0]);
 	}
 }

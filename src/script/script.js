@@ -9,6 +9,7 @@ function init() {
 
 	// TEST
 	image.src = 'test_images/test_2.jpg';
+	image.onloadend = () => update();
 	var ratio = image.width / image.height;
 	scaledWidth = canvas.width;
 	scaledHeight = scaledWidth / ratio;
