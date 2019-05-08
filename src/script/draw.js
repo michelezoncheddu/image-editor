@@ -62,22 +62,14 @@ function draw() {
 
 function drawImage() {
 	var context = canvas.getContext('2d');
-	context.fillRect(0, 0, canvas.width, canvas.height); // draw backgruound
+	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 	context.save();
 
+	// rotate context around the center
 	if (angleInDegrees != 0) {
-		context.translate(canvas.width / 2, canvas.height / 2); // rotate on center
+		context.translate(canvas.width / 2, canvas.height / 2);
 		context.rotate(angleInDegrees * Math.PI / 180);
 		context.translate(-canvas.width / 2, -canvas.height / 2);
-	}
-	
-	// draw
-	var ratio = image.width / image.height;
-	scaledWidth = canvas.width;
-	scaledHeight = scaledWidth / ratio;
-	if (scaledHeight > canvas.height) {
-		scaledHeight = canvas.height;
-		scaledWidth = scaledHeight * ratio;
 	}
 
 	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)'; // compatibility problems

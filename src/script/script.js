@@ -2,30 +2,24 @@
 
 function init() {
 	// @ts-ignore
-	canvas = document.getElementById('image');
-	canvas.height = window.innerHeight * 0.8;
-	canvas.width = window.innerWidth * 0.8;
-	$('#tools').css('top', canvas.height + (canvas.height / 20));
-
-	// TEST
-	image.src = 'test_images/test_2.jpg';
-	image.onloadend = () => update();
-	var ratio = image.width / image.height;
-	scaledWidth = canvas.width;
-	scaledHeight = scaledWidth / ratio;
-	if (scaledHeight > canvas.height) {
-		scaledHeight = canvas.height;
-		scaledWidth = scaledHeight * ratio;
-	}
+	canvas = document.getElementById('editor');
+	canvas.height = window.innerHeight * 0.7;
+	canvas.width = window.innerWidth * 0.7;
+	$('#tool-buttons').css('top', canvas.height + (canvas.height / 20));
 
 	context = canvas.getContext('2d');
 	context.imageSmoothingQuality = 'high';
 	context.imageSmoothingEnabled = true;
 
+	image.onload = function() {
+		setImageSize();
+		update();
+	}
+
 	// background color
 	context.fillStyle = '#262626';
 
-	window.addEventListener('resize', onResize);
+	// window.addEventListener('resize', onResize);
 	document.addEventListener('mousedown', onMouseDown);
 	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
@@ -33,40 +27,11 @@ function init() {
 	canvas.onmouseenter = () => inside = true;
 	canvas.onmouseleave = () => inside = false;
 
-	$('.icon').click(function() {
-		if ($(this).prop('id') == 'upload') { // TODO: good string check?
-			// deselect other icons
-			var icons = document.getElementsByClassName('icon');
-			for (var i = 0; i < icons.length; i++)
-				if (icons[i].classList.contains('active'))
-					icons[i].classList.remove('active');
-			currTool = 'none';
-			return;
-		}
+	$('.tool-button').click(toolSelector);
 
-		// user deselected the current tool
-		if ($(this).hasClass('active')) {
-			$(this).removeClass('active');
-			currTool = 'none';
-			return;
-		}
+	image.src = 'test_images/test_2.jpg';
 
-		// user selected an another tool
-		var icons = document.getElementsByClassName('icon');
-		for (var i = 0; i < icons.length; i++) { // disable the current tool
-			if (icons[i].classList.contains('active')) {
-				icons[i].classList.remove('active');
-				break;
-			}
-		}
-		$(this).addClass('active');
-		currTool = $(this).attr('id');
-	})
-
-	update();
-
-	// TEST
-	var slider = document.getElementById('rotateSlider');
+	var slider = document.getElementById('rotateTool');
 	slider.oninput = function() {
 		// @ts-ignore
 		angleInDegrees = this.value;
@@ -95,4 +60,45 @@ function onMouseUp(evt) {
 	mouseDown = false;
 	releasePos = getMousePos(evt);
 	update();
+}
+
+function toolSelector() {
+	var lastTool = currTool;
+	if ($(this).prop('id') == 'upload') {
+		// deselect other tools
+		var tools = document.getElementsByClassName('tool-button');
+		for (var i = 0; i < tools.length; i++)
+			if (tools[i].classList.contains('active'))
+				tools[i].classList.remove('active');
+		currTool = 'none';
+	}
+	else if ($(this).hasClass('active')) { // user deselected the current tool
+		$(this).removeClass('active');
+		currTool = 'none';
+	}
+	else { // user selected an another tool
+		var tools = document.getElementsByClassName('tool-button');
+		for (var i = 0; i < tools.length; i++) { // disable the current tool
+			if (tools[i].classList.contains('active')) {
+				tools[i].classList.remove('active');
+				break;
+			}
+		}
+		$(this).addClass('active');
+		currTool = $(this).attr('id');
+	}
+	updateWindow(lastTool);
+}
+
+function updateWindow(lastTool) {
+	if (lastTool != 'none') { // there's something to hide
+		var tool = document.getElementById(lastTool + 'Tool');
+		if (tool != null)
+			tool.classList.add('hidden');
+	}
+	if (currTool != 'none') { // there's something to show
+		var tool = document.getElementById(currTool + 'Tool');
+		if (tool != null)
+			tool.classList.remove('hidden');
+	}
 }

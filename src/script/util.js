@@ -11,12 +11,10 @@ function getMousePos(evt) {
 function readURL(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
-		reader.onloadend = function(e) {
+		reader.onload = function(e) {
 			// @ts-ignore
 			image.src = e.target.result;
-			update();
 		};
-		// alternative: onload() { image.src... image.onloadend => update() }
 		reader.readAsDataURL(input.files[0]);
 	}
 }
@@ -29,4 +27,14 @@ function onResize() {
 
 function update() {
 	requestAnimationFrame(draw);
+}
+
+function setImageSize() {
+	var ratio = image.width / image.height;
+	scaledWidth = canvas.width;
+	scaledHeight = scaledWidth / ratio;
+	if (scaledHeight > canvas.height) {
+		scaledHeight = canvas.height;
+		scaledWidth = scaledHeight * ratio;
+	}
 }

@@ -1,28 +1,20 @@
 body {
 	background-color: #535353;
+	text-align: center;
 }
 
 label {
 	margin-bottom: -10px;
 }
 
-#image {
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, 0%);
-}
-
-#tools {
-	display: flex;
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, 0%);
+#tool-buttons {
+	display: inline-flex;
 	padding: 5px;
 	border-radius: 10px;
 	background-color: #DDDDDD;
 }
 
-.icon {
+.tool-button {
 	width: 32px;
 	height: 32px;
 	padding: 4px;
@@ -31,12 +23,12 @@ label {
 	transition: 0.3s all;
 }
 
-.icon:hover, .active {
+.tool-button:hover, .active {
 	background-color: #AAAAAA;
 	filter: invert(100%);
 }
 
-.icon:active {
+.tool-button:active {
 	background-color: #666666;
 }
 
@@ -45,25 +37,21 @@ label {
 }
 
 .slider {
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, 0%);
 	-webkit-appearance: none;
-	width: 80%;
+	width: 40%;
 	height: 10px;
 	border-radius: 5px;
 	background: #d3d3d3;
-	/* outline: none; */
 	opacity: 0.7;
 	transition: .2s;
 	transition: opacity .2s;
 	bottom: 5%;
 }
-  
+
 .slider:hover {
 	opacity: 1;
 }
-  
+
 .slider::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
@@ -72,4 +60,8 @@ label {
 	border-radius: 50%;
 	background: #4CAF50;
 	cursor: pointer;
+}
+
+.hidden {
+	display: none;
 }

@@ -14,15 +14,17 @@
 	</head>
 
 	<body onload="init()">
-		<canvas id="image">Please update your browser</canvas>
-		<div id="tools">
+		<canvas id="editor">Please update your browser</canvas><br>
+		<div id="tool-buttons">
 			<input type='file' id="upload-hidden" onchange="readURL(this)" />
 			<label for="upload-hidden">
-				<image id="upload" class="icon" src="icons/upload.png" />
+				<img id="upload" class="tool-button" src="icons/upload.png" />
 			</label>
-			<image id="crop" class="icon" src="icons/crop.png" />
-			<image id="rotate" class="icon" src="icons/rotate.png" />
-		</div>
-		<input type="range" min="-180" max="180" value="0" class="slider" id="rotateSlider">
+			<img id="pencil" class="tool-button" src="icons/pencil.png" />
+			<img id="crop"   class="tool-button" src="icons/crop.png" />
+			<img id="rotate" class="tool-button" src="icons/rotate.png" />
+			<img id="levels" class="tool-button" src="icons/levels.png" />
+		</div><br>
+		<input type="range" id="rotateTool" class="slider hidden" min="-180" max="180" value="0">
 	</body>
 </html>
