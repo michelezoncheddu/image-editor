@@ -5,11 +5,11 @@ function init() {
 	canvas = document.getElementById('editor');
 	canvas.height = window.innerHeight * 0.7;
 	canvas.width = window.innerWidth * 0.7;
-	$('#tool-buttons').css('top', canvas.height + (canvas.height / 20));
+	$('#toolbar').css('top', canvas.height + (canvas.height / 20));
 
 	context = canvas.getContext('2d');
 	context.imageSmoothingQuality = 'high';
-	// context.imageSmoothingEnabled = true; // maybe not needed
+	context.imageSmoothingEnabled = true;
 
 	image.onload = function() {
 		setImageSize();
@@ -29,7 +29,8 @@ function init() {
 
 	$('.tool-button').click(toolSelector);
 
-	image.src = 'test_images/verticale.jpg';
+	// TEST
+	image.src = 'test_images/test_2.jpg';
 
 	update();
 
@@ -37,6 +38,7 @@ function init() {
 	slider.oninput = function() {
 		// @ts-ignore
 		angleInDegrees = this.value;
+		document.getElementById('degrees').innerHTML = angleInDegrees.toString() + '°';
 		update();
 	}
 }
@@ -94,12 +96,12 @@ function toolSelector() {
 
 function updateWindow(lastTool) {
 	if (lastTool != 'none') { // there's something to hide
-		var tool = document.getElementById(lastTool + 'Tool');
+		var tool = document.getElementById(lastTool + 'Div');
 		if (tool != null)
 			tool.classList.add('hidden');
 	}
 	if (currTool != 'none') { // there's something to show
-		var tool = document.getElementById(currTool + 'Tool');
+		var tool = document.getElementById(currTool + 'Div');
 		if (tool != null)
 			tool.classList.remove('hidden');
 	}

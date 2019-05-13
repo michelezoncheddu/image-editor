@@ -5,6 +5,7 @@
 		<meta charset="utf-8">
 		<title>Image editor</title>
 		<link rel="stylesheet" type="text/css" href="style/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 		<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
 
 		<script type="text/javascript" src="script/util.js"></script>
@@ -14,9 +15,9 @@
 	</head>
 
 	<body onload="init()">
-		<canvas id="editor">Please update your browser</canvas><br>
-		<div id="tool-buttons">
-			<input type='file' id="upload-hidden" onchange="readURL(this)" />
+		<canvas id="editor">Please update your browser</canvas><br><br>
+		<div id="toolbar">
+			<input type='file' id="upload-hidden" class="hidden" onchange="readURL(this)" />
 			<label for="upload-hidden">
 				<img id="upload" class="tool-button" src="icons/upload.png" />
 			</label>
@@ -24,7 +25,26 @@
 			<img id="crop"   class="tool-button" src="icons/crop.png" />
 			<img id="rotate" class="tool-button" src="icons/rotate.png" />
 			<img id="levels" class="tool-button" src="icons/levels.png" />
-		</div><br>
-		<input type="range" id="rotateTool" class="slider hidden" min="-180" max="180" value="0">
+		</div><br><br>
+		<div id="rotateDiv" class="hidden">
+			<table class="slidersTable">
+				<tr>
+					<td>Rotate: <span id="degrees">0°</span></td>
+					<td><input type="range" id="rotateTool" class="slider" min="-180" max="180" value="0"></td>
+				</tr>
+			</table>
+		</div>
+		<div id="levelsDiv" class="hidden">
+			<table class="slidersTable">
+				<tr>
+					<td>Brightness</td>
+					<td><input type="range" id="brightness" class="long slider" min="0" max="10" value="5"></td>
+				</tr>
+				<tr>
+					<td>Saturation</td>
+					<td><input type="range" id="saturation" class="long slider" min="0" max="10" value="5"></td>
+				</tr>
+			</table>
+		</div>
 	</body>
 </html>

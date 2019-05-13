@@ -55,6 +55,12 @@ function draw() {
 		drawImage();
 		break;
 
+		case 'levels':
+		break;
+
+		case 'pencil':
+		break;
+
 		default:
 		alert('Unknown tool: ' + currTool);
 	}
