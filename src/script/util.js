@@ -1,11 +1,25 @@
 'use strict';
 
+function update() {
+	requestAnimationFrame(draw);
+}
+
 function getMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
 	return {
 		x: evt.clientX - rect.left,
 		y: evt.clientY - rect.top
 	};
+}
+
+function setImageSize() {
+	var ratio = image.width / image.height;
+	scaledWidth = canvas.width;
+	scaledHeight = scaledWidth / ratio;
+	if (scaledHeight > canvas.height) {
+		scaledHeight = canvas.height;
+		scaledWidth = scaledHeight * ratio;
+	}
 }
 
 function readURL(input) {
@@ -23,18 +37,4 @@ function onResize() {
 	canvas.height = window.innerHeight * 0.8;
 	canvas.width = window.innerWidth * 0.8;
 	update();
-}
-
-function update() {
-	requestAnimationFrame(draw);
-}
-
-function setImageSize() {
-	var ratio = image.width / image.height;
-	scaledWidth = canvas.width;
-	scaledHeight = scaledWidth / ratio;
-	if (scaledHeight > canvas.height) {
-		scaledHeight = canvas.height;
-		scaledWidth = scaledHeight * ratio;
-	}
 }

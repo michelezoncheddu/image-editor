@@ -10,8 +10,9 @@
 
 		<script type="text/javascript" src="script/util.js"></script>
 		<script type="text/javascript" src="script/state.js"></script>
+		<script type="text/javascript" src="script/events.js"></script>
 		<script type="text/javascript" src="script/draw.js"></script>
-		<script type="text/javascript" src="script/script.js"></script>
+		<script type="text/javascript" src="script/editor.js"></script>
 	</head>
 
 	<body onload="init()">
@@ -29,7 +30,7 @@
 		<div id="rotateDiv" class="hidden">
 			<table class="slidersTable">
 				<tr>
-					<td>Rotate: <span id="degrees">0°</span></td>
+					<td>Rotate: <span id="degrees"></span></td>
 					<td><input type="range" id="rotateSlider" class="slider" min="-180" max="180" value="0"></td>
 				</tr>
 			</table>
@@ -37,11 +38,11 @@
 		<div id="levelsDiv" class="hidden">
 			<table class="slidersTable">
 				<tr>
-					<td>Brightness</td>
+					<td>Brightness: <span id="brightness"></span></td>
 					<td><input type="range" id="brightnessSlider" class="long slider" min="0" max="100" value="50"></td>
 				</tr>
 				<tr>
-					<td>Saturation: <span id="saturation">0</span></td>
+					<td>Saturation: <span id="saturation"></span></td>
 					<td><input type="range" id="saturationSlider" class="long slider" min="0" max="100" value="50"></td>
 				</tr>
 			</table>

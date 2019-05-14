@@ -27,4 +27,4 @@ currPos = {
 	y: 0
 },
 
-currTool = 'levels';
+currTool = 'none';

@@ -29,62 +29,21 @@ function init() {
 
 	$('.tool-button').click(toolSelector);
 
-	// TEST
-	image.src = 'test_images/test_2.jpg';
+	// sliders handlers
+	document.getElementById('rotateSlider').oninput = onRotate;
+	document.getElementById('brightnessSlider').oninput = onBrightness;
+	document.getElementById('saturationSlider').oninput = onSaturation;
 
-	update();
-
-	// sliders
-	var rotateSlider = document.getElementById('rotateSlider');
-	rotateSlider.oninput = function() {
-		// @ts-ignore
-		angleInDegrees = this.value;
-		document.getElementById('degrees').innerHTML = angleInDegrees.toString() + '°';
-		update();
-	}
-	var brightnessSlider = document.getElementById('brightnessSlider');
-	brightnessSlider.oninput = function() {
-		// @ts-ignore
-		brightness = this.value;
-		update();
-	}
-	var saturationSlider = document.getElementById('saturationSlider');
-	saturationSlider.oninput = function() {
-		// @ts-ignore
-		saturation = this.value;
-		document.getElementById('saturation').innerHTML = (saturation - (100 - saturation)).toString();
-		update();
-	}
-
+	// slider bar
 	$('.slider').on('input', function(e) {
 		// @ts-ignore
 		var min = e.target.min, max = e.target.max, val = e.target.value;
-		$(e.target).css({
-			'backgroundSize': (val - min) * 100 / (max - min) + '% 100%'
-		});
-	}).trigger('input');
-}
+		$(e.target).css('background-size', (val - min) * 100 / (max - min) + '% 100%');
+	});
 
-function onMouseDown(evt) {
-	currPos = getMousePos(evt);
-	if (inside) {
-		clickPos.x = currPos.x;
-		clickPos.y = currPos.y;
-		mouseDown = true;
-		update();
-	}
-}
+	// TEST
+	image.src = 'test_images/test_2.jpg';
 
-function onMouseMove(evt) {
-	if (mouseDown) {
-		currPos = getMousePos(evt);
-		update();
-	}
-}
-
-function onMouseUp(evt) {
-	mouseDown = false;
-	releasePos = getMousePos(evt);
 	update();
 }
 
