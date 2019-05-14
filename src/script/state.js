@@ -14,17 +14,11 @@ brightness,
 saturation,
 
 mouseDown = false,
-clickPos = {
-	x: 0,
-	y: 0
-},
-releasePos = {
-	x: 0,
-	y: 0
-},
 currPos = {
 	x: 0,
 	y: 0
 },
 
-currTool = 'none';
+currTool = 'none',
+
+selection = null;

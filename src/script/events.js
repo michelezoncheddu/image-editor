@@ -1,15 +1,28 @@
 'use strict';
 
 function onMouseDown(evt) {
-	currPos = getMousePos(evt);
 	if (inside) {
-		clickPos.x = currPos.x;
-		clickPos.y = currPos.y;
+		currPos = getMousePos(evt);
+
 		mouseDown = true;
 
 		if (currTool == 'pencil') {
 			context.beginPath();
-			context.moveTo(clickPos.x, clickPos.y);
+			context.moveTo(currPos.x, currPos.y);
+		}
+
+		if (selection != null) {
+			if (currPos.x >= selection.startX && currPos.x <= selection.endX && currPos.y >= selection.startY && currPos.y <= selection.endY)
+				alert('inside');
+			else
+				selection = null;
+		} else {
+			selection = {
+				startX: currPos.x,
+				startY: currPos.y,
+				endX:   currPos.x,
+				endY:   currPos.y
+			};
 		}
 
 		update();
@@ -25,8 +38,10 @@ function onMouseMove(evt) {
 
 function onMouseUp(evt) {
 	mouseDown = false;
-	if (inside)
-		releasePos = getMousePos(evt);
+	if (inside && selection != null) {
+		selection.endX = currPos.x;
+		selection.endY = currPos.y;
+	}
 	update();
 }
 

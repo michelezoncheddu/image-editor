@@ -68,6 +68,8 @@ function toolSelector() {
 		$(this).addClass('active');
 		currTool = $(this).attr('id');
 	}
+	selection = null;
+	drawImage();
 	updateWindow(lastTool);
 }
 
