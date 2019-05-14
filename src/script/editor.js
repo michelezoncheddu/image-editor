@@ -11,19 +11,14 @@ function init() {
 	context.imageSmoothingQuality = 'high';
 	context.imageSmoothingEnabled = true;
 
-	image.onload = function() {
-		setImageSize();
-		update();
-	}
+	context.fillStyle = '#262626'; // background color
 
-	// background color
-	context.fillStyle = '#262626';
-
+	// event handlers
+	image.onload = () => (setImageSize(), update());
 	// window.addEventListener('resize', onResize);
 	document.addEventListener('mousedown', onMouseDown);
-	document.addEventListener('mousemove', onMouseMove);
+	canvas.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
-
 	canvas.onmouseenter = () => inside = true;
 	canvas.onmouseleave = () => inside = false;
 
@@ -44,6 +39,7 @@ function init() {
 	// TEST
 	image.src = 'test_images/test_2.jpg';
 
+	// first draw
 	update();
 }
 

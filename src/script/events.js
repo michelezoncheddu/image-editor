@@ -6,6 +6,12 @@ function onMouseDown(evt) {
 		clickPos.x = currPos.x;
 		clickPos.y = currPos.y;
 		mouseDown = true;
+
+		if (currTool == 'pencil') {
+			context.beginPath();
+			context.moveTo(clickPos.x, clickPos.y);
+		}
+
 		update();
 	}
 }
@@ -44,4 +50,3 @@ function onSaturation() {
 	document.getElementById('saturation').innerHTML = (saturation - (100 - saturation)).toString();
 	update();
 }
-
