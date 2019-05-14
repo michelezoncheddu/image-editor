@@ -34,13 +34,35 @@ function init() {
 
 	update();
 
-	var slider = document.getElementById('rotateTool');
-	slider.oninput = function() {
+	// sliders
+	var rotateSlider = document.getElementById('rotateSlider');
+	rotateSlider.oninput = function() {
 		// @ts-ignore
 		angleInDegrees = this.value;
 		document.getElementById('degrees').innerHTML = angleInDegrees.toString() + '°';
 		update();
 	}
+	var brightnessSlider = document.getElementById('brightnessSlider');
+	brightnessSlider.oninput = function() {
+		// @ts-ignore
+		brightness = this.value;
+		update();
+	}
+	var saturationSlider = document.getElementById('saturationSlider');
+	saturationSlider.oninput = function() {
+		// @ts-ignore
+		saturation = this.value;
+		document.getElementById('saturation').innerHTML = (saturation - (100 - saturation)).toString();
+		update();
+	}
+
+	$('.slider').on('input', function(e) {
+		// @ts-ignore
+		var min = e.target.min, max = e.target.max, val = e.target.value;
+		$(e.target).css({
+			'backgroundSize': (val - min) * 100 / (max - min) + '% 100%'
+		});
+	}).trigger('input');
 }
 
 function onMouseDown(evt) {

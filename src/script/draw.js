@@ -56,6 +56,8 @@ function draw() {
 		break;
 
 		case 'levels':
+		drawImage();
+		drawFilters();
 		break;
 
 		case 'pencil':
@@ -77,16 +79,34 @@ function drawImage() {
 		context.rotate(angleInDegrees * Math.PI / 180);
 		context.translate(-canvas.width / 2, -canvas.height / 2);
 	}
+	context.drawImage(image, (canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2, scaledWidth, scaledHeight);
+
+	context.restore();
+}
+
+function drawFilters() {
+	context.save();
+
+	// rotate context around the center
+	if (angleInDegrees != 0) {
+		context.translate(canvas.width / 2, canvas.height / 2);
+		context.rotate(angleInDegrees * Math.PI / 180);
+		context.translate(-canvas.width / 2, -canvas.height / 2);
+	}
 
 	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)'; // compatibility problems
 
-	context.drawImage(image, (canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2, scaledWidth, scaledHeight);
+	// context.globalCompositeOperation = 'luminosity';
+	// context.fillStyle = 'hsl(0, ' + brightness + '%, 100%)';
 
-	// draw filter rectangle
-	// context.globalCompositeOperation = 'saturation';
-	// context.fillStyle = 'hsl(0, 100%, 50%)';
-	// context.fillRect(0, 0, 500, 500);
-	// context.globalCompositeOperation = 'source-over';
+	context.globalCompositeOperation = 'saturation';
+	context.globalAlpha = 0.5 + Math.abs(0.5 - saturation / 100);
+	context.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
+
+	// draw filter
+	context.fillRect((canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2, scaledWidth, scaledHeight);
+	
+	context.globalCompositeOperation = 'source-over';
 
 	// sepia filter
 	// var deltaX = (canvas.width - scaledWidth) / 2;

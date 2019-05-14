@@ -10,6 +10,9 @@ scaledWidth, scaledHeight,
 
 angleInDegrees = 0,
 
+brightness,
+saturation,
+
 mouseDown = false,
 clickPos = {
 	x: 0,
@@ -24,4 +27,4 @@ currPos = {
 	y: 0
 },
 
-currTool = 'none';
+currTool = 'levels';

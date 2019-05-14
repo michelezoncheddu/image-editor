@@ -18,7 +18,7 @@
 		<canvas id="editor">Please update your browser</canvas><br><br>
 		<div id="toolbar">
 			<input type='file' id="upload-hidden" class="hidden" onchange="readURL(this)" />
-			<label for="upload-hidden">
+			<label for="upload-hidden" id="upload-label">
 				<img id="upload" class="tool-button" src="icons/upload.png" />
 			</label>
 			<img id="pencil" class="tool-button" src="icons/pencil.png" />
@@ -30,7 +30,7 @@
 			<table class="slidersTable">
 				<tr>
 					<td>Rotate: <span id="degrees">0°</span></td>
-					<td><input type="range" id="rotateTool" class="slider" min="-180" max="180" value="0"></td>
+					<td><input type="range" id="rotateSlider" class="slider" min="-180" max="180" value="0"></td>
 				</tr>
 			</table>
 		</div>
@@ -38,11 +38,11 @@
 			<table class="slidersTable">
 				<tr>
 					<td>Brightness</td>
-					<td><input type="range" id="brightness" class="long slider" min="0" max="10" value="5"></td>
+					<td><input type="range" id="brightnessSlider" class="long slider" min="0" max="100" value="50"></td>
 				</tr>
 				<tr>
-					<td>Saturation</td>
-					<td><input type="range" id="saturation" class="long slider" min="0" max="10" value="5"></td>
+					<td>Saturation: <span id="saturation">0</span></td>
+					<td><input type="range" id="saturationSlider" class="long slider" min="0" max="100" value="50"></td>
 				</tr>
 			</table>
 		</div>
