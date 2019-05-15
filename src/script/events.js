@@ -19,7 +19,9 @@ function onMouseDown(evt) {
 		} else {
 			selection = {
 				startX: currPos.x,
-				startY: currPos.y
+				startY: currPos.y,
+				endX:   currPos.x,
+				endY:   currPos.y
 			};
 		}
 
