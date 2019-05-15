@@ -17,8 +17,13 @@ function init() {
 	image.onload = () => (setImageSize(), update());
 	// window.addEventListener('resize', onResize);
 	document.addEventListener('mousedown', onMouseDown);
-	canvas.addEventListener('mousemove', onMouseMove);
+	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
+
+	document.addEventListener('touchstart', onMouseDown);
+	document.addEventListener('touchmove', onMouseMove);
+	document.addEventListener('touchend', onMouseUp);
+
 	canvas.onmouseenter = () => inside = true;
 	canvas.onmouseleave = () => inside = false;
 
