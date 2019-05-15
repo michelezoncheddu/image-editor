@@ -2,9 +2,8 @@
 
 function onMouseDown(evt) {
 	if (inside) {
-		currPos = getMousePos(evt);
-
 		mouseDown = true;
+		currPos = getMousePos(evt);
 
 		if (currTool == 'pencil') {
 			context.beginPath();
@@ -27,6 +26,15 @@ function onMouseDown(evt) {
 	}
 }
 
+function onTouchStart() {
+	$(document).on('touchstart', '#box', function(e) {
+		selection = {
+			startX: e.originalEvent.touches[0].pageX,
+			startY: e.originalEvent.touches[0].pageY
+		};
+	  });
+}
+
 function onMouseMove(evt) {
 	if (mouseDown) {
 		currPos = getMousePos(evt);
@@ -40,7 +48,7 @@ function onMouseMove(evt) {
 
 function onMouseUp(evt) {
 	mouseDown = false;
-	if (inside && selection != null) {
+	if (/*inside &&*/ selection != null) {
 		selection.endX = currPos.x;
 		selection.endY = currPos.y;
 	}

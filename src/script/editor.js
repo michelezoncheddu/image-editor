@@ -20,7 +20,7 @@ function init() {
 	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
 
-	document.addEventListener('touchstart', onMouseDown);
+	document.addEventListener('touchstart', onTouchStart);
 	document.addEventListener('touchmove', onMouseMove);
 	document.addEventListener('touchend', onMouseUp);
 
