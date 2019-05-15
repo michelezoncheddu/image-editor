@@ -19,9 +19,7 @@ function onMouseDown(evt) {
 		} else {
 			selection = {
 				startX: currPos.x,
-				startY: currPos.y,
-				endX:   currPos.x,
-				endY:   currPos.y
+				startY: currPos.y
 			};
 		}
 
@@ -32,6 +30,10 @@ function onMouseDown(evt) {
 function onMouseMove(evt) {
 	if (mouseDown) {
 		currPos = getMousePos(evt);
+		if (selection != null) {
+			selection.endX = currPos.x;
+			selection.endY = currPos.y;
+		}
 		update();
 	}
 }
@@ -45,21 +47,21 @@ function onMouseUp(evt) {
 	update();
 }
 
-function onRotate() {
+function onRotateChange() {
 	// @ts-ignore
 	angleInDegrees = this.value;
 	document.getElementById('degrees').innerHTML = angleInDegrees.toString() + '°';
 	update();
 }
 
-function onBrightness() {
+function onBrightnessChange() {
 	// @ts-ignore
 	brightness = this.value;
 	document.getElementById('brightness').innerHTML = (brightness - (100 - brightness)).toString();
 	update();
 }
 
-function onSaturation() {
+function onSaturationChange() {
 	// @ts-ignore
 	saturation = this.value;
 	document.getElementById('saturation').innerHTML = (saturation - (100 - saturation)).toString();

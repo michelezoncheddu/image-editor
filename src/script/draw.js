@@ -55,44 +55,54 @@ function drawImage() {
 }
 
 function drawCrop() {
+	var startX = selection.startX,
+		startY = selection.startY,
+		endX   = selection.endX,
+		endY   = selection.endY;
+	
 	// external dark filler
 	context.globalAlpha = 0.75;
-	if (currPos.y < selection.startY) {
-		context.fillRect(0, 0, canvas.width, currPos.y);
-		context.fillRect(0, selection.startY, canvas.width, canvas.height - currPos.y);
+	if (endY < startY) {
+		context.fillRect(0, 0, canvas.width, endY);
+		context.fillRect(0, startY, canvas.width, canvas.height - endY);
 	} else {
-		context.fillRect(0, 0, canvas.width, selection.startY);
-		context.fillRect(0, currPos.y, canvas.width, canvas.height - currPos.y);
+		context.fillRect(0, 0, canvas.width, startY);
+		context.fillRect(0, endY, canvas.width, canvas.height - endY);
 	}
-	if (currPos.x < selection.startX) {
-		context.fillRect(0, currPos.y, currPos.x, selection.startY - currPos.y);
-		context.fillRect(selection.startX, selection.startY, canvas.width - selection.startX, currPos.y - selection.startY);
+	if (endX < startX) {
+		context.fillRect(0, endY, endX, startY - endY);
+		context.fillRect(startX, startY, canvas.width - startX, endY - startY);
 	} else {
-		context.fillRect(0, currPos.y, selection.startX, selection.startY - currPos.y);
-		context.fillRect(currPos.x, currPos.y, canvas.width - selection.startX, selection.startY - currPos.y);
+		context.fillRect(0, endY, startX, startY - endY);
+		context.fillRect(endX, endY, canvas.width - startX, startY - endY);
 	}
 	context.globalAlpha = 1;
 
 	// border
 	context.strokeStyle = '#FFFFFF';
 	context.lineWidth = 1;
-	context.strokeRect(selection.startX, selection.startY, currPos.x - selection.startX, currPos.y - selection.startY);
+	context.strokeRect(startX, startY, endX - startX, endY - startY);
 
 	// lines
 	context.lineWidth = 0.75;
 	context.beginPath();
-	context.moveTo(selection.startX + ((currPos.x - selection.startX) / 3), selection.startY);
-	context.lineTo(selection.startX + ((currPos.x - selection.startX) / 3), currPos.y);
-	context.moveTo(selection.startX + ((currPos.x - selection.startX) * 2 / 3), selection.startY);
-	context.lineTo(selection.startX + ((currPos.x - selection.startX) * 2 / 3), currPos.y);
-	context.moveTo(selection.startX, selection.startY + ((currPos.y - selection.startY) / 3));
-	context.lineTo(currPos.x, selection.startY + ((currPos.y - selection.startY) / 3));
-	context.moveTo(selection.startX, selection.startY + ((currPos.y - selection.startY) * 2 / 3));
-	context.lineTo(currPos.x, selection.startY + ((currPos.y - selection.startY) * 2 / 3));
+	context.moveTo(startX + ((endX - startX) / 3), startY);
+	context.lineTo(startX + ((endX - startX) / 3), endY);
+	context.moveTo(startX + ((endX - startX) * 2 / 3), startY);
+	context.lineTo(startX + ((endX - startX) * 2 / 3), endY);
+	context.moveTo(startX, startY + ((endY - startY) / 3));
+	context.lineTo(endX, startY + ((endY - startY) / 3));
+	context.moveTo(startX, startY + ((endY - startY) * 2 / 3));
+	context.lineTo(endX, startY + ((endY - startY) * 2 / 3));
 	context.stroke();
 }
 
 function drawFilters() {
+	var startX = selection.startX,
+		startY = selection.startY,
+		endX   = selection.endX,
+		endY   = selection.endY;
+	
 	context.save();
 
 	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)'; // compatibility problems
@@ -105,7 +115,7 @@ function drawFilters() {
 	context.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
 
 	// draw filter layer
-	context.fillRect(selection.startX, selection.startY, currPos.x - selection.startX, currPos.y - selection.startY);
+	context.fillRect(startX, startY, endX - startX, endY - startY);
 	
 	context.globalCompositeOperation = 'source-over';
 

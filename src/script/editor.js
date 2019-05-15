@@ -25,9 +25,9 @@ function init() {
 	$('.tool-button').click(toolSelector);
 
 	// sliders handlers
-	document.getElementById('rotateSlider').oninput = onRotate;
-	document.getElementById('brightnessSlider').oninput = onBrightness;
-	document.getElementById('saturationSlider').oninput = onSaturation;
+	document.getElementById('rotateSlider').oninput = onRotateChange;
+	document.getElementById('brightnessSlider').oninput = onBrightnessChange;
+	document.getElementById('saturationSlider').oninput = onSaturationChange;
 
 	// slider bar
 	$('.slider').on('input', function(e) {
