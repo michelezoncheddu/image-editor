@@ -5,10 +5,9 @@ function update() {
 }
 
 function getMousePos(evt) {
-	var rect = canvas.getBoundingClientRect();
 	return {
-		x: evt.clientX - rect.left,
-		y: evt.clientY - rect.top
+		x: evt.clientX - canvasBorder.left,
+		y: evt.clientY - canvasBorder.top
 	};
 }
 
@@ -33,8 +32,17 @@ function readURL(input) {
 	}
 }
 
-function onResize() {
-	canvas.height = window.innerHeight * 0.8;
-	canvas.width = window.innerWidth * 0.8;
-	update();
+class Rectangle {
+	constructor(x, y, width, height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.dragged = false;
+	}
+
+	contains(point) {
+		return point.x >= this.x && point.x <= this.x + this.width &&
+			   point.y >= this.y && point.y <= this.y + this.height;
+	}
 }

@@ -49,7 +49,7 @@ body {
 }
 
 .tool-button:active {
-	background-color: black;
+	filter: invert(0%);
 }
 
 .slider {

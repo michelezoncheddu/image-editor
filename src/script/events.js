@@ -1,48 +1,49 @@
 'use strict';
 
 function onMouseDown(evt) {
-	if (inside) {
-		mouseDown = true;
-		currPos = getMousePos(evt);
+	if (!inside)
+		return;
 
-		if (currTool == 'pencil') {
-			context.beginPath();
-			context.moveTo(currPos.x, currPos.y);
-		}
+	mouseDown = true;
+	currPos = getMousePos(evt);
 
-		if (selection != null) {
-			if (currPos.x >= selection.startX && currPos.x <= selection.endX && currPos.y >= selection.startY && currPos.y <= selection.endY)
-				alert('inside');
-			else
-				selection = null;
-		} else {
-			selection = {
-				startX: currPos.x,
-				startY: currPos.y,
-				endX:   currPos.x,
-				endY:   currPos.y
-			};
-		}
-
-		update();
+	if (currTool == 'pencil') {
+		context.beginPath();
+		context.moveTo(currPos.x, currPos.y);
 	}
+
+	if (selection != null) {
+		if (selection.contains(currPos)) {
+			selection.dragged = true;
+			selection.deltaX = currPos.x - selection.x;
+			selection.deltaY = currPos.y - selection.y;
+		}
+		else {
+			selection = null;
+		}
+	} else {
+		selection = new Rectangle(currPos.x, currPos.y, 0, 0);
+	}
+
+	update();
 }
 
-function onTouchStart() {
-	$(document).on('touchstart', '#box', function(e) {
-		selection = {
-			startX: e.originalEvent.touches[0].pageX,
-			startY: e.originalEvent.touches[0].pageY
-		};
-	  });
+function onTouchStart(evt) {
+	var touches = evt.changedTouches;
+	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
 }
 
 function onMouseMove(evt) {
 	if (mouseDown) {
 		currPos = getMousePos(evt);
 		if (selection != null) {
-			selection.endX = currPos.x;
-			selection.endY = currPos.y;
+			if (selection.dragged) {
+				selection.x = currPos.x - selection.deltaX;
+				selection.y = currPos.y - selection.deltaY;
+			} else {
+				selection.width = currPos.x - selection.x;
+				selection.height = currPos.y - selection.y;
+			}
 		}
 		update();
 	}
@@ -50,9 +51,20 @@ function onMouseMove(evt) {
 
 function onMouseUp(evt) {
 	mouseDown = false;
-	if (/*inside &&*/ selection != null) {
-		selection.endX = currPos.x;
-		selection.endY = currPos.y;
+	if (!inside)
+		return;
+
+	if (selection != null) {
+		if (selection.dragged)
+			selection.dragged = false;
+		else {
+			selection = new Rectangle(
+				Math.min(selection.x, currPos.x),
+				Math.min(selection.y, currPos.y),
+				Math.abs(selection.x - currPos.x),
+				Math.abs(selection.y - currPos.y));
+		}
+		return; // no update
 	}
 	update();
 }

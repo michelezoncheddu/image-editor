@@ -5,6 +5,8 @@ function init() {
 	canvas = document.getElementById('editor');
 	canvas.height = window.innerHeight * 0.7;
 	canvas.width = window.innerWidth * 0.7;
+	canvasBorder = canvas.getBoundingClientRect();
+
 	$('#toolbar').css('top', canvas.height + (canvas.height / 20));
 
 	context = canvas.getContext('2d');
@@ -15,7 +17,6 @@ function init() {
 
 	// event handlers
 	image.onload = () => (setImageSize(), update());
-	// window.addEventListener('resize', onResize);
 	document.addEventListener('mousedown', onMouseDown);
 	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
@@ -34,7 +35,7 @@ function init() {
 	document.getElementById('brightnessSlider').oninput = onBrightnessChange;
 	document.getElementById('saturationSlider').oninput = onSaturationChange;
 
-	// slider bar
+	// slider color progress
 	$('.slider').on('input', function(e) {
 		// @ts-ignore
 		var min = e.target.min, max = e.target.max, val = e.target.value;
