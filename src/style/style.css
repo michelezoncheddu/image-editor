@@ -16,7 +16,7 @@ body {
 	background-color: #262626;
 }
 
-#upload-label {
+a, label {
 	margin-bottom: -10px;
 }
 

@@ -32,17 +32,14 @@ function readURL(input) {
 	}
 }
 
-class Rectangle {
-	constructor(x, y, width, height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-		this.dragged = false;
-	}
-
-	contains(point) {
-		return point.x >= this.x && point.x <= this.x + this.width &&
-			   point.y >= this.y && point.y <= this.y + this.height;
-	}
+function downloadImage() {
+	var download = document.getElementById("download-link");
+	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	// @ts-ignore
+	download.href = image;
 }
+
+// @ts-ignore
+Number.prototype.between = function(a, b) {
+	return this >= Math.min(a, b) && this <= Math.max(a, b);
+};

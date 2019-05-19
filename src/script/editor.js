@@ -51,7 +51,7 @@ function init() {
 
 function toolSelector() {
 	var lastTool = currTool;
-	if ($(this).prop('id') == 'upload') {
+	if ($(this).prop('id') == 'upload' || $(this).prop('id') == 'download') {
 		// deselect other tools
 		var tools = document.getElementsByClassName('tool-button');
 		for (var i = 0; i < tools.length; i++)

@@ -57,14 +57,8 @@ function onMouseUp(evt) {
 	if (selection != null) {
 		if (selection.dragged)
 			selection.dragged = false;
-		else {
-			selection = new Rectangle(
-				Math.min(selection.x, currPos.x),
-				Math.min(selection.y, currPos.y),
-				Math.abs(selection.x - currPos.x),
-				Math.abs(selection.y - currPos.y));
-		}
-		return; // no update
+		else
+			selection = new Rectangle(selection.x, selection.y, currPos.x - selection.x, currPos.y - selection.y);
 	}
 	update();
 }

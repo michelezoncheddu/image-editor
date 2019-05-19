@@ -8,6 +8,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 		<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
 
+		<script type="text/javascript" src="script/classes.js"></script>
 		<script type="text/javascript" src="script/util.js"></script>
 		<script type="text/javascript" src="script/state.js"></script>
 		<script type="text/javascript" src="script/events.js"></script>
@@ -16,17 +17,22 @@
 	</head>
 
 	<body onload="init()">
-		<canvas id="editor">Please update your browser</canvas><br><br>
+		<canvas id="editor" >Please update your browser</canvas><br><br>
+
 		<div id="toolbar">
 			<input type='file' id="upload-hidden" class="hidden" onchange="readURL(this)" />
-			<label for="upload-hidden" id="upload-label">
+			<label for="upload-hidden">
 				<img id="upload" class="tool-button" src="icons/upload.png" />
 			</label>
-			<img id="pencil" class="tool-button" src="icons/pencil.png" />
-			<img id="crop"   class="tool-button" src="icons/crop.png" />
-			<img id="rotate" class="tool-button" src="icons/rotate.png" />
-			<img id="levels" class="tool-button" src="icons/levels.png" />
+			<img id="pencil"   class="tool-button" src="icons/pencil.png" />
+			<img id="crop"     class="tool-button" src="icons/crop.png" />
+			<img id="rotate"   class="tool-button" src="icons/rotate.png" />
+			<img id="levels"   class="tool-button" src="icons/levels.png" />
+			<a id="download-link" download="image.png">
+				<img id="download" class="tool-button" src="icons/download.png" onClick="downloadImage()" />
+			</a>
 		</div><br><br>
+
 		<div id="rotateDiv" class="hidden">
 			<table class="slidersTable">
 				<tr>
@@ -35,6 +41,7 @@
 				</tr>
 			</table>
 		</div>
+
 		<div id="levelsDiv" class="hidden">
 			<table class="slidersTable">
 				<tr>
@@ -47,5 +54,6 @@
 				</tr>
 			</table>
 		</div>
+
 	</body>
 </html>
