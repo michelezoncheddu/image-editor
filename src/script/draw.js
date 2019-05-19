@@ -57,27 +57,17 @@ function drawImage() {
 function drawCrop() {
 	var startX = selection.x,
 		startY = selection.y,
-		currX  = currPos.x,
-		currY  = currPos.y,
+		endX   = selection.x + selection.width,
+		endY   = selection.y + selection.height,
 		width  = selection.width,
 		height = selection.height;
 	
 	// external dark filler
 	context.globalAlpha = 0.75;
-	if (currY < startY) {
-		context.fillRect(0, 0, canvas.width, currY);
-		context.fillRect(0, startY, canvas.width, canvas.height - currY);
-	} else {
-		context.fillRect(0, 0, canvas.width, startY);
-		context.fillRect(0, currY, canvas.width, canvas.height - currY);
-	}
-	if (currX < startX) {
-		context.fillRect(0, currY, currX, startY - currY);
-		context.fillRect(startX, startY, canvas.width - startX, currY - startY);
-	} else {
-		context.fillRect(0, currY, startX, startY - currY);
-		context.fillRect(currX, currY, canvas.width - startX, startY - currY);
-	}
+	context.fillRect(0, 0, canvas.width, Math.min(startY, endY)); // top wide
+	context.fillRect(0, Math.max(startY, endY), canvas.width, canvas.height); // bottom wide
+	context.fillRect(0, endY, Math.min(startX, endX), startY - endY); // left narrow
+	context.fillRect(Math.max(startX, endX), Math.min(startY, endY), canvas.width, Math.abs(startY - endY)); // right narrow
 	context.globalAlpha = 1;
 
 	// border
@@ -89,13 +79,13 @@ function drawCrop() {
 	context.lineWidth = 0.75;
 	context.beginPath();
 	context.moveTo(startX + (width / 3), startY);
-	context.lineTo(startX + (width / 3), currY);
+	context.lineTo(startX + (width / 3), endY);
 	context.moveTo(startX + (width * 2 / 3), startY);
-	context.lineTo(startX + (width * 2 / 3), currY);
+	context.lineTo(startX + (width * 2 / 3), endY);
 	context.moveTo(startX, startY + (height / 3));
-	context.lineTo(currX, startY + (height / 3));
+	context.lineTo(endX, startY + (height / 3));
 	context.moveTo(startX, startY + (height * 2 / 3));
-	context.lineTo(currX, startY + (height * 2 / 3));
+	context.lineTo(endX, startY + (height * 2 / 3));
 	context.stroke();
 }
 
