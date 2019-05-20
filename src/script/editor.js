@@ -31,6 +31,7 @@ function init() {
 	$('.tool-button').click(toolSelector);
 
 	// sliders handlers
+	document.getElementById('zoomSlider').oninput = onZoomChange;
 	document.getElementById('rotateSlider').oninput = onRotateChange;
 	document.getElementById('brightnessSlider').oninput = onBrightnessChange;
 	document.getElementById('saturationSlider').oninput = onSaturationChange;

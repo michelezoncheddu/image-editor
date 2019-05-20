@@ -3,6 +3,8 @@
 function draw() {
 	switch (currTool) {
 		case 'none':
+		case 'zoom':
+		case 'rotate':
 		drawImage();
 		break;
 
@@ -10,10 +12,6 @@ function draw() {
 		drawImage();
 		if (selection != null)
 			drawCrop();
-		break;
-
-		case 'rotate':
-		drawImage();
 		break;
 
 		case 'levels':
@@ -49,7 +47,9 @@ function drawImage() {
 		context.rotate(angleInDegrees * Math.PI / 180);
 		context.translate(-canvas.width / 2, -canvas.height / 2);
 	}
-	context.drawImage(image, (canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2, scaledWidth, scaledHeight);
+	context.drawImage(image,
+		(canvas.width - scaledWidth * zoom) / 2, (canvas.height - scaledHeight * zoom) / 2,
+		scaledWidth * zoom, scaledHeight * zoom);
 
 	context.restore();
 }

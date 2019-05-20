@@ -9,15 +9,11 @@ body {
 	border-radius: 5px;
 }
 
-#toolbar {
-	display: inline-flex;
-	padding: 0px;
+.toolbar {
+	display: inline-block;
 	border-radius: 5px;
 	background-color: #262626;
-}
-
-a, label {
-	margin-bottom: -10px;
+	font-size: 0px;
 }
 
 .slidersTable {

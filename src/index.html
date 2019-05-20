@@ -19,24 +19,37 @@
 	<body onload="init()">
 		<canvas id="editor" >Please update your browser</canvas><br><br>
 
-		<div id="toolbar">
+		<div class="toolbar">
 			<input type='file' id="upload-hidden" class="hidden" onchange="readURL(this)" />
 			<label for="upload-hidden">
 				<img id="upload" class="tool-button" src="icons/upload.png" />
 			</label>
-			<img id="pencil"   class="tool-button" src="icons/pencil.png" />
-			<img id="crop"     class="tool-button" src="icons/crop.png" />
-			<img id="rotate"   class="tool-button" src="icons/rotate.png" />
-			<img id="levels"   class="tool-button" src="icons/levels.png" />
 			<a id="download-link" download="image.png">
 				<img id="download" class="tool-button" src="icons/download.png" onClick="downloadImage()" />
 			</a>
+		</div>
+		
+		<div class="toolbar">
+			<img id="pencil"   class="tool-button" src="icons/pencil.png" />
+			<img id="zoom"     class="tool-button" src="icons/zoom.png" />
+			<img id="crop"     class="tool-button" src="icons/crop.png" />
+			<img id="rotate"   class="tool-button" src="icons/rotate.png" />
+			<img id="levels"   class="tool-button" src="icons/levels.png" />
 		</div><br><br>
+
+		<div id="zoomDiv" class="hidden">
+			<table class="slidersTable">
+				<tr>
+					<td>Zoom: <span id="zoomValue">100%</span></td>
+					<td><input type="range" id="zoomSlider" class="slider" min="1" max="200" value="100"></td>
+				</tr>
+			</table>
+		</div>
 
 		<div id="rotateDiv" class="hidden">
 			<table class="slidersTable">
 				<tr>
-					<td>Rotate: <span id="degrees">0°</span></td>
+					<td>Rotate: <span id="degreesValue">0°</span></td>
 					<td><input type="range" id="rotateSlider" class="slider" min="-180" max="180" value="0"></td>
 				</tr>
 			</table>
@@ -45,11 +58,11 @@
 		<div id="levelsDiv" class="hidden">
 			<table class="slidersTable">
 				<tr>
-					<td>Brightness: <span id="brightness">0</span></td>
+					<td>Brightness: <span id="brightnessValue">0</span></td>
 					<td><input type="range" id="brightnessSlider" class="long slider" min="0" max="100" value="50"></td>
 				</tr>
 				<tr>
-					<td>Saturation: <span id="saturation">0</span></td>
+					<td>Saturation: <span id="saturationValue">0</span></td>
 					<td><input type="range" id="saturationSlider" class="long slider" min="0" max="100" value="50"></td>
 				</tr>
 			</table>

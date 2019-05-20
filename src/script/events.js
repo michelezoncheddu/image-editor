@@ -63,23 +63,30 @@ function onMouseUp(evt) {
 	update();
 }
 
+function onZoomChange() {
+	// @ts-ignore
+	zoom = this.value / 100;
+	document.getElementById('zoomValue').innerHTML = this.value + '%';
+	update();
+}
+
 function onRotateChange() {
 	// @ts-ignore
 	angleInDegrees = this.value;
-	document.getElementById('degrees').innerHTML = angleInDegrees.toString() + '°';
+	document.getElementById('degreesValue').innerHTML = angleInDegrees.toString() + '°';
 	update();
 }
 
 function onBrightnessChange() {
 	// @ts-ignore
 	brightness = this.value;
-	document.getElementById('brightness').innerHTML = (brightness - (100 - brightness)).toString();
+	document.getElementById('brightnessValue').innerHTML = (brightness - (100 - brightness)).toString();
 	update();
 }
 
 function onSaturationChange() {
 	// @ts-ignore
 	saturation = this.value;
-	document.getElementById('saturation').innerHTML = (saturation - (100 - saturation)).toString();
+	document.getElementById('saturationValue').innerHTML = (saturation - (100 - saturation)).toString();
 	update();
 }
