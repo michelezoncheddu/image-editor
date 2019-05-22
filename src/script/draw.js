@@ -42,11 +42,9 @@ function drawImage() {
 	context.save();
 
 	// rotate context around the center
-	if (currTool == 'rotate') {
-		context.translate(canvas.width / 2, canvas.height / 2);
-		context.rotate(angleInDegrees * Math.PI / 180);
-		context.translate(-canvas.width / 2, -canvas.height / 2);
-	}
+	context.translate(canvas.width / 2, canvas.height / 2);
+	context.rotate(angleInDegrees * Math.PI / 180);
+	context.translate(-canvas.width / 2, -canvas.height / 2);
 	context.drawImage(image,
 		(canvas.width - scaledWidth * zoom) / 2, (canvas.height - scaledHeight * zoom) / 2,
 		scaledWidth * zoom, scaledHeight * zoom);

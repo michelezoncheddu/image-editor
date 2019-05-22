@@ -12,12 +12,17 @@ function getMousePos(evt) {
 }
 
 function setImageSize() {
-	var ratio = image.width / image.height;
-	scaledWidth = canvas.width;
-	scaledHeight = scaledWidth / ratio;
-	if (scaledHeight > canvas.height) {
-		scaledHeight = canvas.height;
-		scaledWidth = scaledHeight * ratio;
+	if (image.width <= canvas.width && image.height <= canvas.height) {
+		scaledWidth = image.width;
+		scaledHeight = image.height;
+	} else {
+		var ratio = image.width / image.height;
+		scaledWidth = canvas.width;
+		scaledHeight = scaledWidth / ratio;
+		if (scaledHeight > canvas.height) {
+			scaledHeight = canvas.height;
+			scaledWidth = scaledHeight * ratio;
+		}
 	}
 }
 

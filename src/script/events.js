@@ -7,10 +7,8 @@ function onMouseDown(evt) {
 	mouseDown = true;
 	currPos = getMousePos(evt);
 
-	if (currTool == 'pencil') {
+	if (currTool == 'pencil')
 		context.beginPath();
-		context.moveTo(currPos.x, currPos.y);
-	}
 
 	if (selection != null) {
 		if (selection.contains(currPos)) {
@@ -49,7 +47,7 @@ function onMouseMove(evt) {
 	}
 }
 
-function onMouseUp(evt) {
+function onMouseUp() {
 	mouseDown = false;
 	if (!inside)
 		return;
@@ -57,8 +55,30 @@ function onMouseUp(evt) {
 	if (selection != null) {
 		if (selection.dragged)
 			selection.dragged = false;
-		else
+		else {
 			selection = new Rectangle(selection.x, selection.y, currPos.x - selection.x, currPos.y - selection.y);
+
+			if (currTool == 'crop' && selection.width != 0 && selection.height != 0) {
+				var ratio = scaledWidth / image.width;
+				var rawStartX = Math.min(
+					(selection.x - (canvas.width - scaledWidth) / 2) / ratio,
+					(selection.x + selection.width - (canvas.width - scaledWidth) / 2) / ratio);
+				var rawStartY = Math.min(
+					(selection.y - (canvas.height - scaledHeight) / 2) / ratio,
+					(selection.y + selection.height - (canvas.height - scaledHeight) / 2) / ratio);
+
+				var bufferCanvas = document.createElement('canvas');
+				var bufferContext = bufferCanvas.getContext('2d');
+				bufferCanvas.width = Math.abs(selection.width) / ratio;
+				bufferCanvas.height = Math.abs(selection.height) / ratio;
+				bufferContext.drawImage(image,
+					rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
+				// @ts-ignore
+				image = bufferCanvas;
+				selection = null;
+				setImageSize();
+			}
+		}
 	}
 	update();
 }
