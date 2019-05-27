@@ -38,10 +38,20 @@ function readURL(input) {
 }
 
 function downloadImage() {
+	var bufferCanvas = document.createElement('canvas');
+	var bufferContext = bufferCanvas.getContext('2d');
+	bufferCanvas.width = image.width;
+	bufferCanvas.height = image.height;
+
+	bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
+	bufferContext.rotate(angleInDegrees * Math.PI / 180);
+	bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
+	bufferContext.drawImage(image, 0, 0, image.width, image.height);
+	
+	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 	var download = document.getElementById("download-link");
-	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 	// @ts-ignore
-	download.href = image;
+	download.href = imageData;
 }
 
 // @ts-ignore
