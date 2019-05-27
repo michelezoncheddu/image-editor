@@ -71,12 +71,20 @@ function onMouseUp() {
 				var bufferContext = bufferCanvas.getContext('2d');
 				bufferCanvas.width = Math.abs(selection.width) / ratio;
 				bufferCanvas.height = Math.abs(selection.height) / ratio;
+
+				bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
+				bufferContext.rotate(angleInDegrees * Math.PI / 180);
+				bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
 				bufferContext.drawImage(image,
 					rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
+				
 				// @ts-ignore
 				image = bufferCanvas;
 				selection = null;
 				setImageSize();
+
+				angleInDegrees = 0;
+				$('#rotateSlider').val(angleInDegrees);
 			}
 		}
 	}
