@@ -7,8 +7,6 @@ function init() {
 	canvas.width = window.innerWidth * 0.7;
 	canvasBorder = canvas.getBoundingClientRect();
 
-	$('#toolbar').css('top', canvas.height + (canvas.height / 20));
-
 	context = canvas.getContext('2d');
 	context.imageSmoothingQuality = 'high';
 	context.imageSmoothingEnabled = true;
@@ -52,9 +50,9 @@ function init() {
 
 function toolSelector() {
 	var lastTool = currTool;
+	var tools = document.getElementsByClassName('tool-button');
 	if ($(this).prop('id') == 'upload' || $(this).prop('id') == 'download') {
 		// deselect other tools
-		var tools = document.getElementsByClassName('tool-button');
 		for (var i = 0; i < tools.length; i++)
 			if (tools[i].classList.contains('active'))
 				tools[i].classList.remove('active');
@@ -65,7 +63,6 @@ function toolSelector() {
 		currTool = 'none';
 	}
 	else { // user selected an another tool
-		var tools = document.getElementsByClassName('tool-button');
 		for (var i = 0; i < tools.length; i++) { // disable the current tool
 			if (tools[i].classList.contains('active')) {
 				tools[i].classList.remove('active');

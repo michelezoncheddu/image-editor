@@ -58,23 +58,21 @@ function onMouseUp() {
 		else {
 			selection = new Rectangle(selection.x, selection.y, currPos.x - selection.x, currPos.y - selection.y);
 
+			// CROP TEST
 			if (currTool == 'crop' && selection.width != 0 && selection.height != 0) {
-				var ratio = scaledWidth / image.width;
+				var scaleRatio = scaledWidth / image.width;
 				var rawStartX = Math.min(
-					(selection.x - (canvas.width - scaledWidth) / 2) / ratio,
-					(selection.x + selection.width - (canvas.width - scaledWidth) / 2) / ratio);
+					(selection.x - (canvas.width - scaledWidth) / 2) / scaleRatio,
+					(selection.x + selection.width - (canvas.width - scaledWidth) / 2) / scaleRatio);
 				var rawStartY = Math.min(
-					(selection.y - (canvas.height - scaledHeight) / 2) / ratio,
-					(selection.y + selection.height - (canvas.height - scaledHeight) / 2) / ratio);
+					(selection.y - (canvas.height - scaledHeight) / 2) / scaleRatio,
+					(selection.y + selection.height - (canvas.height - scaledHeight) / 2) / scaleRatio);
 
 				var bufferCanvas = document.createElement('canvas');
 				var bufferContext = bufferCanvas.getContext('2d');
-				bufferCanvas.width = Math.abs(selection.width) / ratio;
-				bufferCanvas.height = Math.abs(selection.height) / ratio;
+				bufferCanvas.width = Math.abs(selection.width) / scaleRatio;
+				bufferCanvas.height = Math.abs(selection.height) / scaleRatio;
 
-				bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
-				bufferContext.rotate(angleInDegrees * Math.PI / 180);
-				bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
 				bufferContext.drawImage(image,
 					rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
 				
@@ -83,8 +81,8 @@ function onMouseUp() {
 				selection = null;
 				setImageSize();
 
-				angleInDegrees = 0;
-				$('#rotateSlider').val(angleInDegrees);
+				// angleInDegrees = 0;
+				// $('#rotateSlider').val(angleInDegrees);
 			}
 		}
 	}
@@ -102,6 +100,18 @@ function onRotateChange() {
 	// @ts-ignore
 	angleInDegrees = this.value;
 	document.getElementById('degreesValue').innerHTML = angleInDegrees.toString() + '°';
+
+	var x = (canvas.width - scaledWidth) / 2;
+	var y = (canvas.height - scaledHeight) / 2;
+	var point = [x, y];
+	var pivot = [canvas.width / 2, canvas.height / 2];
+	point = rotatePoint(pivot, point, degToRad(angleInDegrees));
+	var deltaY = point[1] - y;
+	if (deltaY < 0) { // out of canvas
+		scaledHeight += point[1];
+		scaledWidth += point[1] * ratio;
+	}
+
 	update();
 }
 

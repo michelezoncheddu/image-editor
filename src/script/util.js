@@ -16,7 +16,7 @@ function setImageSize() {
 		scaledWidth = image.width;
 		scaledHeight = image.height;
 	} else {
-		var ratio = image.width / image.height;
+		ratio = image.width / image.height;
 		scaledWidth = canvas.width;
 		scaledHeight = scaledWidth / ratio;
 		if (scaledHeight > canvas.height) {
@@ -58,3 +58,18 @@ function downloadImage() {
 Number.prototype.between = function(a, b) {
 	return this >= Math.min(a, b) && this <= Math.max(a, b);
 };
+
+function rotatePoint(pivot, point, angle) {
+	// Rotate clockwise, angle in radians
+	var x = Math.round((Math.cos(angle) * (point[0] - pivot[0])) -
+					   (Math.sin(angle) * (point[1] - pivot[1])) +
+					   pivot[0]),
+		y = Math.round((Math.sin(angle) * (point[0] - pivot[0])) +
+					   (Math.cos(angle) * (point[1] - pivot[1])) +
+					   pivot[1]);
+	return [x, y];
+};
+
+function degToRad(deg) {
+	return deg * Math.PI / 180;
+}

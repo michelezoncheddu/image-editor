@@ -106,8 +106,6 @@ function drawFilters() {
 
 	// draw filter layer
 	context.fillRect(startX, startY, width, height);
-	
-	context.globalCompositeOperation = 'source-over';
 
 	context.restore();
 }

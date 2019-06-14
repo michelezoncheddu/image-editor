@@ -8,6 +8,7 @@ context,
 inside,
 
 scaledWidth, scaledHeight,
+ratio,
 zoom = 1,
 
 angleInDegrees = 0,
