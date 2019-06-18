@@ -103,14 +103,45 @@ function onRotateChange() {
 
 	var x = (canvas.width - scaledWidth) / 2;
 	var y = (canvas.height - scaledHeight) / 2;
-	var point = [x, y];
+	var bottomLeft = [x, scaledHeight + y];
+	var topLeft = [x, y];
+	var topRight = [scaledWidth + x, y];
+
 	var pivot = [canvas.width / 2, canvas.height / 2];
-	point = rotatePoint(pivot, point, degToRad(angleInDegrees));
-	var deltaY = point[1] - y;
-	if (deltaY < 0) { // out of canvas
-		scaledHeight += point[1];
-		scaledWidth += point[1] * ratio;
+
+	var angle = Math.abs(angleInDegrees) < 90 ? degToRad(angleInDegrees) : degToRad(180 - angleInDegrees);
+
+	var bottomLeftRot = rotatePoint(pivot, bottomLeft, angle);
+	var topLeftRot = rotatePoint(pivot, topLeft, angle);
+	var topRightRot = rotatePoint(pivot, topRight, angle);
+
+	var deltaX = Math.min(bottomLeftRot[0], topLeftRot[0]);
+	var deltaY = Math.min(topLeftRot[1], topRightRot[1]);
+
+	if (deltaX < deltaY) {
+		scaledHeight += deltaX;
+		scaledWidth += (deltaX) * ratio;
+	} else {
+		scaledHeight += deltaY;
+		scaledWidth += (deltaY) * ratio;
 	}
+
+
+	// TO EXPORT
+
+	// var fullWidth = Math.abs(scaledWidth * Math.sin(degToRad(90 - angleInDegrees))) +
+	// 	Math.abs(scaledHeight * Math.sin(degToRad(angleInDegrees)));
+	// var fullHeight = Math.abs(scaledHeight * Math.sin(degToRad(90 - angleInDegrees))) +
+	// 	Math.abs(scaledWidth * Math.sin(degToRad(angleInDegrees)));
+	// canvas.width = fullWidth;
+	// canvas.height = fullHeight;
+
+	// TEST
+	// var w = canvas.width, h = canvas.height, alpha = degToRad(angleInDegrees);
+	// var zoom = Math.sqrt(Math.pow(w, 2) + Math.pow(h, 2)) * 
+	// 	Math.max(
+	// 		(Math.abs(Math.cos(Math.atan(w / h) - alpha))) / h, 
+	// 		(Math.abs(Math.cos(Math.atan(h / w) - alpha))) / w);
 
 	update();
 }
