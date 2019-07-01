@@ -118,30 +118,22 @@ function onRotateChange() {
 	var deltaX = Math.min(bottomLeftRot[0], topLeftRot[0]);
 	var deltaY = Math.min(topLeftRot[1], topRightRot[1]);
 
-	if (deltaX < deltaY) {
-		scaledHeight += deltaX;
-		scaledWidth += (deltaX) * ratio;
-	} else {
-		scaledHeight += deltaY;
-		scaledWidth += (deltaY) * ratio;
+	/** 
+	 * Change the scaled resolution if:
+	 * - the full res image is bigger than the canvas (resized == true) OR
+	 * - the full res image is smaller than the canvas but:
+	 *   - the rotated image is overhanging the canvas (delta < 0) and needs to be scaled down OR
+	 *   - the rotated image needs to scale up to the original size (delta > 0), but not bigger
+	 */
+	if (resized || (deltaY < 0 || deltaX < 0 || scaledHeight + deltaY <= image.height || scaledWidth + deltaX <= image.width)) {
+		if (deltaX < deltaY) {
+			scaledHeight += deltaX;
+			scaledWidth += (deltaX) * ratio;
+		} else {
+			scaledHeight += deltaY;
+			scaledWidth += (deltaY) * ratio;
+		}
 	}
-
-
-	// TO EXPORT
-
-	// var fullWidth = Math.abs(scaledWidth * Math.sin(degToRad(90 - angleInDegrees))) +
-	// 	Math.abs(scaledHeight * Math.sin(degToRad(angleInDegrees)));
-	// var fullHeight = Math.abs(scaledHeight * Math.sin(degToRad(90 - angleInDegrees))) +
-	// 	Math.abs(scaledWidth * Math.sin(degToRad(angleInDegrees)));
-	// canvas.width = fullWidth;
-	// canvas.height = fullHeight;
-
-	// TEST
-	// var w = canvas.width, h = canvas.height, alpha = degToRad(angleInDegrees);
-	// var zoom = Math.sqrt(Math.pow(w, 2) + Math.pow(h, 2)) * 
-	// 	Math.max(
-	// 		(Math.abs(Math.cos(Math.atan(w / h) - alpha))) / h, 
-	// 		(Math.abs(Math.cos(Math.atan(h / w) - alpha))) / w);
 
 	update();
 }

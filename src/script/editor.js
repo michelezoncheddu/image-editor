@@ -42,7 +42,7 @@ function init() {
 	});
 
 	// TEST
-	image.src = 'test_images/test_2.jpg';
+	image.src = 'test_images/merda.jpg';
 
 	// first draw
 	update();

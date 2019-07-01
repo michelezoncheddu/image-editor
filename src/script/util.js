@@ -12,11 +12,13 @@ function getMousePos(evt) {
 }
 
 function setImageSize() {
+	ratio = image.width / image.height;
 	if (image.width <= canvas.width && image.height <= canvas.height) {
+		resized = false;
 		scaledWidth = image.width;
 		scaledHeight = image.height;
 	} else {
-		ratio = image.width / image.height;
+		resized = true;
 		scaledWidth = canvas.width;
 		scaledHeight = scaledWidth / ratio;
 		if (scaledHeight > canvas.height) {
@@ -40,13 +42,22 @@ function readURL(input) {
 function downloadImage() {
 	var bufferCanvas = document.createElement('canvas');
 	var bufferContext = bufferCanvas.getContext('2d');
-	bufferCanvas.width = image.width;
-	bufferCanvas.height = image.height;
 
+	var fullWidth = Math.abs(image.width * Math.sin(degToRad(90 - angleInDegrees))) +
+		Math.abs(image.height * Math.sin(degToRad(angleInDegrees)));
+	var fullHeight = Math.abs(image.height * Math.sin(degToRad(90 - angleInDegrees))) +
+		Math.abs(image.width * Math.sin(degToRad(angleInDegrees)));
+
+	bufferCanvas.width = fullWidth;
+	bufferCanvas.height = fullHeight;
+
+	// TODO: zoom
 	bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
 	bufferContext.rotate(angleInDegrees * Math.PI / 180);
 	bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
-	bufferContext.drawImage(image, 0, 0, image.width, image.height);
+	bufferContext.drawImage(image,
+		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
+		image.width, image.height);
 	
 	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 	var download = document.getElementById("download-link");
