@@ -1,9 +1,15 @@
 'use strict';
 
+/**
+ * Draws the whole canvas
+ */
 function update() {
 	requestAnimationFrame(draw);
 }
 
+/**
+ * Returns the mouse position relative to the canvas
+ */
 function getMousePos(evt) {
 	return {
 		x: evt.clientX - canvasBorder.left,
@@ -11,7 +17,10 @@ function getMousePos(evt) {
 	};
 }
 
-function setImageSize() {
+/**
+ * Calculates the scaled image size to fit in the canvas
+ */
+function setScaledSize() {
 	ratio = image.width / image.height;
 	if (image.width <= canvas.width && image.height <= canvas.height) {
 		scaled = false;
@@ -28,10 +37,13 @@ function setImageSize() {
 	}
 }
 
-function readURL(input) {
-	if (input.files && input.files[0]) {
+/**
+ * Uploads the new photo to edit
+ */
+function loadFile(input) {
+	if (input.files && input.files[0]) { // TODO: check if input is an image file
 		image = new Image();
-		image.onload = () => (setImageSize(), update());
+		image.onload = () => (setScaledSize(), update());
 
 		var reader = new FileReader();
 		reader.onload = function(e) {
@@ -42,6 +54,9 @@ function readURL(input) {
 	}
 }
 
+/**
+ * Downloads the full-resolution edited image
+ */
 function downloadImage() {
 	var bufferCanvas = document.createElement('canvas');
 	var bufferContext = bufferCanvas.getContext('2d');
@@ -80,11 +95,17 @@ function downloadImage() {
 	download.href = imageData;
 }
 
+/**
+ * Checks if a number is in the range [a, b]
+ */
 // @ts-ignore
 Number.prototype.between = function(a, b) {
 	return this >= Math.min(a, b) && this <= Math.max(a, b);
 };
 
+/**
+ * Returns the coordinates of a point rotated around a pivot
+ */
 function rotatePoint(pivot, point, angle) {
 	// Rotate clockwise, angle in radians
 	var xRot = Math.round((Math.cos(angle) * (point.x - pivot.x)) -
@@ -96,6 +117,9 @@ function rotatePoint(pivot, point, angle) {
 	return {x: xRot, y: yRot};
 };
 
+/**
+ * Converts a degrees angle to radians
+ */
 function degToRad(deg) {
 	return deg * Math.PI / 180;
 }

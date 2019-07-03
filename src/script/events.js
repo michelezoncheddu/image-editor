@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Handles the mouse down event
+ */
 function onMouseDown(evt) {
 	if (!inside) // click outside the canvas
 		return;
@@ -27,6 +30,9 @@ function onMouseDown(evt) {
 	update();
 }
 
+/**
+ * Handles the mouse move event
+ */
 function onMouseMove(evt) {
 	if (mouseDown) {
 		currPos = getMousePos(evt);
@@ -43,6 +49,9 @@ function onMouseMove(evt) {
 	}
 }
 
+/**
+ * Handles the mouse up event
+ */
 function onMouseUp() {
 	mouseDown = false;
 	if (!inside)
@@ -75,7 +84,7 @@ function onMouseUp() {
 				// @ts-ignore
 				image = bufferCanvas;
 				selection = null;
-				setImageSize();
+				setScaledSize();
 			}
 		}
 	}
@@ -90,6 +99,9 @@ function onTouchStart(evt) {
 	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
 }
 
+/**
+ * Handles the zoom change event
+ */
 function onZoomChange() {
 	// @ts-ignore
 	zoom = this.value / 100;
@@ -97,6 +109,9 @@ function onZoomChange() {
 	update();
 }
 
+/**
+ * Handles the rotate change event
+ */
 function onRotateChange() {
 	// @ts-ignore
 	angleInDegrees = this.value;
@@ -150,6 +165,9 @@ function onRotateChange() {
 	update();
 }
 
+/**
+ * Handles the brightness change event
+ */
 function onBrightnessChange() {
 	// @ts-ignore
 	brightness = this.value;
@@ -157,6 +175,9 @@ function onBrightnessChange() {
 	update();
 }
 
+/**
+ * Handles the saturation change event
+ */
 function onSaturationChange() {
 	// @ts-ignore
 	saturation = this.value;

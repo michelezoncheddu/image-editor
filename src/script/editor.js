@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Initializes the editor state
+ */
 function init() {
 	// @ts-ignore
 	canvas = document.getElementById('editor');
@@ -41,7 +44,7 @@ function init() {
 	});
 
 	// TEST
-	image.onload = () => (setImageSize(), update());
+	image.onload = () => (setScaledSize(), update());
 	image.src = 'test_images/merda.jpg';
 
 	// first draw
