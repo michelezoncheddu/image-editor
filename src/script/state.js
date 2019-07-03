@@ -9,7 +9,7 @@ inside,
 
 scaledWidth, scaledHeight,
 ratio,
-resized,
+scaled,
 zoom = 1,
 
 angleInDegrees = 0,

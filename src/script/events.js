@@ -80,9 +80,6 @@ function onMouseUp() {
 				image = bufferCanvas;
 				selection = null;
 				setImageSize();
-
-				// angleInDegrees = 0;
-				// $('#rotateSlider').val(angleInDegrees);
 			}
 		}
 	}
@@ -120,12 +117,12 @@ function onRotateChange() {
 
 	/** 
 	 * Change the scaled resolution if:
-	 * - the full res image is bigger than the canvas (resized == true) OR
+	 * - the full res image is bigger than the canvas (scaled == true) OR
 	 * - the full res image is smaller than the canvas but:
 	 *   - the rotated image is overhanging the canvas (delta < 0) and needs to be scaled down OR
 	 *   - the rotated image needs to scale up to the original size (delta > 0), but not bigger
 	 */
-	if (resized || (deltaY < 0 || deltaX < 0 || scaledHeight + deltaY <= image.height || scaledWidth + deltaX <= image.width)) {
+	if (scaled || (deltaY < 0 || deltaX < 0 || scaledHeight + deltaY <= image.height || scaledWidth + deltaX <= image.width)) {
 		if (deltaX < deltaY) {
 			scaledHeight += deltaX;
 			scaledWidth += (deltaX) * ratio;

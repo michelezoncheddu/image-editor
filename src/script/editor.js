@@ -14,7 +14,6 @@ function init() {
 	context.fillStyle = '#262626'; // background color
 
 	// event handlers
-	image.onload = () => (setImageSize(), update());
 	document.addEventListener('mousedown', onMouseDown);
 	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
@@ -42,6 +41,7 @@ function init() {
 	});
 
 	// TEST
+	image.onload = () => (setImageSize(), update());
 	image.src = 'test_images/merda.jpg';
 
 	// first draw

@@ -14,11 +14,11 @@ function getMousePos(evt) {
 function setImageSize() {
 	ratio = image.width / image.height;
 	if (image.width <= canvas.width && image.height <= canvas.height) {
-		resized = false;
+		scaled = false;
 		scaledWidth = image.width;
 		scaledHeight = image.height;
 	} else {
-		resized = true;
+		scaled = true;
 		scaledWidth = canvas.width;
 		scaledHeight = scaledWidth / ratio;
 		if (scaledHeight > canvas.height) {
@@ -30,6 +30,9 @@ function setImageSize() {
 
 function readURL(input) {
 	if (input.files && input.files[0]) {
+		image = new Image();
+		image.onload = () => (setImageSize(), update());
+
 		var reader = new FileReader();
 		reader.onload = function(e) {
 			// @ts-ignore
@@ -51,7 +54,6 @@ function downloadImage() {
 	bufferCanvas.width = fullWidth;
 	bufferCanvas.height = fullHeight;
 
-	// TODO: zoom
 	bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
 	bufferContext.rotate(angleInDegrees * Math.PI / 180);
 	bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
@@ -59,6 +61,15 @@ function downloadImage() {
 		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
 		image.width, image.height);
 	
+	// TEST
+	if (selection != null) {
+		bufferContext.globalCompositeOperation = 'saturation';
+		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
+		bufferContext.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
+		// draw filter layer
+		// bufferContext.fillRect(startX, startY, width, height);
+	}
+
 	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 	var download = document.getElementById("download-link");
 	// @ts-ignore

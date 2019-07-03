@@ -45,9 +45,15 @@ function drawImage() {
 	context.translate(canvas.width / 2, canvas.height / 2);
 	context.rotate(angleInDegrees * Math.PI / 180);
 	context.translate(-canvas.width / 2, -canvas.height / 2);
-	context.drawImage(image,
-		(canvas.width - scaledWidth * zoom) / 2, (canvas.height - scaledHeight * zoom) / 2,
-		scaledWidth * zoom, scaledHeight * zoom);
+	if (currTool == 'zoom') {
+		context.drawImage(image,
+			(canvas.width - scaledWidth * zoom) / 2, (canvas.height - scaledHeight * zoom) / 2,
+			scaledWidth * zoom, scaledHeight * zoom);
+	} else {
+		context.drawImage(image,
+			(canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2,
+			scaledWidth, scaledHeight);
+	}
 
 	context.restore();
 }
