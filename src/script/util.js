@@ -87,13 +87,13 @@ Number.prototype.between = function(a, b) {
 
 function rotatePoint(pivot, point, angle) {
 	// Rotate clockwise, angle in radians
-	var x = Math.round((Math.cos(angle) * (point[0] - pivot[0])) -
-					   (Math.sin(angle) * (point[1] - pivot[1])) +
-					   pivot[0]),
-		y = Math.round((Math.sin(angle) * (point[0] - pivot[0])) +
-					   (Math.cos(angle) * (point[1] - pivot[1])) +
-					   pivot[1]);
-	return [x, y];
+	var xRot = Math.round((Math.cos(angle) * (point.x - pivot.x)) -
+					   (Math.sin(angle) * (point.y - pivot.y)) +
+					   pivot.x),
+		yRot = Math.round((Math.sin(angle) * (point.x - pivot.x)) +
+					   (Math.cos(angle) * (point.y - pivot.y)) +
+					   pivot.y);
+	return {x: xRot, y: yRot};
 };
 
 function degToRad(deg) {

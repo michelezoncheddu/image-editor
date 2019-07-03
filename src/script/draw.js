@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Chooses what to draw according to the current tool
+ */
 function draw() {
 	switch (currTool) {
 		case 'none':
@@ -36,8 +39,10 @@ function draw() {
 	}
 }
 
+/**
+ * Draws the image (wow!)
+ */
 function drawImage() {
-	var context = canvas.getContext('2d');
 	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 	context.save();
 
@@ -45,7 +50,7 @@ function drawImage() {
 	context.translate(canvas.width / 2, canvas.height / 2);
 	context.rotate(angleInDegrees * Math.PI / 180);
 	context.translate(-canvas.width / 2, -canvas.height / 2);
-	if (currTool == 'zoom') {
+	if (currTool == 'zoom') { // TODO: dedicate function to zoomed image
 		context.drawImage(image,
 			(canvas.width - scaledWidth * zoom) / 2, (canvas.height - scaledHeight * zoom) / 2,
 			scaledWidth * zoom, scaledHeight * zoom);
@@ -58,6 +63,9 @@ function drawImage() {
 	context.restore();
 }
 
+/**
+ * Draws the crop selection
+ */
 function drawCrop() {
 	var startX = selection.x,
 		startY = selection.y,
@@ -66,7 +74,7 @@ function drawCrop() {
 		width  = selection.width,
 		height = selection.height;
 	
-	// external dark filler
+	// external opaque filler
 	context.globalAlpha = 0.75;
 	context.fillRect(0, 0, canvas.width, Math.min(startY, endY)); // top wide
 	context.fillRect(0, Math.max(startY, endY), canvas.width, canvas.height); // bottom wide
@@ -74,12 +82,12 @@ function drawCrop() {
 	context.fillRect(Math.max(startX, endX), Math.min(startY, endY), canvas.width, Math.abs(startY - endY)); // right narrow
 	context.globalAlpha = 1;
 
-	// border
+	// selection border
 	context.strokeStyle = '#FFFFFF';
 	context.lineWidth = 1;
 	context.strokeRect(startX, startY, width, height);
 
-	// lines
+	// rule of thirds
 	context.lineWidth = 0.75;
 	context.beginPath();
 	context.moveTo(startX + (width / 3), startY);
@@ -93,6 +101,9 @@ function drawCrop() {
 	context.stroke();
 }
 
+/**
+ * Draws the filter levels on the image
+ */
 function drawFilters() {
 	var startX = selection.x,
 		startY = selection.y,

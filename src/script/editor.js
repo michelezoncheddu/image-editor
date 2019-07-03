@@ -48,6 +48,9 @@ function init() {
 	update();
 }
 
+/**
+ * Detects the selected tool and enables its related button
+ */
 function toolSelector() {
 	var lastTool = currTool;
 	var tools = document.getElementsByClassName('tool-button');
@@ -62,7 +65,7 @@ function toolSelector() {
 		$(this).removeClass('active');
 		currTool = 'none';
 	}
-	else { // user selected an another tool
+	else { // user selected an other tool
 		for (var i = 0; i < tools.length; i++) { // disable the current tool
 			if (tools[i].classList.contains('active')) {
 				tools[i].classList.remove('active');
@@ -72,11 +75,13 @@ function toolSelector() {
 		$(this).addClass('active');
 		currTool = $(this).attr('id');
 	}
-	selection = null;
-	drawImage();
 	updateWindow(lastTool);
+	update();
 }
 
+/**
+ * Shows the correct tool controls in the web page
+ */
 function updateWindow(lastTool) {
 	if (lastTool != 'none') { // there's something to hide
 		var tool = document.getElementById(lastTool + 'Div');

@@ -1,34 +1,30 @@
 'use strict';
 
 function onMouseDown(evt) {
-	if (!inside)
+	if (!inside) // click outside the canvas
 		return;
 
 	mouseDown = true;
 	currPos = getMousePos(evt);
 
+	// PENCIL TEST
 	if (currTool == 'pencil')
 		context.beginPath();
 
 	if (selection != null) {
-		if (selection.contains(currPos)) {
+		if (selection.contains(currPos)) { // dragging selection
 			selection.dragged = true;
 			selection.deltaX = currPos.x - selection.x;
 			selection.deltaY = currPos.y - selection.y;
 		}
-		else {
+		else { // selection deselected
 			selection = null;
 		}
-	} else {
+	} else { // new selection
 		selection = new Rectangle(currPos.x, currPos.y, 0, 0);
 	}
 
 	update();
-}
-
-function onTouchStart(evt) {
-	var touches = evt.changedTouches;
-	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
 }
 
 function onMouseMove(evt) {
@@ -86,6 +82,14 @@ function onMouseUp() {
 	update();
 }
 
+/**
+ * TEST: touch support
+ */
+function onTouchStart(evt) {
+	var touches = evt.changedTouches;
+	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
+}
+
 function onZoomChange() {
 	// @ts-ignore
 	zoom = this.value / 100;
@@ -98,13 +102,23 @@ function onRotateChange() {
 	angleInDegrees = this.value;
 	document.getElementById('degreesValue').innerHTML = angleInDegrees.toString() + '°';
 
-	var x = (canvas.width - scaledWidth) / 2;
-	var y = (canvas.height - scaledHeight) / 2;
-	var bottomLeft = [x, scaledHeight + y];
-	var topLeft = [x, y];
-	var topRight = [scaledWidth + x, y];
-
-	var pivot = [canvas.width / 2, canvas.height / 2];
+	// coordinates of 3 vertices to detect the overhang, and the pivot to rotate around the center
+	var topLeft = {
+		x: (canvas.width - scaledWidth) / 2,
+		y: (canvas.height - scaledHeight) / 2
+	};
+	var bottomLeft = {
+		x: topLeft.x,
+		y: scaledHeight + topLeft.y
+	};
+	var topRight = {
+		x: scaledWidth + topLeft.x,
+		y: topLeft.y
+	};
+	var pivot = {
+		x: canvas.width / 2,
+		y: canvas.height / 2
+	};
 
 	var angle = Math.abs(angleInDegrees) < 90 ? degToRad(angleInDegrees) : degToRad(180 - angleInDegrees);
 
@@ -112,8 +126,9 @@ function onRotateChange() {
 	var topLeftRot = rotatePoint(pivot, topLeft, angle);
 	var topRightRot = rotatePoint(pivot, topRight, angle);
 
-	var deltaX = Math.min(bottomLeftRot[0], topLeftRot[0]);
-	var deltaY = Math.min(topLeftRot[1], topRightRot[1]);
+	// saves the further vertex in x and y axis
+	var deltaX = Math.min(bottomLeftRot.x, topLeftRot.x);
+	var deltaY = Math.min(topLeftRot.y, topRightRot.y);
 
 	/** 
 	 * Change the scaled resolution if:
