@@ -60,18 +60,18 @@ function onMouseUp() {
 
 			// CROP TEST
 			if (currTool == 'crop' && selection.width != 0 && selection.height != 0) {
-				var scaleRatio = scaledWidth / image.width;
+				var scaleRatio = image.width / scaledWidth;
 				var rawStartX = Math.min(
-					(selection.x - (canvas.width - scaledWidth) / 2) / scaleRatio,
-					(selection.x + selection.width - (canvas.width - scaledWidth) / 2) / scaleRatio);
+					(selection.x - (canvas.width - scaledWidth) / 2) * scaleRatio,
+					(selection.x + selection.width - (canvas.width - scaledWidth) / 2) * scaleRatio);
 				var rawStartY = Math.min(
-					(selection.y - (canvas.height - scaledHeight) / 2) / scaleRatio,
-					(selection.y + selection.height - (canvas.height - scaledHeight) / 2) / scaleRatio);
+					(selection.y - (canvas.height - scaledHeight) / 2) * scaleRatio,
+					(selection.y + selection.height - (canvas.height - scaledHeight) / 2) * scaleRatio);
 
 				var bufferCanvas = document.createElement('canvas');
 				var bufferContext = bufferCanvas.getContext('2d');
-				bufferCanvas.width = Math.abs(selection.width) / scaleRatio;
-				bufferCanvas.height = Math.abs(selection.height) / scaleRatio;
+				bufferCanvas.width = Math.abs(selection.width) * scaleRatio;
+				bufferCanvas.height = Math.abs(selection.height) * scaleRatio;
 
 				bufferContext.drawImage(image,
 					rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);

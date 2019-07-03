@@ -61,13 +61,17 @@ function downloadImage() {
 		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
 		image.width, image.height);
 	
-	// TEST
+	// TEST: filters
 	if (selection != null) {
+		var marginX = canvas.width - scaledWidth;
+		var marginY = canvas.height - scaledHeight;
+		var scaleRatio = image.width / scaledWidth;
 		bufferContext.globalCompositeOperation = 'saturation';
 		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
 		bufferContext.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
 		// draw filter layer
-		// bufferContext.fillRect(startX, startY, width, height);
+		bufferContext.fillRect((selection.x - marginX / 2) * scaleRatio, (selection.y - marginY / 2) * scaleRatio,
+			selection.width * scaleRatio, selection.height * scaleRatio);
 	}
 
 	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
