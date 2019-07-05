@@ -14,6 +14,8 @@ body {
 	border-radius: 5px;
 	background-color: #262626;
 	font-size: 0px;
+	margin-left: 3px;
+	margin-right: 3px;
 }
 
 .slidersTable {
@@ -28,8 +30,12 @@ body {
 	padding: 5px 0px;
 }
 
-.slidersTable td:nth-child(1) {
+.slidersTable td:first-child {
 	width: 20%;
+}
+
+.slidersTable td:last-child {
+	padding-right: 3%;
 }
 
 .tool-button {
@@ -54,7 +60,7 @@ body {
 	filter: invert(100%);
 }
 
-.active {
+.selected {
 	filter: invert(0%) !important;
 	background-color: #CCCCCC;
 }

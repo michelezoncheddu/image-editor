@@ -60,22 +60,22 @@ function toolSelector() {
 	if ($(this).prop('id') == 'upload' || $(this).prop('id') == 'download') {
 		// deselect other tools
 		for (var i = 0; i < tools.length; i++)
-			if (tools[i].classList.contains('active'))
-				tools[i].classList.remove('active');
+			if (tools[i].classList.contains('selected'))
+				tools[i].classList.remove('selected');
 		currTool = 'none';
 	}
-	else if ($(this).hasClass('active')) { // user deselected the current tool
-		$(this).removeClass('active');
+	else if ($(this).hasClass('selected')) { // user deselected the current tool
+		$(this).removeClass('selected');
 		currTool = 'none';
 	}
 	else { // user selected an other tool
 		for (var i = 0; i < tools.length; i++) { // disable the current tool
-			if (tools[i].classList.contains('active')) {
-				tools[i].classList.remove('active');
+			if (tools[i].classList.contains('selected')) {
+				tools[i].classList.remove('selected');
 				break;
 			}
 		}
-		$(this).addClass('active');
+		$(this).addClass('selected');
 		currTool = $(this).attr('id');
 	}
 	updateWindow(lastTool);
