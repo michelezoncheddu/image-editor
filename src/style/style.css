@@ -33,19 +33,30 @@ body {
 }
 
 .tool-button {
-	width: 32px;
-	height: 32px;
+	width: 30px;
+	height: 30px;
 	padding: 10px;
 	transition: 0.3s all;
+	filter: invert(80%);
+}
+
+.tool-button:first-child {
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+}
+
+.tool-button:last-child {
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.tool-button:hover {
 	filter: invert(100%);
 }
 
-.tool-button:hover, .active {
-	background-color: #AAAAAA;
-}
-
-.tool-button:active {
-	filter: invert(0%);
+.active {
+	filter: invert(0%) !important;
+	background-color: #CCCCCC;
 }
 
 .slider {
@@ -53,7 +64,7 @@ body {
 	vertical-align: middle;
 	width: 100%;
     height: 2px;
-    background-color: #dedede;
+    background-color: #DEDEDE;
 	background-image: linear-gradient(90deg, red 0%, red 100%, transparent 100%);
     background-size: 50% 100%;
     background-repeat: no-repeat;
@@ -69,7 +80,7 @@ body {
 	border-radius: 50%;
 	background: white;
 	cursor: ew-resize;
-    box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+    box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.1);
 }
 
 .hidden {
