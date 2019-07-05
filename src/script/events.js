@@ -82,7 +82,6 @@ function onMouseUp() {
 				bufferContext.drawImage(image,
 					rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
 				
-				// @ts-ignore
 				image = bufferCanvas;
 				selection = null;
 				setScaledSize();
@@ -104,9 +103,8 @@ function onTouchStart(evt) {
  * Handles the zoom change event
  */
 function onZoomChange() {
-	// @ts-ignore
 	zoom = this.value / 100;
-	document.getElementById('zoomValue').innerHTML = this.value + '%';
+	$('#zoomValue').html(this.value + '%');
 	update();
 }
 
@@ -114,9 +112,8 @@ function onZoomChange() {
  * Handles the rotate change event
  */
 function onRotateChange() {
-	// @ts-ignore
 	angleInDegrees = this.value;
-	document.getElementById('degreesValue').innerHTML = angleInDegrees.toString() + '°';
+	$('#degreesValue').html(angleInDegrees.toString() + '°');
 
 	// coordinates of 3 vertices to detect the overhang, and the pivot to rotate around the center
 	var topLeft = {
@@ -170,9 +167,8 @@ function onRotateChange() {
  * Handles the brightness change event
  */
 function onBrightnessChange() {
-	// @ts-ignore
 	brightness = this.value;
-	document.getElementById('brightnessValue').innerHTML = (brightness - (100 - brightness)).toString();
+	$('#brightnessValue').html((brightness - (100 - brightness)).toString());
 	update();
 }
 
@@ -180,19 +176,26 @@ function onBrightnessChange() {
  * Handles the saturation change event
  */
 function onSaturationChange() {
-	// @ts-ignore
 	saturation = this.value;
-	document.getElementById('saturationValue').innerHTML = (saturation - (100 - saturation)).toString();
+	$('#saturationValue').html((saturation - (100 - saturation)).toString());
 	update();
 }
 
 /**
  * Detects the key pressing
  */
-function keyPress(evt) {
+function onKeyDown(evt) {
 	if (evt.ctrlKey && evt.keyCode == 90) { // ctrl-z
 		image = lastImage;
 		setScaledSize();
 		update();
 	}
+}
+
+/**
+ * Changes the slider background to follow the thumb
+ */
+function onSliderChange(evt) {
+	var min = evt.target.min, max = evt.target.max, val = evt.target.value;
+	$(evt.target).css('background-size', (val - min) * 100 / (max - min) + '% 100%');
 }

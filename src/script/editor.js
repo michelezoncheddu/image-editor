@@ -4,8 +4,7 @@
  * Initializes the editor state
  */
 function init() {
-	// @ts-ignore
-	canvas = document.getElementById('editor');
+	canvas = $('#editor')[0];
 	canvas.height = window.innerHeight * 0.7;
 	canvas.width = window.innerWidth * 0.7;
 	canvasBorder = canvas.getBoundingClientRect();
@@ -17,16 +16,15 @@ function init() {
 	context.fillStyle = '#262626'; // background color
 
 	// event handlers
-	// document.addEventListener('mousedown', onMouseDown);
 	document.onmousedown = onMouseDown;
-	document.addEventListener('mousemove', onMouseMove);
-	document.addEventListener('mouseup', onMouseUp);
+	document.onmousemove = onMouseMove;
+	document.onmouseup = onMouseUp;
 	
-	document.onkeydown = keyPress;
+	document.onkeydown = onKeyDown;
 
-	document.addEventListener('touchstart', onTouchStart);
-	document.addEventListener('touchmove', onMouseMove);
-	document.addEventListener('touchend', onMouseUp);
+	document.ontouchstart = onTouchStart;
+	document.ontouchmove = onMouseMove;
+	document.ontouchend = onMouseUp;
 
 	canvas.onmouseenter = () => inside = true;
 	canvas.onmouseleave = () => inside = false;
@@ -34,17 +32,13 @@ function init() {
 	$('.tool-button').click(toolSelector);
 
 	// sliders handlers
-	document.getElementById('zoomSlider').oninput = onZoomChange;
-	document.getElementById('rotateSlider').oninput = onRotateChange;
-	document.getElementById('brightnessSlider').oninput = onBrightnessChange;
-	document.getElementById('saturationSlider').oninput = onSaturationChange;
+	$('#zoomSlider').on('input', onZoomChange);
+	$('#rotateSlider').on('input', onRotateChange);
+	$('#brightnessSlider').on('input', onBrightnessChange);
+	$('#saturationSlider').on('input', onSaturationChange);
 
 	// slider color progress
-	$('.slider').on('input', function(e) {
-		// @ts-ignore
-		var min = e.target.min, max = e.target.max, val = e.target.value;
-		$(e.target).css('background-size', (val - min) * 100 / (max - min) + '% 100%');
-	});
+	$('.slider').on('input', onSliderChange);
 
 	// TEST
 	image.onload = () => (setScaledSize(), update());
@@ -59,7 +53,7 @@ function init() {
  */
 function toolSelector() {
 	var lastTool = currTool;
-	var tools = document.getElementsByClassName('tool-button');
+	var tools = $('.tool-button');
 	if ($(this).prop('id') == 'upload' || $(this).prop('id') == 'download') {
 		// deselect other tools
 		for (var i = 0; i < tools.length; i++)
@@ -81,6 +75,16 @@ function toolSelector() {
 		$(this).addClass('selected');
 		currTool = $(this).attr('id');
 	}
+
+	// save rotated image
+	if (lastTool == 'rotate') {
+		saveImage();
+		angleInDegrees = 0;
+		$('#degreesValue').html(angleInDegrees.toString() + '°');
+		$('#rotateSlider').val(angleInDegrees);
+		$('#rotateSlider').trigger('input');
+	}
+
 	updateWindow(lastTool);
 	update();
 }

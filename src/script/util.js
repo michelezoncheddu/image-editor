@@ -48,7 +48,6 @@ function loadFile(input) {
 
 		var reader = new FileReader();
 		reader.onload = function(e) {
-			// @ts-ignore
 			image.src = e.target.result;
 		};
 		reader.readAsDataURL(input.files[0]);
@@ -91,15 +90,42 @@ function downloadImage() {
 	}
 
 	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	var download = document.getElementById("download-link");
-	// @ts-ignore
+	var download = $("#download-link")[0];
 	download.href = imageData;
+}
+
+/**
+ * Saves the full-resolution edited image and replaces it to the current image
+ * 
+ * TODO: function for bufferCanvas (identical to downloadImage)
+ */
+function saveImage() {
+	var bufferCanvas = document.createElement('canvas');
+	var bufferContext = bufferCanvas.getContext('2d');
+
+	var fullWidth = Math.abs(image.width * Math.sin(degToRad(90 - angleInDegrees))) +
+		Math.abs(image.height * Math.sin(degToRad(angleInDegrees)));
+	var fullHeight = Math.abs(image.height * Math.sin(degToRad(90 - angleInDegrees))) +
+		Math.abs(image.width * Math.sin(degToRad(angleInDegrees)));
+
+	bufferCanvas.width = fullWidth;
+	bufferCanvas.height = fullHeight;
+
+	bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
+	bufferContext.rotate(angleInDegrees * Math.PI / 180);
+	bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
+	bufferContext.drawImage(image,
+		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
+		image.width, image.height);
+
+	lastImage = image;
+	image = bufferCanvas;
+	setScaledSize();
 }
 
 /**
  * Checks if a number is in the range [a, b]
  */
-// @ts-ignore
 Number.prototype.between = function(a, b) {
 	return this >= Math.min(a, b) && this <= Math.max(a, b);
 };
