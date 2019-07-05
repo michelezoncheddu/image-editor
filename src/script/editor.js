@@ -17,9 +17,12 @@ function init() {
 	context.fillStyle = '#262626'; // background color
 
 	// event handlers
-	document.addEventListener('mousedown', onMouseDown);
+	// document.addEventListener('mousedown', onMouseDown);
+	document.onmousedown = onMouseDown;
 	document.addEventListener('mousemove', onMouseMove);
 	document.addEventListener('mouseup', onMouseUp);
+	
+	document.onkeydown = keyPress;
 
 	document.addEventListener('touchstart', onTouchStart);
 	document.addEventListener('touchmove', onMouseMove);

@@ -4,6 +4,7 @@
 var canvas,
 canvasBorder,
 image = new Image(),
+lastImage = image,
 context,
 inside,
 

@@ -65,6 +65,7 @@ function onMouseUp() {
 
 			// CROP TEST
 			if (currTool == 'crop' && selection.width != 0 && selection.height != 0) {
+				lastImage = image;
 				var scaleRatio = image.width / scaledWidth;
 				var rawStartX = Math.min(
 					(selection.x - (canvas.width - scaledWidth) / 2) * scaleRatio,
@@ -183,4 +184,15 @@ function onSaturationChange() {
 	saturation = this.value;
 	document.getElementById('saturationValue').innerHTML = (saturation - (100 - saturation)).toString();
 	update();
+}
+
+/**
+ * Detects the key pressing
+ */
+function keyPress(evt) {
+	if (evt.ctrlKey && evt.keyCode == 90) { // ctrl-z
+		image = lastImage;
+		setScaledSize();
+		update();
+	}
 }

@@ -42,6 +42,7 @@ function setScaledSize() {
  */
 function loadFile(input) {
 	if (input.files && input.files[0]) { // TODO: check if input is an image file
+		lastImage = image;
 		image = new Image();
 		image.onload = () => (setScaledSize(), update());
 
