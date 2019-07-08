@@ -4,7 +4,7 @@
  * Handles the mouse down event
  */
 function onMouseDown(evt) {
-	if (!inside) // click outside the canvas
+	if (!inside || (currTool != 'crop' && currTool != 'levels')) // click outside the canvas or selection disabled
 		return;
 
 	mouseDown = true;
@@ -15,8 +15,7 @@ function onMouseDown(evt) {
 			selection.dragged = true;
 			selection.deltaX = currPos.x - selection.x;
 			selection.deltaY = currPos.y - selection.y;
-		}
-		else { // selection deselected
+		} else { // selection deselected
 			selection = null;
 		}
 	} else { // new selection
@@ -56,33 +55,8 @@ function onMouseUp() {
 	if (selection != null) {
 		if (selection.dragged)
 			selection.dragged = false;
-		else {
+		else
 			selection = new Rectangle(selection.x, selection.y, currPos.x - selection.x, currPos.y - selection.y);
-
-			// CROP TEST
-			if (currTool == 'crop' && selection.width != 0 && selection.height != 0) {
-				lastImage = image;
-				var scaleRatio = image.width / scaledWidth;
-				var rawStartX = Math.min(
-					(selection.x - (canvas.width - scaledWidth) / 2) * scaleRatio,
-					(selection.x + selection.width - (canvas.width - scaledWidth) / 2) * scaleRatio);
-				var rawStartY = Math.min(
-					(selection.y - (canvas.height - scaledHeight) / 2) * scaleRatio,
-					(selection.y + selection.height - (canvas.height - scaledHeight) / 2) * scaleRatio);
-
-				var bufferCanvas = document.createElement('canvas');
-				var bufferContext = bufferCanvas.getContext('2d');
-				bufferCanvas.width = Math.abs(selection.width) * scaleRatio;
-				bufferCanvas.height = Math.abs(selection.height) * scaleRatio;
-
-				bufferContext.drawImage(image,
-					rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
-				
-				image = bufferCanvas;
-				selection = null;
-				setScaledSize();
-			}
-		}
 	}
 	update();
 }
@@ -181,9 +155,23 @@ function onSaturationChange() {
  * Detects the key pressing
  */
 function onKeyDown(evt) {
-	if (evt.ctrlKey && evt.keyCode == 90) { // ctrl-z
-		image = lastImage;
-		setScaledSize();
+	if (evt.ctrlKey) {
+		switch(evt.keyCode) {
+		case 65: // ctrl-a
+			var marginX = canvas.width - scaledWidth;
+			var marginY = canvas.height - scaledHeight;
+			selection = new Rectangle(marginX / 2, marginY / 2, scaledWidth, scaledHeight);
+			update();
+			break;
+
+		case 90: // ctrl-z
+			image = lastImage;
+			setScaledSize();
+			update();
+			break;
+		}
+	} else if (evt.keyCode == 13 && currTool == 'crop' && selection != null) { // enter
+		cropImage();
 		update();
 	}
 }

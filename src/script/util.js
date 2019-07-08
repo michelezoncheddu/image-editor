@@ -42,6 +42,7 @@ function setScaledSize() {
  */
 function loadFile(input) {
 	if (input.files && input.files[0]) { // TODO: check if input is an image file
+		selection = null;
 		lastImage = image;
 		image = new Image();
 		image.onload = () => (setScaledSize(), update());
@@ -121,6 +122,34 @@ function saveImage() {
 	lastImage = image;
 	image = bufferCanvas;
 	setScaledSize();
+}
+
+/**
+ * Crops the image to the selection
+ */
+function cropImage() {
+	if (selection.width != 0 && selection.height != 0) {
+		lastImage = image;
+		var scaleRatio = image.width / scaledWidth;
+		var rawStartX = Math.min(
+			(selection.x - (canvas.width - scaledWidth) / 2) * scaleRatio,
+			(selection.x + selection.width - (canvas.width - scaledWidth) / 2) * scaleRatio);
+		var rawStartY = Math.min(
+			(selection.y - (canvas.height - scaledHeight) / 2) * scaleRatio,
+			(selection.y + selection.height - (canvas.height - scaledHeight) / 2) * scaleRatio);
+		
+		var bufferCanvas = document.createElement('canvas');
+		var bufferContext = bufferCanvas.getContext('2d');
+		bufferCanvas.width = Math.abs(selection.width) * scaleRatio;
+		bufferCanvas.height = Math.abs(selection.height) * scaleRatio;
+		
+		bufferContext.drawImage(image,
+			rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
+		
+		image = bufferCanvas;
+		selection = null;
+		setScaledSize();
+	}
 }
 
 /**

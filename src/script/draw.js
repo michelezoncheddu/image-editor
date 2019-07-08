@@ -101,6 +101,11 @@ function drawFilters() {
 	
 	context.save();
 
+	// selection border
+	context.strokeStyle = '#FFFFFF';
+	context.lineWidth = 1;
+	context.strokeRect(startX, startY, width, height);
+
 	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)'; // compatibility problems
 
 	// context.globalCompositeOperation = 'luminosity';
