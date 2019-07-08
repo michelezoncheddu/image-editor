@@ -144,13 +144,6 @@ function cropImage() {
 }
 
 /**
- * Checks if a number is in the range [a, b]
- */
-Number.prototype.between = function(a, b) {
-	return this >= Math.min(a, b) && this <= Math.max(a, b);
-};
-
-/**
  * Returns the coordinates of a point rotated around a pivot
  */
 function rotatePoint(pivot, point, angle) {
@@ -169,4 +162,11 @@ function rotatePoint(pivot, point, angle) {
  */
 function degToRad(deg) {
 	return deg * Math.PI / 180;
+}
+
+/**
+ * Checks if a number is in the range [a, b]
+ */
+Number.prototype.between = function(a, b) {
+	return this >= Math.min(a, b) && this <= Math.max(a, b);
 }

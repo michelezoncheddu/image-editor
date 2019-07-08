@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<title>Image editor</title>
 		<link rel="stylesheet" type="text/css" href="style/style.css">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,600" rel="stylesheet">
 		<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
 
 		<script type="text/javascript" src="script/classes.js"></script>
@@ -17,7 +17,14 @@
 	</head>
 
 	<body onload="init()">
-		<canvas id="editor" >Please update your browser</canvas><br><br>
+		<div class="title left">
+			image-editor
+		</div>
+		<div id="help" class="title right">
+			Need help? - About this project
+		</div>
+
+		<canvas id="editor">Please update your browser</canvas><br><br>
 
 		<div class="toolbar">
 			<input type='file' id="upload-hidden" class="hidden" onchange="loadFile(this)" />
@@ -25,7 +32,7 @@
 				<img id="upload" class="tool-button" src="icons/upload.png" />
 			</label>
 			<a id="download-link" download="image.png">
-				<img id="download" class="tool-button" src="icons/download.png" onClick="downloadImage()" />
+				<img id="download" class="tool-button" src="icons/download.png" onclick="downloadImage()" />
 			</a>
 		</div>
 		

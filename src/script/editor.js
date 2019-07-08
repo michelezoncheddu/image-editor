@@ -5,8 +5,8 @@
  */
 function init() {
 	canvas = $('#editor')[0];
-	canvas.height = window.innerHeight * 0.7;
-	canvas.width = window.innerWidth * 0.7;
+	canvas.height = window.innerHeight * 0.65;
+	canvas.width = window.innerWidth * 0.65;
 	canvasBorder = canvas.getBoundingClientRect();
 
 	context = canvas.getContext('2d');
