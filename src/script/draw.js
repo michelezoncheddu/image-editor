@@ -44,9 +44,7 @@ function drawImage() {
 			(canvas.width - scaledWidth * zoom) / 2, (canvas.height - scaledHeight * zoom) / 2,
 			scaledWidth * zoom, scaledHeight * zoom);
 	} else {
-		context.drawImage(image,
-			(canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2,
-			scaledWidth, scaledHeight);
+		context.drawImage(image, marginX, marginY, scaledWidth, scaledHeight);
 	}
 
 	context.restore();

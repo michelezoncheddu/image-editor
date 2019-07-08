@@ -116,8 +116,8 @@ function onRotateChange() {
 
 	// coordinates of 3 vertices to detect the overhang, and the pivot to rotate around the center
 	var topLeft = {
-		x: (canvas.width - scaledWidth) / 2,
-		y: (canvas.height - scaledHeight) / 2
+		x: marginX,
+		y: marginY
 	};
 	var bottomLeft = {
 		x: topLeft.x,
@@ -212,4 +212,14 @@ function onKeyDown(evt) {
 function onSliderChange(evt) {
 	var min = evt.target.min, max = evt.target.max, val = evt.target.value;
 	$(evt.target).css('background-size', (val - min) * 100 / (max - min) + '% 100%');
+}
+
+/**
+ * Changes the canvas size
+ */
+function onResize() {
+	canvas.height = window.innerHeight * 0.7;
+	canvas.width = window.innerWidth * 0.7;
+	setScaledSize();
+	update();
 }

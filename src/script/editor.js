@@ -22,6 +22,8 @@ function init() {
 	
 	document.onkeydown = onKeyDown;
 
+	window.onresize = onResize;
+
 	document.ontouchstart = onTouchStart;
 	document.ontouchmove = onMouseMove;
 	document.ontouchend = onMouseUp;
