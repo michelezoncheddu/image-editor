@@ -41,10 +41,12 @@ function drawImage() {
 	context.translate(-canvas.width / 2, -canvas.height / 2);
 	if (currTool == 'zoom') { // TODO: dedicate function to zoomed image
 		context.drawImage(image,
-			(canvas.width - scaledWidth * zoom) / 2, (canvas.height - scaledHeight * zoom) / 2,
+			(canvas.width - (scaledWidth * zoom)) / 2, (canvas.height - (scaledHeight * zoom)) / 2,
 			scaledWidth * zoom, scaledHeight * zoom);
 	} else {
-		context.drawImage(image, marginX, marginY, scaledWidth, scaledHeight);
+		context.drawImage(image,
+			(canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2,
+			scaledWidth, scaledHeight);
 	}
 
 	context.restore();

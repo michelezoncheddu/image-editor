@@ -116,8 +116,8 @@ function onRotateChange() {
 
 	// coordinates of 3 vertices to detect the overhang, and the pivot to rotate around the center
 	var topLeft = {
-		x: marginX,
-		y: marginY
+		x: (canvas.width - scaledWidth) / 2,
+		y: (canvas.height - scaledHeight) / 2
 	};
 	var bottomLeft = {
 		x: topLeft.x,
@@ -193,7 +193,7 @@ function onKeyDown(evt) {
 			break;
 
 		case 90: // ctrl-z
-		evt.preventDefault();
+			evt.preventDefault();
 			image = lastImage;
 			setScaledSize();
 			update();
