@@ -22,8 +22,6 @@ function init() {
 	
 	document.onkeydown = onKeyDown;
 
-	window.onresize = onResize;
-
 	document.ontouchstart = onTouchStart;
 	document.ontouchmove = onMouseMove;
 	document.ontouchend = onMouseUp;
@@ -55,28 +53,18 @@ function init() {
  */
 function toolSelector() {
 	var lastTool = currTool;
-	var tools = $('.tool-button');
-	if ($(this).prop('id') == 'upload' || $(this).prop('id') == 'download') {
-		// deselect other tools
-		for (var i = 0; i < tools.length; i++)
-			if (tools[i].classList.contains('selected'))
-				tools[i].classList.remove('selected');
-		currTool = 'none';
-	} else if ($(this).hasClass('selected')) { // user deselected the current tool
-		$(this).removeClass('selected');
-		currTool = 'none';
-	} else { // user selected an other tool
-		for (var i = 0; i < tools.length; i++) { // disable the current tool
-			if (tools[i].classList.contains('selected')) {
-				tools[i].classList.remove('selected');
-				break;
-			}
-		}
-		$(this).addClass('selected');
-		currTool = $(this).attr('id');
-	}
+	currTool = $(this).prop('id');
 
-	// save rotated image
+	$('#' + lastTool).removeClass('selected');
+	if (currTool != lastTool && currTool != 'upload' && currTool != 'download')
+		$('#' + currTool).addClass('selected');
+	else
+		currTool = 'none';
+
+	$('#' + lastTool + 'Div').addClass('hidden');
+	$('#' + currTool + 'Div').removeClass('hidden');
+
+	// saving rotated image
 	// TODO: save filters
 	if (lastTool == 'rotate') {
 		saveImage();
@@ -86,22 +74,5 @@ function toolSelector() {
 		$('#rotateSlider').trigger('input');
 	}
 
-	updateWindow(lastTool);
 	update();
-}
-
-/**
- * Shows the correct tool controls in the web page
- */
-function updateWindow(lastTool) {
-	if (lastTool != 'none') { // there's something to hide
-		var tool = document.getElementById(lastTool + 'Div');
-		if (tool != null)
-			tool.classList.add('hidden');
-	}
-	if (currTool != 'none') { // there's something to show
-		var tool = document.getElementById(currTool + 'Div');
-		if (tool != null)
-			tool.classList.remove('hidden');
-	}
 }

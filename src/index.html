@@ -20,8 +20,14 @@
 		<div class="title left">
 			image-editor
 		</div>
-		<div id="help" class="title right">
-			Need help? - About this project
+		<div id="help" class="title right" onclick="showPopup()">
+			<span class="popup">
+				Need help?
+				<span class="popuptext" id="helpPopup">
+					Load an image to start editing
+				</span>
+			</span>
+			- About this project
 		</div>
 
 		<canvas id="editor">Please update your browser</canvas><br><br>
@@ -37,10 +43,10 @@
 		</div>
 		
 		<div class="toolbar">
-			<img id="zoom"     class="tool-button" src="icons/zoom.png" />
-			<img id="crop"     class="tool-button" src="icons/crop.png" />
-			<img id="rotate"   class="tool-button" src="icons/rotate.png" />
-			<img id="levels"   class="tool-button" src="icons/levels.png" />
+			<img id="zoom"   class="tool-button" src="icons/zoom.png" />
+			<img id="crop"   class="tool-button" src="icons/crop.png" />
+			<img id="rotate" class="tool-button" src="icons/rotate.png" />
+			<img id="levels" class="tool-button" src="icons/levels.png" />
 		</div><br><br>
 
 		<div id="zoomDiv" class="hidden">

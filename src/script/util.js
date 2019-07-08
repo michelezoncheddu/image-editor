@@ -170,3 +170,10 @@ function degToRad(deg) {
 Number.prototype.between = function(a, b) {
 	return this >= Math.min(a, b) && this <= Math.max(a, b);
 }
+
+/**
+ * Opens the popup on click
+ */
+function showPopup() {
+	$("#helpPopup")[0].classList.toggle("show");
+}
