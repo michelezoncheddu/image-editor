@@ -4,7 +4,6 @@
  * Handles the mouse down event
  */
 function onMouseDown(evt) {
-	evt.preventDefault();
 	if (!inside || (currTool != 'crop' && currTool != 'levels')) // click outside the canvas or selection disabled
 		return;
 
@@ -35,7 +34,6 @@ function onMouseDown(evt) {
  * Handles the mouse move event
  */
 function onMouseMove(evt) {
-	evt.preventDefault();
 	if (mouseDown) {
 		currPos = getMousePos(evt);
 		if (selection != null) {
@@ -82,7 +80,6 @@ function onMouseMove(evt) {
  * Handles the mouse up event
  */
 function onMouseUp() {
-	evt.preventDefault();
 	mouseDown = false;
 	if (selection != null && selection.dragged)
 		selection.dragged = false;
@@ -94,7 +91,6 @@ function onMouseUp() {
  * TEST: touch support
  */
 function onTouchStart(evt) {
-	evt.preventDefault();
 	var touches = evt.changedTouches;
 	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
 }
@@ -185,10 +181,10 @@ function onSaturationChange() {
  * Detects the key pressing
  */
 function onKeyDown(evt) {
-	evt.preventDefault();
 	if (evt.ctrlKey) {
 		switch(evt.keyCode) {
 		case 65: // ctrl-a
+			evt.preventDefault();
 			var marginX = canvas.width - scaledWidth;
 			var marginY = canvas.height - scaledHeight;
 			selection = new Rectangle(marginX / 2, marginY / 2, scaledWidth, scaledHeight);
@@ -196,12 +192,14 @@ function onKeyDown(evt) {
 			break;
 
 		case 90: // ctrl-z
+		evt.preventDefault();
 			image = lastImage;
 			setScaledSize();
 			update();
 			break;
 		}
 	} else if (evt.keyCode == 13 && currTool == 'crop' && selection != null) { // enter
+		evt.preventDefault();
 		cropImage();
 		update();
 	}
