@@ -4,6 +4,7 @@
  * Handles the mouse down event
  */
 function onMouseDown(evt) {
+	evt.preventDefault();
 	if (!inside || (currTool != 'crop' && currTool != 'levels')) // click outside the canvas or selection disabled
 		return;
 
@@ -34,6 +35,7 @@ function onMouseDown(evt) {
  * Handles the mouse move event
  */
 function onMouseMove(evt) {
+	evt.preventDefault();
 	if (mouseDown) {
 		currPos = getMousePos(evt);
 		if (selection != null) {
@@ -80,6 +82,7 @@ function onMouseMove(evt) {
  * Handles the mouse up event
  */
 function onMouseUp() {
+	evt.preventDefault();
 	mouseDown = false;
 	if (selection != null && selection.dragged)
 		selection.dragged = false;
@@ -91,6 +94,7 @@ function onMouseUp() {
  * TEST: touch support
  */
 function onTouchStart(evt) {
+	evt.preventDefault();
 	var touches = evt.changedTouches;
 	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
 }
@@ -181,6 +185,7 @@ function onSaturationChange() {
  * Detects the key pressing
  */
 function onKeyDown(evt) {
+	evt.preventDefault();
 	if (evt.ctrlKey) {
 		switch(evt.keyCode) {
 		case 65: // ctrl-a
