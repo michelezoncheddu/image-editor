@@ -35,6 +35,8 @@ function setScaledSize() {
 			scaledWidth = scaledHeight * ratio;
 		}
 	}
+	marginX = (canvas.width - scaledWidth) / 2;
+	marginY = (canvas.height - scaledHeight) / 2;
 }
 
 /**
@@ -59,6 +61,39 @@ function loadFile(input) {
  * Downloads the full-resolution edited image
  */
 function downloadImage() {
+	var bufferCanvas = drawFullResolutionImage();
+	
+	// TEST: filters
+	if (selection != null) {
+		var scaleRatio = image.width / scaledWidth;
+		bufferContext.globalCompositeOperation = 'saturation';
+		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
+		bufferContext.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
+		// draw filter layer
+		bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
+			selection.width * scaleRatio, selection.height * scaleRatio);
+	}
+
+	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	var download = $("#download-link")[0];
+	download.href = imageData;
+}
+
+/**
+ * Saves the full-resolution edited image and replaces it to the current image
+ */
+function saveImage() {
+	var bufferCanvas = drawFullResolutionImage();
+
+	lastImage = image;
+	image = bufferCanvas;
+	setScaledSize();
+}
+
+/**
+ * Draws the full resolution image in a canvas, and returns it
+ */
+function drawFullResolutionImage() {
 	var bufferCanvas = document.createElement('canvas');
 	var bufferContext = bufferCanvas.getContext('2d');
 
@@ -77,51 +112,7 @@ function downloadImage() {
 		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
 		image.width, image.height);
 	
-	// TEST: filters
-	if (selection != null) {
-		var marginX = canvas.width - scaledWidth;
-		var marginY = canvas.height - scaledHeight;
-		var scaleRatio = image.width / scaledWidth;
-		bufferContext.globalCompositeOperation = 'saturation';
-		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
-		bufferContext.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
-		// draw filter layer
-		bufferContext.fillRect((selection.x - marginX / 2) * scaleRatio, (selection.y - marginY / 2) * scaleRatio,
-			selection.width * scaleRatio, selection.height * scaleRatio);
-	}
-
-	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	var download = $("#download-link")[0];
-	download.href = imageData;
-}
-
-/**
- * Saves the full-resolution edited image and replaces it to the current image
- * 
- * TODO: function for bufferCanvas (identical to downloadImage)
- */
-function saveImage() {
-	var bufferCanvas = document.createElement('canvas');
-	var bufferContext = bufferCanvas.getContext('2d');
-
-	var fullWidth = Math.abs(image.width * Math.sin(degToRad(90 - angleInDegrees))) +
-		Math.abs(image.height * Math.sin(degToRad(angleInDegrees)));
-	var fullHeight = Math.abs(image.height * Math.sin(degToRad(90 - angleInDegrees))) +
-		Math.abs(image.width * Math.sin(degToRad(angleInDegrees)));
-
-	bufferCanvas.width = fullWidth;
-	bufferCanvas.height = fullHeight;
-
-	bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
-	bufferContext.rotate(angleInDegrees * Math.PI / 180);
-	bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
-	bufferContext.drawImage(image,
-		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
-		image.width, image.height);
-
-	lastImage = image;
-	image = bufferCanvas;
-	setScaledSize();
+	return bufferCanvas;
 }
 
 /**
@@ -132,17 +123,17 @@ function cropImage() {
 		lastImage = image;
 		var scaleRatio = image.width / scaledWidth;
 		var rawStartX = Math.min(
-			(selection.x - (canvas.width - scaledWidth) / 2) * scaleRatio,
-			(selection.x + selection.width - (canvas.width - scaledWidth) / 2) * scaleRatio);
+			(selection.x - marginX) * scaleRatio,
+			(selection.x + selection.width - marginX) * scaleRatio);
 		var rawStartY = Math.min(
-			(selection.y - (canvas.height - scaledHeight) / 2) * scaleRatio,
-			(selection.y + selection.height - (canvas.height - scaledHeight) / 2) * scaleRatio);
+			(selection.y - marginY) * scaleRatio,
+			(selection.y + selection.height - marginY) * scaleRatio);
 		
 		var bufferCanvas = document.createElement('canvas');
 		var bufferContext = bufferCanvas.getContext('2d');
 		bufferCanvas.width = Math.abs(selection.width) * scaleRatio;
 		bufferCanvas.height = Math.abs(selection.height) * scaleRatio;
-		
+
 		bufferContext.drawImage(image,
 			rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
 		

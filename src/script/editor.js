@@ -75,6 +75,7 @@ function toolSelector() {
 	}
 
 	// save rotated image
+	// TODO: save filters
 	if (lastTool == 'rotate') {
 		saveImage();
 		angleInDegrees = 0;

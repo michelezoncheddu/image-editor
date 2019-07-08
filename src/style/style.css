@@ -43,7 +43,7 @@ body {
 	height: 30px;
 	padding: 10px;
 	transition: 0.3s all;
-	filter: invert(80%);
+	filter: invert(65%);
 }
 
 .tool-button:first-child {

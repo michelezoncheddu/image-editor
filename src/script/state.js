@@ -9,6 +9,7 @@ context,
 inside,
 
 scaledWidth, scaledHeight,
+marginX, marginY,
 ratio,
 scaled,
 zoom = 1,

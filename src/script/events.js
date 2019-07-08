@@ -19,11 +19,8 @@ function onMouseDown(evt) {
 			selection = null;
 		}
 	} else { // new selection
-		var marginX = canvas.width - scaledWidth;
-		var marginY = canvas.height - scaledHeight;
-
 		// selection can start only inside the image
-		if (currPos.x.between(marginX / 2, marginX / 2 + scaledWidth) && currPos.y.between(marginY / 2, marginY / 2 + scaledHeight))
+		if (currPos.x.between(marginX, marginX + scaledWidth) && currPos.y.between(marginY, marginY + scaledHeight))
 			selection = new Rectangle(currPos.x, currPos.y, 0, 0);
 	}
 
@@ -37,39 +34,45 @@ function onMouseMove(evt) {
 	if (mouseDown) {
 		currPos = getMousePos(evt);
 		if (selection != null) {
-			var marginX = canvas.width - scaledWidth;
-			var marginY = canvas.height - scaledHeight;
-
 			if (selection.dragged) { // moving selection
 				selection.x = currPos.x - selection.deltaX;
 				selection.y = currPos.y - selection.deltaY;
-				
-				selection.width = selection.width > 0 ?
-					Math.min(selection.width, - (selection.x - (marginX / 2 + scaledWidth))) :
-					Math.max(selection.width, - (selection.x - (marginX / 2)));
 
-				if (selection.x < marginX / 2)
-					selection.x = marginX / 2;
-				else if (selection.x > marginX / 2 + scaledWidth)
-					selection.x = marginX / 2 + scaledWidth;
-				
-				selection.height = selection.height > 0 ?
-					Math.min(selection.height, - (selection.y - (marginY / 2 + scaledHeight))) :
-					Math.max(selection.height, - (selection.y - (marginY / 2)));
+				// start of selection (X axis) out of the image
+				if (selection.x < marginX)
+					selection.x = marginX;
+				else if (selection.x > marginX + scaledWidth)
+					selection.x = marginX + scaledWidth;
 
-				if (selection.y < marginY / 2)
-					selection.y = marginY / 2;
-				else if (selection.y > marginY / 2 + scaledHeight)
-					selection.y = marginY / 2 + scaledHeight;
+				// end of selection (X asis) out of the image
+				if (selection.width > 0 && selection.x + selection.width > marginX + scaledWidth)
+					selection.x = marginX + scaledWidth - selection.width;
+				else if (selection.width < 0 && selection.x + selection.width < marginX)
+					selection.x = marginX - selection.width;
+
+				// start of selection (Y axis) out of the image
+				if (selection.y < marginY)
+					selection.y = marginY;
+				else if (selection.y > marginY + scaledHeight)
+					selection.y = marginY + scaledHeight;
+				
+				// end of selection (Y asis) out of the image
+				if (selection.height > 0 && selection.y + selection.height > marginY + scaledHeight)
+					selection.y = marginY + scaledHeight - selection.height;
+				else if (selection.height < 0 && selection.y + selection.height < marginY)
+					selection.y = marginY - selection.height;
+
 			} else { // creating selection
 				var width = currPos.x - selection.x;
 				var height = currPos.y - selection.y;
+
+				// check if selection end is going out of the image
 				selection.width = width > 0 ?
-					Math.min(width, marginX / 2 + scaledWidth - selection.x) :
-					Math.max(width, marginX / 2 - selection.x);
+					Math.min(width, marginX + scaledWidth - selection.x) :
+					Math.max(width, marginX - selection.x);
 				selection.height = height > 0 ?
-					Math.min(height, marginY / 2 + scaledHeight - selection.y) :
-					Math.max(height, marginY / 2 - selection.y);
+					Math.min(height, marginY + scaledHeight - selection.y) :
+					Math.max(height, marginY - selection.y);
 			}
 		}
 		update();
@@ -83,7 +86,6 @@ function onMouseUp() {
 	mouseDown = false;
 	if (selection != null && selection.dragged)
 		selection.dragged = false;
-	
 	update();
 }
 
@@ -91,6 +93,7 @@ function onMouseUp() {
  * TEST: touch support
  */
 function onTouchStart(evt) {
+	evt.preventDefault();
 	var touches = evt.changedTouches;
 	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
 }
@@ -185,9 +188,7 @@ function onKeyDown(evt) {
 		switch(evt.keyCode) {
 		case 65: // ctrl-a
 			evt.preventDefault();
-			var marginX = canvas.width - scaledWidth;
-			var marginY = canvas.height - scaledHeight;
-			selection = new Rectangle(marginX / 2, marginY / 2, scaledWidth, scaledHeight);
+			selection = new Rectangle(marginX, marginY, scaledWidth, scaledHeight);
 			update();
 			break;
 
