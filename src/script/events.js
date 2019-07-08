@@ -19,7 +19,12 @@ function onMouseDown(evt) {
 			selection = null;
 		}
 	} else { // new selection
-		selection = new Rectangle(currPos.x, currPos.y, 0, 0);
+		var marginX = canvas.width - scaledWidth;
+		var marginY = canvas.height - scaledHeight;
+
+		// selection can start only inside the image
+		if (currPos.x.between(marginX / 2, marginX / 2 + scaledWidth) && currPos.y.between(marginY / 2, marginY / 2 + scaledHeight))
+			selection = new Rectangle(currPos.x, currPos.y, 0, 0);
 	}
 
 	update();
@@ -32,12 +37,39 @@ function onMouseMove(evt) {
 	if (mouseDown) {
 		currPos = getMousePos(evt);
 		if (selection != null) {
-			if (selection.dragged) {
+			var marginX = canvas.width - scaledWidth;
+			var marginY = canvas.height - scaledHeight;
+
+			if (selection.dragged) { // moving selection
 				selection.x = currPos.x - selection.deltaX;
 				selection.y = currPos.y - selection.deltaY;
-			} else {
-				selection.width = currPos.x - selection.x;
-				selection.height = currPos.y - selection.y;
+				
+				selection.width = selection.width > 0 ?
+					Math.min(selection.width, - (selection.x - (marginX / 2 + scaledWidth))) :
+					Math.max(selection.width, - (selection.x - (marginX / 2)));
+
+				if (selection.x < marginX / 2)
+					selection.x = marginX / 2;
+				else if (selection.x > marginX / 2 + scaledWidth)
+					selection.x = marginX / 2 + scaledWidth;
+				
+				selection.height = selection.height > 0 ?
+					Math.min(selection.height, - (selection.y - (marginY / 2 + scaledHeight))) :
+					Math.max(selection.height, - (selection.y - (marginY / 2)));
+
+				if (selection.y < marginY / 2)
+					selection.y = marginY / 2;
+				else if (selection.y > marginY / 2 + scaledHeight)
+					selection.y = marginY / 2 + scaledHeight;
+			} else { // creating selection
+				var width = currPos.x - selection.x;
+				var height = currPos.y - selection.y;
+				selection.width = width > 0 ?
+					Math.min(width, marginX / 2 + scaledWidth - selection.x) :
+					Math.max(width, marginX / 2 - selection.x);
+				selection.height = height > 0 ?
+					Math.min(height, marginY / 2 + scaledHeight - selection.y) :
+					Math.max(height, marginY / 2 - selection.y);
 			}
 		}
 		update();
@@ -49,15 +81,9 @@ function onMouseMove(evt) {
  */
 function onMouseUp() {
 	mouseDown = false;
-	if (!inside)
-		return;
-
-	if (selection != null) {
-		if (selection.dragged)
-			selection.dragged = false;
-		else
-			selection = new Rectangle(selection.x, selection.y, currPos.x - selection.x, currPos.y - selection.y);
-	}
+	if (selection != null && selection.dragged)
+		selection.dragged = false;
+	
 	update();
 }
 
@@ -138,7 +164,7 @@ function onRotateChange() {
  */
 function onBrightnessChange() {
 	brightness = this.value;
-	$('#brightnessValue').html((brightness - (100 - brightness)).toString());
+	$('#brightnessValue').html(brightness);
 	update();
 }
 

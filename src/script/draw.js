@@ -108,15 +108,45 @@ function drawFilters() {
 
 	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)'; // compatibility problems
 
-	// context.globalCompositeOperation = 'luminosity';
-	// context.fillStyle = 'hsl(0, ' + brightness + '%, 100%)';
+	if (brightness < 0) {
+		context.globalCompositeOperation = "multiply";
+		context.fillStyle = "black";
+		context.globalAlpha = -brightness / 100;
+		context.fillRect(startX, startY, width, height);
 
+	} else if (brightness > 0) {
+		context.fillStyle = "white";
+		context.globalCompositeOperation = "lighten";
+		context.globalAlpha = 1;
+		context.globalAlpha = brightness / 100;
+		context.fillRect(startX, startY, width, height);
+	}
+
+	// saturarion
 	context.globalCompositeOperation = 'saturation';
 	context.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
 	context.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
 
 	// draw filter layer
 	context.fillRect(startX, startY, width, height);
+
+	// sepia filter
+	// var imgData = context.getImageData(startX, startY, width, height), // get image from unmodified context!
+	// pxData = imgData.data,
+	// length = pxData.length;
+	// for (var x = 0; x < length; x += 4) {
+	// 	// convert to grayscale
+	// 	var r = pxData[x],
+	// 		g = pxData[x + 1],
+	// 		b = pxData[x + 2],
+	// 		sepiaR = r * .393 + g * .769 + b * .189,
+	// 		sepiaG = r * .349 + g * .686 + b * .168,
+	// 		sepiaB = r * .272 + g * .534 + b * .131;
+	// 	pxData[x] = sepiaR;
+	// 	pxData[x + 1] = sepiaG;
+	// 	pxData[x + 2] = sepiaB;
+	// }
+	// context.putImageData(imgData, startX, startY);
 
 	context.restore();
 }
