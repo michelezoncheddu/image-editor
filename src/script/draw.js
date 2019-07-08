@@ -23,17 +23,6 @@ function draw() {
 			drawFilters();
 		break;
 
-		case 'pencil':
-		if (mouseDown) {
-			context.strokeStyle = '#00CC99';
-			context.lineWidth = 3;
-			context.lineJoin = 'round';
-			context.lineCap = 'round';
-			context.lineTo(currPos.x, currPos.y);
-			context.stroke();
-		}
-		break;
-
 		default:
 		alert('Unknown tool: ' + currTool);
 	}

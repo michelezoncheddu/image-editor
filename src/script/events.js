@@ -10,10 +10,6 @@ function onMouseDown(evt) {
 	mouseDown = true;
 	currPos = getMousePos(evt);
 
-	// PENCIL TEST
-	if (currTool == 'pencil')
-		context.beginPath();
-
 	if (selection != null) {
 		if (selection.contains(currPos)) { // dragging selection
 			selection.dragged = true;
