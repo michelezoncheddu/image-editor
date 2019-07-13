@@ -65,6 +65,7 @@ function downloadImage() {
 	
 	// TEST: filters
 	if (selection != null) {
+		var bufferContext = bufferCanvas.getContext('2d');
 		var scaleRatio = image.width / scaledWidth;
 		bufferContext.globalCompositeOperation = 'saturation';
 		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;

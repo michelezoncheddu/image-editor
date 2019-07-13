@@ -213,3 +213,13 @@ function onSliderChange(evt) {
 	var min = evt.target.min, max = evt.target.max, val = evt.target.value;
 	$(evt.target).css('background-size', (val - min) * 100 / (max - min) + '% 100%');
 }
+
+/**
+ * Changes the canvas size, the scaled image size and updates the context
+ */
+function onResize() {
+	canvas.height = window.innerHeight * 0.65;
+	canvas.width = window.innerWidth * 0.65;
+	setScaledSize();
+	update();
+}

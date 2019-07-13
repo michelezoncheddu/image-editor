@@ -13,8 +13,6 @@ function init() {
 	context.imageSmoothingQuality = 'high';
 	context.imageSmoothingEnabled = true;
 
-	context.fillStyle = '#262626'; // background color
-
 	// event handlers
 	document.onmousedown = onMouseDown;
 	document.onmousemove = onMouseMove;
@@ -25,6 +23,8 @@ function init() {
 	document.ontouchstart = onTouchStart;
 	document.ontouchmove = onMouseMove;
 	document.ontouchend = onMouseUp;
+
+	window.onresize = onResize;
 
 	canvas.onmouseenter = () => inside = true;
 	canvas.onmouseleave = () => inside = false;

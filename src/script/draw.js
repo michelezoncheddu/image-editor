@@ -32,6 +32,7 @@ function draw() {
  * Draws the image (wow!)
  */
 function drawImage() {
+	context.fillStyle = '#262626'; // background color
 	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 	context.save();
 
