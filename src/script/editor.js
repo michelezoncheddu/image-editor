@@ -64,14 +64,18 @@ function toolSelector() {
 	$('#' + lastTool + 'Div').addClass('hidden');
 	$('#' + currTool + 'Div').removeClass('hidden');
 
-	// saving rotated image
-	// TODO: save filters
-	if (lastTool == 'rotate') {
+	// saving image
+	if (lastTool == 'rotate' || lastTool == 'levels') {
 		saveImage();
-		angleInDegrees = 0;
-		$('#degreesValue').html(angleInDegrees.toString() + '°');
-		$('#rotateSlider').val(angleInDegrees);
+
+		selection = null;
+
+		$('#rotateSlider').val(0);
 		$('#rotateSlider').trigger('input');
+		$('#brightnessSlider').val(0);
+		$('#brightnessSlider').trigger('input');
+		$('#saturationSlider').val(50);
+		$('#saturationSlider').trigger('input');
 	}
 
 	update();

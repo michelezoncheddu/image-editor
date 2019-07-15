@@ -107,8 +107,6 @@ function drawFilters() {
 	context.lineWidth = 1;
 	context.strokeRect(startX, startY, width, height);
 
-	// context.filter = 'contrast(1.4) sepia(1) drop-shadow(9px 9px 2px #e81)'; // compatibility problems
-
 	if (brightness < 0) {
 		context.globalCompositeOperation = "multiply";
 		context.fillStyle = "black";
@@ -123,12 +121,10 @@ function drawFilters() {
 		context.fillRect(startX, startY, width, height);
 	}
 
-	// saturarion
+	// saturation
 	context.globalCompositeOperation = 'saturation';
 	context.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
 	context.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
-
-	// draw filter layer
 	context.fillRect(startX, startY, width, height);
 
 	// sepia filter

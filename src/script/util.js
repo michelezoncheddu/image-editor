@@ -63,18 +63,6 @@ function loadFile(input) {
  */
 function downloadImage() {
 	var bufferCanvas = drawFullResolutionImage();
-	
-	// TEST: filters
-	if (selection != null) {
-		var bufferContext = bufferCanvas.getContext('2d');
-		var scaleRatio = image.width / scaledWidth;
-		bufferContext.globalCompositeOperation = 'saturation';
-		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
-		bufferContext.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
-		// draw filter layer
-		bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
-			selection.width * scaleRatio, selection.height * scaleRatio);
-	}
 
 	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 	var download = $("#download-link")[0];
@@ -113,6 +101,35 @@ function drawFullResolutionImage() {
 	bufferContext.drawImage(image,
 		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
 		image.width, image.height);
+	
+	// draw filters
+	if (selection != null) {
+		var bufferContext = bufferCanvas.getContext('2d');
+		var scaleRatio = image.width / scaledWidth;
+
+		if (brightness < 0) {
+			bufferContext.globalCompositeOperation = "multiply";
+			bufferContext.fillStyle = "black";
+			bufferContext.globalAlpha = -brightness / 100;
+			bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
+				selection.width * scaleRatio, selection.height * scaleRatio);
+
+		} else if (brightness > 0) {
+			bufferContext.fillStyle = "white";
+			bufferContext.globalCompositeOperation = "lighten";
+			bufferContext.globalAlpha = 1;
+			bufferContext.globalAlpha = brightness / 100;
+			bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
+				selection.width * scaleRatio, selection.height * scaleRatio);
+		}
+
+		// saturation
+		bufferContext.globalCompositeOperation = 'saturation';
+		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
+		bufferContext.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
+		bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
+			selection.width * scaleRatio, selection.height * scaleRatio);
+	}
 	
 	return bufferCanvas;
 }
