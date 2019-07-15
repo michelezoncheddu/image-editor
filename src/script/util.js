@@ -11,10 +11,11 @@ function update() {
  * Returns the mouse position relative to the canvas
  */
 function getMousePos(evt) {
+	var offset = $('#editor').offset();
 	return {
-		x: evt.clientX - canvasBorder.left,
-		y: evt.clientY - canvasBorder.top
-	};
+		x: evt.pageX - offset.left,
+		y: evt.pageY - offset.top
+	  };
 }
 
 /**
