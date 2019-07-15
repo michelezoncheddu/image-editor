@@ -194,7 +194,9 @@ function onKeyDown(evt) {
 
 		case 90: // ctrl-z
 			evt.preventDefault();
+			var tmp = image;
 			image = lastImage;
+			lastImage = tmp;
 			setScaledSize();
 			update();
 			break;
