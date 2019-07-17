@@ -31,17 +31,21 @@ function init() {
 
 	$('.tool-button').click(toolSelector);
 
+	// slider color progress
+	$('.slider').on('input', onSliderChange);
+
 	// sliders handlers
 	$('#zoomSlider').on('input', onZoomChange);
 	$('#rotateSlider').on('input', onRotateChange);
 	$('#brightnessSlider').on('input', onBrightnessChange);
 	$('#saturationSlider').on('input', onSaturationChange);
+	$('#contrastSlider').on('input', onContrastChange);
+	$('#sepiaSlider').on('input', onSepiaChange);
 
-	// slider color progress
-	$('.slider').on('input', onSliderChange);
-
+	$('#sepiaSlider').trigger('input'); // because starts from the left, not from the center
+	
 	// TEST
-	image.onload = () => (setScaledSize(), update());
+	image.onload = () => (resetSliders(), setScaledSize(), update());
 	image.src = 'test_images/merda.jpg';
 
 	// first draw
@@ -65,17 +69,10 @@ function toolSelector() {
 	$('#' + currTool + 'Div').removeClass('hidden');
 
 	// saving image
-	if (lastTool == 'rotate' || lastTool == 'levels') {
+	if (lastTool == 'rotate' || lastTool == 'filters') {
 		saveImage();
-
+		resetSliders();
 		selection = null;
-
-		$('#rotateSlider').val(0);
-		$('#rotateSlider').trigger('input');
-		$('#brightnessSlider').val(0);
-		$('#brightnessSlider').trigger('input');
-		$('#saturationSlider').val(50);
-		$('#saturationSlider').trigger('input');
 	}
 
 	update();

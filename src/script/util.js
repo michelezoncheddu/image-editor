@@ -44,11 +44,11 @@ function setScaledSize() {
  * Uploads the new photo to edit
  */
 function loadFile(input) {
-	if (input.files && input.files[0]) { // TODO: check if input is an image file
+	if (input.files && input.files[0]) {
 		selection = null;
 		lastImage = image;
 		image = new Image();
-		image.onload = () => (setScaledSize(), update());
+		image.onload = () => (resetSliders(), setScaledSize(), update());
 
 		var reader = new FileReader();
 		reader.onload = function(e) {
@@ -64,8 +64,8 @@ function loadFile(input) {
 function downloadImage() {
 	var bufferCanvas = drawFullResolutionImage();
 
-	var imageData = bufferCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	var download = $("#download-link")[0];
+	var imageData = bufferCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+	var download = $('#download-link')[0];
 	download.href = imageData;
 }
 
@@ -81,85 +81,21 @@ function saveImage() {
 }
 
 /**
- * Draws the full resolution image and returns the canvas
+ * Sets the original position of the sliders
  */
-function drawFullResolutionImage() {
-	var bufferCanvas = document.createElement('canvas');
-	var bufferContext = bufferCanvas.getContext('2d');
+function resetSliders() {
+	$('#zoomSlider').val(100);
+	$('#zoomSlider').trigger('input');
 
-	var fullWidth = Math.abs(image.width * Math.sin(degToRad(90 - angleInDegrees))) +
-		Math.abs(image.height * Math.sin(degToRad(angleInDegrees)));
-	var fullHeight = Math.abs(image.height * Math.sin(degToRad(90 - angleInDegrees))) +
-		Math.abs(image.width * Math.sin(degToRad(angleInDegrees)));
+	$('#rotateSlider').val(0);
+	$('#rotateSlider').trigger('input');
 
-	bufferCanvas.width = fullWidth;
-	bufferCanvas.height = fullHeight;
-
-	bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
-	bufferContext.rotate(angleInDegrees * Math.PI / 180);
-	bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
-	bufferContext.drawImage(image,
-		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
-		image.width, image.height);
-	
-	// draw filters
-	if (selection != null) {
-		var bufferContext = bufferCanvas.getContext('2d');
-		var scaleRatio = image.width / scaledWidth;
-
-		if (brightness < 0) {
-			bufferContext.globalCompositeOperation = "multiply";
-			bufferContext.fillStyle = "black";
-			bufferContext.globalAlpha = -brightness / 100;
-			bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
-				selection.width * scaleRatio, selection.height * scaleRatio);
-
-		} else if (brightness > 0) {
-			bufferContext.fillStyle = "white";
-			bufferContext.globalCompositeOperation = "lighten";
-			bufferContext.globalAlpha = 1;
-			bufferContext.globalAlpha = brightness / 100;
-			bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
-				selection.width * scaleRatio, selection.height * scaleRatio);
-		}
-
-		// saturation
-		bufferContext.globalCompositeOperation = 'saturation';
-		bufferContext.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
-		bufferContext.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
-		bufferContext.fillRect((selection.x - marginX) * scaleRatio, (selection.y - marginY) * scaleRatio,
-			selection.width * scaleRatio, selection.height * scaleRatio);
-	}
-	
-	return bufferCanvas;
-}
-
-/**
- * Crops the image to the selection
- */
-function cropImage() {
-	if (selection.width != 0 && selection.height != 0) {
-		lastImage = image;
-		var scaleRatio = image.width / scaledWidth;
-		var rawStartX = Math.min(
-			(selection.x - marginX) * scaleRatio,
-			(selection.x + selection.width - marginX) * scaleRatio);
-		var rawStartY = Math.min(
-			(selection.y - marginY) * scaleRatio,
-			(selection.y + selection.height - marginY) * scaleRatio);
-		
-		var bufferCanvas = document.createElement('canvas');
-		var bufferContext = bufferCanvas.getContext('2d');
-		bufferCanvas.width = Math.abs(selection.width) * scaleRatio;
-		bufferCanvas.height = Math.abs(selection.height) * scaleRatio;
-
-		bufferContext.drawImage(image,
-			rawStartX, rawStartY, bufferCanvas.width, bufferCanvas.height, 0, 0, bufferCanvas.width, bufferCanvas.height);
-		
-		image = bufferCanvas;
-		selection = null;
-		setScaledSize();
-	}
+	$('#brightnessSlider').val(0);
+	$('#brightnessSlider').trigger('input');
+	$('#saturationSlider').val(50);
+	$('#saturationSlider').trigger('input');
+	$('#contrastSlider').val(0);
+	$('#contrastSlider').trigger('input');
 }
 
 /**
@@ -190,5 +126,5 @@ Number.prototype.between = function(a, b) {
  * Opens the popup on click
  */
 function showPopup() {
-	$("#helpPopup")[0].classList.toggle("show");
+	$('#helpPopup')[0].classList.toggle('show');
 }

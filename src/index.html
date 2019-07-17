@@ -9,11 +9,14 @@
 		<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
 
 		<script type="text/javascript" src="script/classes.js"></script>
-		<script type="text/javascript" src="script/util.js"></script>
-		<script type="text/javascript" src="script/state.js"></script>
-		<script type="text/javascript" src="script/events.js"></script>
 		<script type="text/javascript" src="script/draw.js"></script>
 		<script type="text/javascript" src="script/editor.js"></script>
+		<script type="text/javascript" src="script/events.js"></script>
+		<script type="text/javascript" src="script/fullResDraw.js"></script>
+		<script type="text/javascript" src="script/mouseEvents.js"></script>
+		<script type="text/javascript" src="script/sliderEvents.js"></script>
+		<script type="text/javascript" src="script/state.js"></script>
+		<script type="text/javascript" src="script/util.js"></script>
 	</head>
 
 	<body onload="init()">
@@ -43,10 +46,10 @@
 		</div>
 		
 		<div class="toolbar">
-			<img id="zoom"   class="tool-button" src="icons/zoom.png" />
-			<img id="crop"   class="tool-button" src="icons/crop.png" />
-			<img id="rotate" class="tool-button" src="icons/rotate.png" />
-			<img id="levels" class="tool-button" src="icons/levels.png" />
+			<img id="zoom"     class="tool-button" src="icons/zoom.png" />
+			<img id="crop"     class="tool-button" src="icons/crop.png" />
+			<img id="rotate"   class="tool-button" src="icons/rotate.png" />
+			<img id="filters"  class="tool-button" src="icons/filters.png" />
 		</div><br><br>
 
 		<div id="zoomDiv" class="hidden">
@@ -67,7 +70,7 @@
 			</table>
 		</div>
 
-		<div id="levelsDiv" class="hidden">
+		<div id="filtersDiv" class="hidden">
 			<table class="slidersTable">
 				<tr>
 					<td>Brightness: <span id="brightnessValue">0</span></td>
@@ -76,6 +79,14 @@
 				<tr>
 					<td>Saturation: <span id="saturationValue">0</span></td>
 					<td><input type="range" id="saturationSlider" class="long slider" min="0" max="100" value="50"></td>
+				</tr>
+				<tr>
+					<td>Contrast: <span id="contrastValue">0</span></td>
+					<td><input type="range" id="contrastSlider" class="long slider" min="-100" max="100" value="0"></td>
+				</tr>
+				<tr>
+					<td>Sepia: <span id="sepiaValue">0</span></td>
+					<td><input type="range" id="sepiaSlider" class="long slider" min="0" max="1" value="0"></td>
 				</tr>
 			</table>
 		</div>
