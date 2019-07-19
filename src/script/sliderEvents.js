@@ -103,7 +103,7 @@ function onContrastChange() {
  * Handles the sepia change event
  */
 function onSepiaChange() {
-	sepia = this.value;
-	$('#sepiaValue').html(sepia);
+	sepia = this.value / 100;
+	$('#sepiaValue').html(this.value);
 	update();
 }

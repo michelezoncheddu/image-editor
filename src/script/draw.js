@@ -181,9 +181,9 @@ function drawFilters() {
 		var r = pxData[x],
 			g = pxData[x + 1],
 			b = pxData[x + 2],
-			sepiaR = r * .393 + g * .769 + b * .189,
-			sepiaG = r * .349 + g * .686 + b * .168,
-			sepiaB = r * .272 + g * .534 + b * .131;
+			sepiaR = r * (1 - (.607 * sepia)) + g * (.769 * sepia) + b * (.189 * sepia),
+			sepiaG = r * (.349 * sepia) + g * (1 - (.314 * sepia)) + b * (.168 * sepia),
+			sepiaB = r * (.272 * sepia) + g * (.534 * sepia) + b * (1 - (.869 * sepia));
 		pxData[x] = sepiaR;
 		pxData[x + 1] = sepiaG;
 		pxData[x + 2] = sepiaB;

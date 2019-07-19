@@ -92,6 +92,9 @@ function resetEditor() {
 	$('#saturationSlider').trigger('input');
 	$('#contrastSlider').val(0);
 	$('#contrastSlider').trigger('input');
+	$('#sepiaSlider').val(0);
+	$('#sepiaSlider').trigger('input');
+
 
 	selection = null;
 	deltaStart = {
