@@ -45,10 +45,9 @@ function setScaledSize() {
  */
 function loadFile(input) {
 	if (input.files && input.files[0]) {
-		selection = null;
 		lastImage = image;
 		image = new Image();
-		image.onload = () => (resetSliders(), setScaledSize(), update());
+		image.onload = () => (resetEditor(), setScaledSize(), update());
 
 		var reader = new FileReader();
 		reader.onload = function(e) {
@@ -63,7 +62,6 @@ function loadFile(input) {
  */
 function downloadImage() {
 	var bufferCanvas = drawFullResolutionImage();
-
 	var imageData = bufferCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
 	var download = $('#download-link')[0];
 	download.href = imageData;
@@ -74,16 +72,14 @@ function downloadImage() {
  */
 function saveImage() {
 	var bufferCanvas = drawFullResolutionImage();
-
 	lastImage = image;
 	image = bufferCanvas;
-	setScaledSize();
 }
 
 /**
- * Sets the original position of the sliders
+ * Resets the original state of the editor
  */
-function resetSliders() {
+function resetEditor() {
 	$('#zoomSlider').val(100);
 	$('#zoomSlider').trigger('input');
 
@@ -96,6 +92,12 @@ function resetSliders() {
 	$('#saturationSlider').trigger('input');
 	$('#contrastSlider').val(0);
 	$('#contrastSlider').trigger('input');
+
+	selection = null;
+	deltaStart = {
+		x: 0,
+		y: 0
+	};
 }
 
 /**

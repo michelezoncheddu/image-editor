@@ -2,6 +2,8 @@
 
 /** @type {HTMLCanvasElement} */
 var canvas,
+widthPercentage = 0.65,
+heightPercentage = 0.65,
 canvasBorder,
 image = new Image(),
 lastImage = image,
@@ -23,6 +25,18 @@ sepia = 0,
 
 mouseDown = false,
 currPos = {
+	x: 0,
+	y: 0
+},
+clickPos = {
+	x: 0,
+	y: 0
+},
+deltaClick = {
+	x: 0,
+	y: 0
+},
+deltaStart = {
 	x: 0,
 	y: 0
 },

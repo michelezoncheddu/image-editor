@@ -4,11 +4,16 @@
  * Chooses what to draw according to the current tool
  */
 function draw() {
+	context.fillStyle = '#262626'; // background color
+	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 	switch (currTool) {
 		case 'none':
-		case 'zoom':
 		case 'rotate':
 		drawImage();
+		break;
+
+		case 'zoom':
+		drawImageMoved();
 		break;
 
 		case 'crop':
@@ -32,23 +37,36 @@ function draw() {
  * Draws the image (wow!)
  */
 function drawImage() {
-	context.fillStyle = '#262626'; // background color
-	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 	context.save();
 
-	// rotate context around the center
-	context.translate(canvas.width / 2, canvas.height / 2);
-	context.rotate(angleInDegrees * Math.PI / 180);
-	context.translate(-canvas.width / 2, -canvas.height / 2);
-	if (currTool == 'zoom') {
-		context.drawImage(image,
-			(canvas.width - (scaledWidth * zoom)) / 2, (canvas.height - (scaledHeight * zoom)) / 2,
-			scaledWidth * zoom, scaledHeight * zoom);
-	} else {
-		context.drawImage(image,
-			(canvas.width - scaledWidth) / 2, (canvas.height - scaledHeight) / 2,
-			scaledWidth, scaledHeight);
+	if (currTool == 'rotate') {
+		// rotate context around the center
+		context.translate(canvas.width / 2, canvas.height / 2);
+		context.rotate(angleInDegrees * Math.PI / 180);
+		context.translate(-canvas.width / 2, -canvas.height / 2);
 	}
+	context.drawImage(image,
+		(canvas.width - scaledWidth) / 2,
+		(canvas.height - scaledHeight) / 2,
+		scaledWidth, scaledHeight
+	);
+
+	context.restore();
+}
+
+/**
+ * Draws the image moved and zoomed inside the canvas
+ */
+function drawImageMoved() {
+	context.save();
+
+	context.translate(deltaStart.x, deltaStart.y);
+	context.drawImage(image,
+		(canvas.width - (scaledWidth * zoom)) / 2,
+		(canvas.height - (scaledHeight * zoom)) / 2,
+		scaledWidth * zoom,
+		scaledHeight * zoom
+	);
 
 	context.restore();
 }
@@ -175,7 +193,7 @@ function drawFilters() {
 }
 
 /**
- * TODO
+ * Draws the brightness filter in the specified rectangle
  */
 function drawBrightnessFilter(context, startX, startY, width, height) {
 	if (brightness < 0) {
@@ -194,7 +212,7 @@ function drawBrightnessFilter(context, startX, startY, width, height) {
 }
 
 /**
- * TODO
+ * Draws the saturation filter in the specified rectangle
  */
 function drawSaturationFilter(context, startX, startY, width, height) {
 	context.globalCompositeOperation = 'saturation';

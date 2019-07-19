@@ -5,8 +5,8 @@
  */
 function init() {
 	canvas = $('#editor')[0];
-	canvas.height = window.innerHeight * 0.65;
-	canvas.width = window.innerWidth * 0.65;
+	canvas.width = window.innerWidth * widthPercentage;
+	canvas.height = window.innerHeight * heightPercentage;
 	canvasBorder = canvas.getBoundingClientRect();
 
 	context = canvas.getContext('2d');
@@ -42,10 +42,12 @@ function init() {
 	$('#contrastSlider').on('input', onContrastChange);
 	$('#sepiaSlider').on('input', onSepiaChange);
 
-	$('#sepiaSlider').trigger('input'); // because starts from the left, not from the center
+	// because these sliders don't start from the center
+	$('#zoomSlider').trigger('input');
+	$('#sepiaSlider').trigger('input');
 	
 	// TEST
-	image.onload = () => (resetSliders(), setScaledSize(), update());
+	image.onload = () => (resetEditor(), setScaledSize(), update());
 	image.src = 'test_images/merda.jpg';
 
 	// first draw
@@ -69,10 +71,10 @@ function toolSelector() {
 	$('#' + currTool + 'Div').removeClass('hidden');
 
 	// saving image
-	if (lastTool == 'rotate' || lastTool == 'filters') {
+	if ((lastTool == 'rotate' && angleInDegrees != 0) || (lastTool == 'filters' && selection != null)) {
 		saveImage();
-		resetSliders();
-		selection = null;
+		setScaledSize();
+		resetEditor();
 	}
 
 	update();

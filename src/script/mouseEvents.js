@@ -4,24 +4,31 @@
  * Handles the mouse down event
  */
 function onMouseDown(evt) {
-	if (!inside || (currTool != 'crop' && currTool != 'filters')) // click outside the canvas or selection disabled
+	if (!inside) // click outside the canvas
 		return;
 
 	mouseDown = true;
 	currPos = getMousePos(evt);
 
-	if (selection != null) {
-		if (selection.contains(currPos)) { // dragging selection
-			selection.dragged = true;
-			selection.deltaX = currPos.x - selection.x;
-			selection.deltaY = currPos.y - selection.y;
-		} else { // selection deselected
-			selection = null;
+	if (currTool == 'zoom') {
+		deltaClick = {
+			x: currPos.x - deltaStart.x,
+			y: currPos.y - deltaStart.y
+		};
+	} else if (currTool == 'crop' || currTool == 'filters') {
+		if (selection != null) {
+			if (selection.contains(currPos)) { // dragging selection
+				selection.dragged = true;
+				selection.deltaX = currPos.x - selection.x;
+				selection.deltaY = currPos.y - selection.y;
+			} else { // selection deselected
+				selection = null;
+			}
+		} else { // new selection
+			// selection can start only inside the image
+			if (currPos.x.between(marginX, marginX + scaledWidth) && currPos.y.between(marginY, marginY + scaledHeight))
+				selection = new Rectangle(currPos.x, currPos.y, 0, 0);
 		}
-	} else { // new selection
-		// selection can start only inside the image
-		if (currPos.x.between(marginX, marginX + scaledWidth) && currPos.y.between(marginY, marginY + scaledHeight))
-			selection = new Rectangle(currPos.x, currPos.y, 0, 0);
 	}
 
 	update();
@@ -33,7 +40,12 @@ function onMouseDown(evt) {
 function onMouseMove(evt) {
 	if (mouseDown) {
 		currPos = getMousePos(evt);
-		if (selection != null) {
+		if (currTool == 'zoom') {
+			deltaStart = {
+				x: currPos.x - deltaClick.x,
+				y: currPos.y - deltaClick.y
+			};
+		} else if (selection != null) {
 			if (selection.dragged) { // moving selection
 				selection.x = currPos.x - selection.deltaX;
 				selection.y = currPos.y - selection.deltaY;

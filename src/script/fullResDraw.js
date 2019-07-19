@@ -82,6 +82,5 @@ function cropImage() {
 		
 		image = bufferCanvas;
 		selection = null;
-		setScaledSize();
 	}
 }
