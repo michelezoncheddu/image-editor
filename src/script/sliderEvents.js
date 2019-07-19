@@ -18,7 +18,7 @@ function onZoomChange() {
 }
 
 /**
- * Handles the rotate change event
+ * Handles the rotate change event, resizing the image if needed
  */
 function onRotateChange() {
 	angleInDegrees = this.value;
@@ -96,6 +96,15 @@ function onSaturationChange() {
 function onContrastChange() {
 	contrast = this.value;
 	$('#contrastValue').html(contrast);
+	update();
+}
+
+/**
+ * Handles the exposure change event
+ */
+function onExposureChange() {
+	exposure = this.value;
+	$('#exposureValue').html(exposure / 100);
 	update();
 }
 

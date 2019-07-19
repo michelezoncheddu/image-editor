@@ -34,25 +34,9 @@ function drawFullResolutionImage() {
 
 		drawBrightnessFilter(bufferContext, startX, startY, width, height);
 		drawSaturationFilter(bufferContext, startX, startY, width, height);
-
-		// TEST -------------------------------------------------------------------------------------------------
-		var imgData = bufferContext.getImageData(startX, startY, width, height);
-		var original = bufferContext.getImageData(marginX, marginY, scaledWidth, scaledHeight);
-		var pxData = imgData.data;
-		for (var x = 0; x < pxData.length; x += 4) {
-			var r = pxData[x],
-				g = pxData[x + 1],
-				b = pxData[x + 2],
-				sepiaR = r * .393 + g * .769 + b * .189,
-				sepiaG = r * .349 + g * .686 + b * .168,
-				sepiaB = r * .272 + g * .534 + b * .131;
-			pxData[x] = sepiaR;
-			pxData[x + 1] = sepiaG;
-			pxData[x + 2] = sepiaB;
-		}
-		bufferContext.putImageData(original, marginX, marginY);
-		bufferContext.putImageData(imgData, Math.min(startX, startX + width), Math.min(startY, startY + height));
-		// TEST -------------------------------------------------------------------------------------------------
+		drawContrastFilter(bufferContext, startX, startY, width, height);
+		drawExposureFilter(bufferContext, startX, startY, width, height);
+		drawSepiaFilter(bufferContext, startX, startY, width, height);
 	}
 	
 	return bufferCanvas;

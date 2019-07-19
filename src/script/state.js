@@ -21,6 +21,7 @@ angleInDegrees = 0,
 brightness = 0,
 saturation = 50,
 contrast = 0,
+exposure = 0,
 sepia = 0,
 
 mouseDown = false,

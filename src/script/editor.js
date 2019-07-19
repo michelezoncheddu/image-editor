@@ -40,10 +40,12 @@ function init() {
 	$('#brightnessSlider').on('input', onBrightnessChange);
 	$('#saturationSlider').on('input', onSaturationChange);
 	$('#contrastSlider').on('input', onContrastChange);
+	$('#exposureSlider').on('input', onExposureChange);
 	$('#sepiaSlider').on('input', onSepiaChange);
 
 	// because these sliders don't start from the center
 	$('#zoomSlider').trigger('input');
+	$('#exposureSlider').trigger('input');
 	$('#sepiaSlider').trigger('input');
 	
 	// TEST

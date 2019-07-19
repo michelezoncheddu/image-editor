@@ -92,6 +92,8 @@ function resetEditor() {
 	$('#saturationSlider').trigger('input');
 	$('#contrastSlider').val(0);
 	$('#contrastSlider').trigger('input');
+	$('#exposureSlider').val(0);
+	$('#exposureSlider').trigger('input');
 	$('#sepiaSlider').val(0);
 	$('#sepiaSlider').trigger('input');
 
