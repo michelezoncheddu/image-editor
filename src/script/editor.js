@@ -50,7 +50,7 @@ function init() {
 	
 	// TEST
 	image.onload = () => (resetEditor(), setScaledSize(), update());
-	image.src = 'test_images/merda.jpg';
+	image.src = 'test_images/test.jpg';
 
 	// first draw
 	update();

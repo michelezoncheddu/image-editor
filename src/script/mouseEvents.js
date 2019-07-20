@@ -45,6 +45,7 @@ function onMouseMove(evt) {
 				x: currPos.x - deltaClick.x,
 				y: currPos.y - deltaClick.y
 			};
+			update();
 		} else if (selection != null) {
 			if (selection.dragged) { // moving selection
 				selection.x = currPos.x - selection.deltaX;
@@ -86,8 +87,8 @@ function onMouseMove(evt) {
 					Math.min(height, marginY + scaledHeight - selection.y) :
 					Math.max(height, marginY - selection.y);
 			}
+			update();
 		}
-		update();
 	}
 }
 

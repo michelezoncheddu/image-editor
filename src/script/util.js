@@ -88,7 +88,7 @@ function resetEditor() {
 
 	$('#brightnessSlider').val(0);
 	$('#brightnessSlider').trigger('input');
-	$('#saturationSlider').val(50);
+	$('#saturationSlider').val(0);
 	$('#saturationSlider').trigger('input');
 	$('#contrastSlider').val(0);
 	$('#contrastSlider').trigger('input');
@@ -129,9 +129,3 @@ Number.prototype.between = function(a, b) {
 	return this >= Math.min(a, b) && this <= Math.max(a, b);
 }
 
-/**
- * Opens the popup on click
- */
-function showPopup() {
-	$('#helpPopup')[0].classList.toggle('show');
-}

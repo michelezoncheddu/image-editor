@@ -44,3 +44,11 @@ function onResize() {
 	setScaledSize();
 	update();
 }
+
+/**
+ * Opens the popup on click
+ */
+function showPopup() {
+	$('#helpPopup')[0].classList.toggle('show');
+	// popup text
+}

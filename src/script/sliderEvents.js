@@ -86,7 +86,7 @@ function onBrightnessChange() {
  */
 function onSaturationChange() {
 	saturation = this.value;
-	$('#saturationValue').html((saturation - (100 - saturation)).toString());
+	$('#saturationValue').html(saturation);
 	update();
 }
 

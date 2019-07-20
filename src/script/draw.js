@@ -161,9 +161,10 @@ function drawBrightnessFilter(context, startX, startY, width, height) {
  * Draws the saturation filter in the specified rectangle
  */
 function drawSaturationFilter(context, startX, startY, width, height) {
+	var adjust = saturation > 0 ? (parseInt(saturation) + 50) : 0;
 	context.globalCompositeOperation = 'saturation';
-	context.globalAlpha = Math.abs(saturation - (100 - saturation)) / 100;
-	context.fillStyle = 'hsl(0, ' + saturation + '%, 50%)';
+	context.globalAlpha = Math.abs(saturation) / 100;
+	context.fillStyle = 'hsl(0, ' + adjust + '%, 50%)';
 	context.fillRect(startX, startY, width, height);
 }
 
