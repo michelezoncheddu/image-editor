@@ -8,7 +8,6 @@ function draw() {
 	context.fillRect(0, 0, canvas.width, canvas.height); // draw background
 	switch (currTool) {
 		case 'none':
-		case 'rotate':
 		drawImage();
 		break;
 
@@ -22,6 +21,10 @@ function draw() {
 			drawCrop();
 		break;
 
+		case 'rotate':
+		drawImageRotated();
+		break;
+
 		case 'filters':
 		drawImage();
 		if (selection != null)
@@ -29,7 +32,8 @@ function draw() {
 		break;
 
 		default:
-		alert('Unknown tool: ' + currTool);
+		currTool = 'none';
+		alert(';)');
 	}
 }
 
@@ -37,19 +41,25 @@ function draw() {
  * Draws the image (wow!)
  */
 function drawImage() {
-	context.save();
-
-	if (currTool == 'rotate') {
-		// rotate context around the center
-		context.translate(canvas.width / 2, canvas.height / 2);
-		context.rotate(angleInDegrees * Math.PI / 180);
-		context.translate(-canvas.width / 2, -canvas.height / 2);
-	}
 	context.drawImage(image,
 		(canvas.width - scaledWidth) / 2,
 		(canvas.height - scaledHeight) / 2,
 		scaledWidth, scaledHeight
 	);
+}
+
+/**
+ * Draws the image rotated around the center
+ */
+function drawImageRotated() {
+	context.save();
+
+	// rotate context around the center
+	context.translate(canvas.width / 2, canvas.height / 2);
+	context.rotate(angleInDegrees * Math.PI / 180);
+	context.translate(-canvas.width / 2, -canvas.height / 2);
+
+	drawImage();
 
 	context.restore();
 }

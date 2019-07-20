@@ -35,18 +35,18 @@ function init() {
 	$('.slider').on('input', onSliderChange);
 
 	// sliders handlers
-	$('#zoomSlider').on('input', onZoomChange);
-	$('#rotateSlider').on('input', onRotateChange);
-	$('#brightnessSlider').on('input', onBrightnessChange);
-	$('#saturationSlider').on('input', onSaturationChange);
-	$('#contrastSlider').on('input', onContrastChange);
-	$('#exposureSlider').on('input', onExposureChange);
-	$('#sepiaSlider').on('input', onSepiaChange);
+	$('#zoom-slider').on('input', onZoomChange);
+	$('#rotate-slider').on('input', onRotateChange);
+	$('#brightness-slider').on('input', onBrightnessChange);
+	$('#saturation-slider').on('input', onSaturationChange);
+	$('#contrast-slider').on('input', onContrastChange);
+	$('#exposure-slider').on('input', onExposureChange);
+	$('#sepia-slider').on('input', onSepiaChange);
 
 	// because these sliders don't start from the center
-	$('#zoomSlider').trigger('input');
-	$('#exposureSlider').trigger('input');
-	$('#sepiaSlider').trigger('input');
+	$('#zoom-slider').trigger('input');
+	$('#exposure-slider').trigger('input');
+	$('#sepia-slider').trigger('input');
 	
 	// TEST
 	image.onload = () => (resetEditor(), setScaledSize(), update());
@@ -64,20 +64,30 @@ function toolSelector() {
 	currTool = $(this).prop('id');
 
 	$('#' + lastTool).removeClass('selected');
-	if (currTool != lastTool && currTool != 'upload' && currTool != 'download')
+	if (currTool != lastTool && currTool != 'upload')
 		$('#' + currTool).addClass('selected');
 	else
 		currTool = 'none';
 
-	$('#' + lastTool + 'Div').addClass('hidden');
-	$('#' + currTool + 'Div').removeClass('hidden');
+	$('#' + lastTool + '-div').addClass('hidden');
+	$('#' + currTool + '-div').removeClass('hidden');
+
+	var canvas = null; // to not draw two times when saving and downloading at the same time
 
 	// saving image
 	if ((lastTool == 'rotate' && angleInDegrees != 0) || (lastTool == 'filters' && selection != null)) {
-		saveImage();
+		canvas = saveImage();
 		setScaledSize();
 		resetEditor();
 	}
 
+	// downloading image
+	if (currTool == "download") {
+		downloadImage(canvas);
+		$('#download').removeClass('selected');
+		currTool = 'none';
+	}
+	
+	updateHelp();
 	update();
 }

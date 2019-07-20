@@ -60,11 +60,10 @@ function loadFile(input) {
 /**
  * Downloads the full-resolution edited image
  */
-function downloadImage() {
-	var bufferCanvas = drawFullResolutionImage();
-	var imageData = bufferCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-	var download = $('#download-link')[0];
-	download.href = imageData;
+function downloadImage(canvas) {
+	var bufferCanvas = canvas == null ? drawFullResolutionImage() : canvas;
+	var imageData = bufferCanvas.toDataURL('image/png');
+	$('#download-link')[0].href = imageData;
 }
 
 /**
@@ -74,28 +73,29 @@ function saveImage() {
 	var bufferCanvas = drawFullResolutionImage();
 	lastImage = image;
 	image = bufferCanvas;
+	return bufferCanvas;
 }
 
 /**
  * Resets the original state of the editor
  */
 function resetEditor() {
-	$('#zoomSlider').val(100);
-	$('#zoomSlider').trigger('input');
+	$('#zoom-slider').val(100);
+	$('#zoom-slider').trigger('input');
 
-	$('#rotateSlider').val(0);
-	$('#rotateSlider').trigger('input');
+	$('#rotate-slider').val(0);
+	$('#rotate-slider').trigger('input');
 
-	$('#brightnessSlider').val(0);
-	$('#brightnessSlider').trigger('input');
-	$('#saturationSlider').val(0);
-	$('#saturationSlider').trigger('input');
-	$('#contrastSlider').val(0);
-	$('#contrastSlider').trigger('input');
-	$('#exposureSlider').val(0);
-	$('#exposureSlider').trigger('input');
-	$('#sepiaSlider').val(0);
-	$('#sepiaSlider').trigger('input');
+	$('#brightness-slider').val(0);
+	$('#brightness-slider').trigger('input');
+	$('#saturation-slider').val(0);
+	$('#saturation-slider').trigger('input');
+	$('#contrast-slider').val(0);
+	$('#contrast-slider').trigger('input');
+	$('#exposure-slider').val(0);
+	$('#exposure-slider').trigger('input');
+	$('#sepia-slider').val(0);
+	$('#sepia-slider').trigger('input');
 
 
 	selection = null;

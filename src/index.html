@@ -23,11 +23,11 @@
 		<div class="title left">
 			image-editor
 		</div>
-		<div id="help" class="title right" onclick="showPopup()">
+		<div id="help" class="title right" onclick="showHelp()">
 			<span class="popup">
 				Need help?
-				<span class="popuptext" id="helpPopup">
-					Load an image to start editing
+				<span class="popuptext" id="help-popup">
+					Load an image and choose a tool to start editing
 				</span>
 			</span>
 			- About this project
@@ -41,7 +41,7 @@
 				<img id="upload" class="tool-button" src="icons/upload.png" />
 			</label>
 			<a id="download-link" download="image.png">
-				<img id="download" class="tool-button" src="icons/download.png" onclick="downloadImage()" />
+				<img id="download" class="tool-button" src="icons/download.png" />
 			</a>
 		</div>
 		
@@ -52,45 +52,45 @@
 			<img id="filters"  class="tool-button" src="icons/filters.png" />
 		</div><br><br>
 
-		<div id="zoomDiv" class="hidden">
-			<table class="slidersTable">
+		<div id="zoom-div" class="hidden">
+			<table class="sliders-table">
 				<tr>
-					<td>Zoom: <span id="zoomValue">100%</span></td>
-					<td><input type="range" id="zoomSlider" class="slider" min="10" max="1000" value="100"></td>
+					<td>Zoom: <span id="zoom-value">100%</span></td>
+					<td><input type="range" id="zoom-slider" class="slider" min="10" max="1000" value="100"></td>
 				</tr>
 			</table>
 		</div>
 
-		<div id="rotateDiv" class="hidden">
-			<table class="slidersTable">
+		<div id="rotate-div" class="hidden">
+			<table class="sliders-table">
 				<tr>
-					<td>Rotate: <span id="degreesValue">0°</span></td>
-					<td><input type="range" id="rotateSlider" class="slider" min="-180" max="180" value="0"></td>
+					<td>Rotate: <span id="degrees-value">0°</span></td>
+					<td><input type="range" id="rotate-slider" class="slider" min="-180" max="180" value="0"></td>
 				</tr>
 			</table>
 		</div>
 
-		<div id="filtersDiv" class="hidden">
-			<table class="slidersTable">
+		<div id="filters-div" class="hidden">
+			<table class="sliders-table">
 				<tr>
-					<td>Brightness: <span id="brightnessValue">0</span></td>
-					<td><input type="range" id="brightnessSlider" class="long slider" min="-100" max="100" value="0"></td>
+					<td>Brightness: <span id="britghtness-value">0</span></td>
+					<td><input type="range" id="brightness-slider" class="long slider" min="-100" max="100" value="0"></td>
 				</tr>
 				<tr>
-					<td>Saturation: <span id="saturationValue">0</span></td>
-					<td><input type="range" id="saturationSlider" class="long slider" min="-100" max="100" value="0"></td>
+					<td>Saturation: <span id="saturation-value">0</span></td>
+					<td><input type="range" id="saturation-slider" class="long slider" min="-100" max="100" value="0"></td>
 				</tr>
 				<tr>
-					<td>Contrast: <span id="contrastValue">0</span></td>
-					<td><input type="range" id="contrastSlider" class="long slider" min="-100" max="100" value="0"></td>
+					<td>Contrast: <span id="contrast-value">0</span></td>
+					<td><input type="range" id="contrast-slider" class="long slider" min="-100" max="100" value="0"></td>
 				</tr>
 				<tr>
-					<td>Exposure: <span id="exposureValue">0</span></td>
-					<td><input type="range" id="exposureSlider" class="long slider" min="-100" max="500" value="0"></td>
+					<td>Exposure: <span id="exposure-value">0</span></td>
+					<td><input type="range" id="exposure-slider" class="long slider" min="-100" max="500" value="0"></td>
 				</tr>
 				<tr>
-					<td>Sepia: <span id="sepiaValue">0</span></td>
-					<td><input type="range" id="sepiaSlider" class="long slider" min="0" max="100" value="0"></td>
+					<td>Sepia: <span id="sepia-value">0</span></td>
+					<td><input type="range" id="sepia-slider" class="long slider" min="0" max="100" value="0"></td>
 				</tr>
 			</table>
 		</div>

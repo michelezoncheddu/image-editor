@@ -40,7 +40,7 @@ body {
 	margin-right: 3px;
 }
 
-.slidersTable {
+.sliders-table {
 	margin: 0px auto;
 	margin-bottom: 5%;
 	width: 50%;
@@ -49,15 +49,15 @@ body {
 	background-color: #262626;
 }
 
-.slidersTable td {
+.sliders-table td {
 	padding: 5px 0px;
 }
 
-.slidersTable td:first-child {
+.sliders-table td:first-child {
 	width: 20%;
 }
 
-.slidersTable td:last-child {
+.sliders-table td:last-child {
 	padding-right: 3%;
 }
 
@@ -123,22 +123,22 @@ body {
 	cursor: pointer;
 }
 
-/* The actual popup (appears on top) */
+/* The popup */
 .popup .popuptext {
 	visibility: hidden;
-	width: 300px;
+	width: 400px;
 	background-color: white;
 	color: black;
 	text-align: center;
 	font-style: normal;
 	font-size: 0.9em;
 	border-radius: 6px;
-	padding: 8px 0;
+	padding: 10px;
 	position: absolute;
 	z-index: 1;
 	top: 200%;
 	left: 50%;
-	margin-left: -150px;
+	margin-left: -200px;
 }
 
 /* Popup arrow */

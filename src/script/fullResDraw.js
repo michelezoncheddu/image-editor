@@ -16,9 +16,11 @@ function drawFullResolutionImage() {
 	bufferCanvas.width = fullWidth;
 	bufferCanvas.height = fullHeight;
 
-	bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
-	bufferContext.rotate(angleInDegrees * Math.PI / 180);
-	bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
+	if (angleInDegrees != 0) {
+		bufferContext.translate(bufferCanvas.width / 2, bufferCanvas.height / 2);
+		bufferContext.rotate(angleInDegrees * Math.PI / 180);
+		bufferContext.translate(-bufferCanvas.width / 2, -bufferCanvas.height / 2);
+	}
 	bufferContext.drawImage(image,
 		(bufferCanvas.width - image.width) / 2, (bufferCanvas.height - image.height) / 2,
 		image.width, image.height);

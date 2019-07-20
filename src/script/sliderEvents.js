@@ -13,7 +13,7 @@ function onSliderChange(evt) {
  */
 function onZoomChange() {
 	zoom = this.value / 100;
-	$('#zoomValue').html(this.value + '%');
+	$('#zoom-value').html(this.value + '%');
 	update();
 }
 
@@ -22,7 +22,7 @@ function onZoomChange() {
  */
 function onRotateChange() {
 	angleInDegrees = this.value;
-	$('#degreesValue').html(angleInDegrees.toString() + '°');
+	$('#degrees-value').html(angleInDegrees.toString() + '°');
 
 	// coordinates of 3 vertices to detect the overhang, and the pivot to rotate around the center
 	var topLeft = {
@@ -77,7 +77,7 @@ function onRotateChange() {
  */
 function onBrightnessChange() {
 	brightness = this.value;
-	$('#brightnessValue').html(brightness);
+	$('#britghtness-value').html(brightness);
 	update();
 }
 
@@ -86,7 +86,7 @@ function onBrightnessChange() {
  */
 function onSaturationChange() {
 	saturation = this.value;
-	$('#saturationValue').html(saturation);
+	$('#saturation-value').html(saturation);
 	update();
 }
 
@@ -95,7 +95,7 @@ function onSaturationChange() {
  */
 function onContrastChange() {
 	contrast = this.value;
-	$('#contrastValue').html(contrast);
+	$('#contrast-value').html(contrast);
 	update();
 }
 
@@ -104,7 +104,7 @@ function onContrastChange() {
  */
 function onExposureChange() {
 	exposure = this.value;
-	$('#exposureValue').html(exposure / 100);
+	$('#exposure-value').html(exposure / 100);
 	update();
 }
 
@@ -113,6 +113,6 @@ function onExposureChange() {
  */
 function onSepiaChange() {
 	sepia = this.value / 100;
-	$('#sepiaValue').html(this.value);
+	$('#sepia-value').html(this.value);
 	update();
 }
