@@ -12,13 +12,13 @@ function onKeyDown(evt) {
 		evt.preventDefault();
 		switch(evt.key) {
 		case 'a': // ctrl-a
-			selection = new Rectangle(marginX, marginY, scaledWidth, scaledHeight);
+			selection = new Rectangle(margin.x, margin.y, scaledWidth, scaledHeight);
 			update();
 			break;
 
 		case 'z': // ctrl-z
 			if (currTool != 'zoom') {
-				var tmp = image;
+				let tmp = image;
 				image = lastImage;
 				lastImage = tmp;
 				setScaledSize();
@@ -39,8 +39,8 @@ function onKeyDown(evt) {
  * Changes the canvas size, the scaled image size and updates the context
  */
 function onResize() {
-	canvas.width = window.innerWidth * widthPercentage;
-	canvas.height = window.innerHeight * heightPercentage;
+	canvas.width = window.innerWidth * canvas.widthPercentage;
+	canvas.height = window.innerHeight * canvas.heightPercentage;
 	setScaledSize();
 	update();
 }

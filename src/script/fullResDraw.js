@@ -4,11 +4,11 @@
  * Draws the full resolution image and returns the canvas
  */
 function drawFullResolutionImage() {
-	var bufferCanvas = document.createElement('canvas');
-	var bufferContext = bufferCanvas.getContext('2d');
+	let bufferCanvas = document.createElement('canvas'),
+		bufferContext = bufferCanvas.getContext('2d');
 
 	// size of the canvas to contain the rotated image
-	var fullWidth = Math.abs(image.width * Math.sin(degToRad(90 - angleInDegrees))) +
+	let fullWidth = Math.abs(image.width * Math.sin(degToRad(90 - angleInDegrees))) +
 					Math.abs(image.height * Math.sin(degToRad(angleInDegrees))),
 		fullHeight = Math.abs(image.height * Math.sin(degToRad(90 - angleInDegrees))) +
 					 Math.abs(image.width * Math.sin(degToRad(angleInDegrees)));
@@ -27,10 +27,10 @@ function drawFullResolutionImage() {
 	
 	// draw filters
 	if (selection != null) {
-		var scaleRatio = image.width / scaledWidth;
+		let scaleRatio = image.width / scaledWidth;
 
-		var startX = (selection.x - marginX) * scaleRatio,
-			startY = (selection.y - marginY) * scaleRatio,
+		let startX = (selection.x - margin.x) * scaleRatio,
+			startY = (selection.y - margin.y) * scaleRatio,
 			width = selection.width * scaleRatio,
 			height = selection.height * scaleRatio;
 
@@ -50,16 +50,18 @@ function drawFullResolutionImage() {
 function cropImage() {
 	if (selection.width != 0 && selection.height != 0) {
 		lastImage = image;
-		var scaleRatio = image.width / scaledWidth;
-		var rawStartX = Math.min(
-			(selection.x - marginX) * scaleRatio,
-			(selection.x + selection.width - marginX) * scaleRatio);
-		var rawStartY = Math.min(
-			(selection.y - marginY) * scaleRatio,
-			(selection.y + selection.height - marginY) * scaleRatio);
 		
-		var bufferCanvas = document.createElement('canvas');
-		var bufferContext = bufferCanvas.getContext('2d');
+		let scaleRatio = image.width / scaledWidth;
+
+		let rawStartX = Math.min(
+			(selection.x - margin.x) * scaleRatio,
+			(selection.x + selection.width - margin.x) * scaleRatio);
+		let rawStartY = Math.min(
+			(selection.y - margin.y) * scaleRatio,
+			(selection.y + selection.height - margin.y) * scaleRatio);
+		
+		let bufferCanvas = document.createElement('canvas'),
+			bufferContext = bufferCanvas.getContext('2d');
 		bufferCanvas.width = Math.abs(selection.width) * scaleRatio;
 		bufferCanvas.height = Math.abs(selection.height) * scaleRatio;
 

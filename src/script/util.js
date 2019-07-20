@@ -11,7 +11,7 @@ function update() {
  * Returns the mouse position relative to the canvas
  */
 function getMousePos(evt) {
-	var offset = $('#editor').offset();
+	let offset = $('#editor').offset();
 	return {
 		x: evt.pageX - offset.left,
 		y: evt.pageY - offset.top
@@ -22,22 +22,24 @@ function getMousePos(evt) {
  * Calculates the scaled image size to fit in the canvas
  */
 function setScaledSize() {
-	ratio = image.width / image.height;
+	image.ratio = image.width / image.height;
 	if (image.width <= canvas.width && image.height <= canvas.height) {
-		scaled = false;
+		image.scaled = false
 		scaledWidth = image.width;
 		scaledHeight = image.height;
 	} else {
-		scaled = true;
+		image.scaled = true;
 		scaledWidth = canvas.width;
-		scaledHeight = scaledWidth / ratio;
+		scaledHeight = scaledWidth / image.ratio;
 		if (scaledHeight > canvas.height) {
 			scaledHeight = canvas.height;
-			scaledWidth = scaledHeight * ratio;
+			scaledWidth = scaledHeight * image.ratio;
 		}
 	}
-	marginX = (canvas.width - scaledWidth) / 2;
-	marginY = (canvas.height - scaledHeight) / 2;
+	margin = {
+		x: (canvas.width - scaledWidth) / 2,
+		y: (canvas.height - scaledHeight) / 2
+	};
 }
 
 /**
@@ -49,7 +51,7 @@ function loadFile(input) {
 		image = new Image();
 		image.onload = () => (resetEditor(), setScaledSize(), update());
 
-		var reader = new FileReader();
+		let reader = new FileReader();
 		reader.onload = function(e) {
 			image.src = e.target.result;
 		};
@@ -61,8 +63,8 @@ function loadFile(input) {
  * Downloads the full-resolution edited image
  */
 function downloadImage(canvas) {
-	var bufferCanvas = canvas == null ? drawFullResolutionImage() : canvas;
-	var imageData = bufferCanvas.toDataURL('image/png');
+	let bufferCanvas = canvas == null ? drawFullResolutionImage() : canvas;
+	let imageData = bufferCanvas.toDataURL('image/png');
 	$('#download-link')[0].href = imageData;
 }
 
@@ -70,7 +72,7 @@ function downloadImage(canvas) {
  * Saves the full-resolution edited image and replaces it to the current image
  */
 function saveImage() {
-	var bufferCanvas = drawFullResolutionImage();
+	let bufferCanvas = drawFullResolutionImage();
 	lastImage = image;
 	image = bufferCanvas;
 	return bufferCanvas;

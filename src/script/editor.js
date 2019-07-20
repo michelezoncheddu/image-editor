@@ -5,9 +5,10 @@
  */
 function init() {
 	canvas = $('#editor')[0];
-	canvas.width = window.innerWidth * widthPercentage;
-	canvas.height = window.innerHeight * heightPercentage;
-	canvasBorder = canvas.getBoundingClientRect();
+	canvas.widthPercentage = 0.65,
+	canvas.heightPercentage = 0.65
+	canvas.width = window.innerWidth * canvas.widthPercentage;
+	canvas.height = window.innerHeight * canvas.heightPercentage;
 
 	context = canvas.getContext('2d');
 	context.imageSmoothingQuality = 'high';
@@ -26,8 +27,8 @@ function init() {
 
 	window.onresize = onResize;
 
-	canvas.onmouseenter = () => inside = true;
-	canvas.onmouseleave = () => inside = false;
+	canvas.onmouseenter = () => canvas.inside = true;
+	canvas.onmouseleave = () => canvas.inside = false;
 
 	$('#help').click(showHelp);
 	$('.tool-button').click(toolSelector);
@@ -61,7 +62,7 @@ function init() {
  * Detects the selected tool and enables its related button
  */
 function toolSelector() {
-	var lastTool = currTool;
+	let lastTool = currTool;
 	currTool = $(this).prop('id');
 
 	$('#' + lastTool).removeClass('selected');
@@ -73,7 +74,7 @@ function toolSelector() {
 	$('#' + lastTool + '-div').addClass('hidden');
 	$('#' + currTool + '-div').removeClass('hidden');
 
-	var canvas = null; // to not draw two times when saving and downloading at the same time
+	let canvas = null; // to not draw two times when saving and downloading at the same time
 
 	// saving image
 	if ((lastTool == 'rotate' && angleInDegrees != 0) || (lastTool == 'filters' && selection != null)) {

@@ -86,7 +86,7 @@ function drawImageMoved() {
  * Draws the crop selection
  */
 function drawCrop() {
-	var startX = selection.x,
+	let startX = selection.x,
 		startY = selection.y,
 		endX   = selection.x + selection.width,
 		endY   = selection.y + selection.height,
@@ -124,7 +124,7 @@ function drawCrop() {
  * Draws the filters on the selection over the image
  */
 function drawFilters() {
-	var startX = selection.x,
+	let startX = selection.x,
 		startY = selection.y,
 		width  = selection.width,
 		height = selection.height;
@@ -172,7 +172,7 @@ function drawBrightnessFilter(context, startX, startY, width, height) {
  * Draws the saturation filter in the specified rectangle
  */
 function drawSaturationFilter(context, startX, startY, width, height) {
-	var adjust = saturation > 0 ? (parseInt(saturation) + 50) : 0;
+	let adjust = saturation > 0 ? (parseInt(saturation) + 50) : 0;
 	context.globalCompositeOperation = 'saturation';
 	context.globalAlpha = Math.abs(saturation) / 100;
 	context.fillStyle = 'hsl(0, ' + adjust + '%, 50%)';
@@ -183,13 +183,13 @@ function drawSaturationFilter(context, startX, startY, width, height) {
  * Draws the contrast filter in the specified rectangle
  */
 function drawContrastFilter(context, startX, startY, width, height) {
-	var adjust = contrast / 100 + 1; // + 1 because the slider starts at 0
-	var imgData = context.getImageData(startX, startY, width, height);
-	var original = context.getImageData(marginX, marginY, scaledWidth, scaledHeight);
+	let adjust = contrast / 100 + 1; // + 1 because the slider starts at 0
+	let imgData = context.getImageData(startX, startY, width, height);
+	let original = context.getImageData(margin.x, margin.y, scaledWidth, scaledHeight);
 
-	var pxData = imgData.data;
-	for (var x = 0; x < pxData.length; x += 4) {
-		var r = pxData[x],
+	let pxData = imgData.data;
+	for (let x = 0; x < pxData.length; x += 4) {
+		let r = pxData[x],
 			g = pxData[x + 1],
 			b = pxData[x + 2],
 			newR = r,
@@ -218,7 +218,7 @@ function drawContrastFilter(context, startX, startY, width, height) {
 		pxData[x + 1] = newG;
 		pxData[x + 2] = newB;
 	}
-	context.putImageData(original, marginX, marginY);
+	context.putImageData(original, margin.x, margin.y);
 	context.putImageData(imgData, Math.min(startX, startX + width), Math.min(startY, startY + height));
 }
 
@@ -226,13 +226,13 @@ function drawContrastFilter(context, startX, startY, width, height) {
  * Draws the exposure filter in the specified rectangle
  */
 function drawExposureFilter(context, startX, startY, width, height) {
-	var adjust = exposure / 100 + 1; // + 1 because the slider starts at 0
-	var imgData = context.getImageData(startX, startY, width, height);
-	var original = context.getImageData(marginX, marginY, scaledWidth, scaledHeight);
+	let adjust = exposure / 100 + 1; // + 1 because the slider starts at 0
+	let imgData = context.getImageData(startX, startY, width, height);
+	let original = context.getImageData(margin.x, margin.y, scaledWidth, scaledHeight);
 
-	var pxData = imgData.data;
-	for (var x = 0; x < pxData.length; x += 4) {
-		var r = pxData[x],
+	let pxData = imgData.data;
+	for (let x = 0; x < pxData.length; x += 4) {
+		let r = pxData[x],
 			g = pxData[x + 1],
 			b = pxData[x + 2],
 			newR = r,
@@ -247,7 +247,7 @@ function drawExposureFilter(context, startX, startY, width, height) {
 		pxData[x + 1] = newG;
 		pxData[x + 2] = newB;
 	}
-	context.putImageData(original, marginX, marginY);
+	context.putImageData(original, margin.x, margin.y);
 	context.putImageData(imgData, Math.min(startX, startX + width), Math.min(startY, startY + height));
 }
 
@@ -255,12 +255,12 @@ function drawExposureFilter(context, startX, startY, width, height) {
  * Draws the sepia filter in the specified rectangle
  */
 function drawSepiaFilter(context, startX, startY, width, height) {
-	var imgData = context.getImageData(startX, startY, width, height);
-	var original = context.getImageData(marginX, marginY, scaledWidth, scaledHeight);
+	let imgData = context.getImageData(startX, startY, width, height);
+	let original = context.getImageData(margin.x, margin.y, scaledWidth, scaledHeight);
 
-	var pxData = imgData.data;
-	for (var x = 0; x < pxData.length; x += 4) {
-		var r = pxData[x],
+	let pxData = imgData.data;
+	for (let x = 0; x < pxData.length; x += 4) {
+		let r = pxData[x],
 			g = pxData[x + 1],
 			b = pxData[x + 2],
 			sepiaR = r * (1 - (.607 * sepia)) + g * (.769 * sepia) + b * (.189 * sepia),
@@ -271,6 +271,6 @@ function drawSepiaFilter(context, startX, startY, width, height) {
 		pxData[x + 1] = sepiaG;
 		pxData[x + 2] = sepiaB;
 	}
-	context.putImageData(original, marginX, marginY);
+	context.putImageData(original, margin.x, margin.y);
 	context.putImageData(imgData, Math.min(startX, startX + width), Math.min(startY, startY + height));
 }

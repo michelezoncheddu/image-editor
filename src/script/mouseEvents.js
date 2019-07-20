@@ -4,7 +4,7 @@
  * Handles the mouse down event
  */
 function onMouseDown(evt) {
-	if (!inside) // click outside the canvas
+	if (!canvas.inside) // click outside the canvas
 		return;
 
 	mouseDown = true;
@@ -26,7 +26,7 @@ function onMouseDown(evt) {
 			}
 		} else { // new selection
 			// selection can start only inside the image
-			if (currPos.x.between(marginX, marginX + scaledWidth) && currPos.y.between(marginY, marginY + scaledHeight))
+			if (currPos.x.between(margin.x, margin.x + scaledWidth) && currPos.y.between(margin.y, margin.y + scaledHeight))
 				selection = new Rectangle(currPos.x, currPos.y, 0, 0);
 		}
 	}
@@ -52,40 +52,40 @@ function onMouseMove(evt) {
 				selection.y = currPos.y - selection.deltaY;
 
 				// start of selection (X axis) out of the image
-				if (selection.x < marginX)
-					selection.x = marginX;
-				else if (selection.x > marginX + scaledWidth)
-					selection.x = marginX + scaledWidth;
+				if (selection.x < margin.x)
+					selection.x = margin.x;
+				else if (selection.x > margin.x + scaledWidth)
+					selection.x = margin.x + scaledWidth;
 
 				// end of selection (X asis) out of the image
-				if (selection.width > 0 && selection.x + selection.width > marginX + scaledWidth)
-					selection.x = marginX + scaledWidth - selection.width;
-				else if (selection.width < 0 && selection.x + selection.width < marginX)
-					selection.x = marginX - selection.width;
+				if (selection.width > 0 && selection.x + selection.width > margin.x + scaledWidth)
+					selection.x = margin.x + scaledWidth - selection.width;
+				else if (selection.width < 0 && selection.x + selection.width < margin.x)
+					selection.x = margin.x - selection.width;
 
 				// start of selection (Y axis) out of the image
-				if (selection.y < marginY)
-					selection.y = marginY;
-				else if (selection.y > marginY + scaledHeight)
-					selection.y = marginY + scaledHeight;
+				if (selection.y < margin.y)
+					selection.y = margin.y;
+				else if (selection.y > margin.y + scaledHeight)
+					selection.y = margin.y + scaledHeight;
 				
 				// end of selection (Y asis) out of the image
-				if (selection.height > 0 && selection.y + selection.height > marginY + scaledHeight)
-					selection.y = marginY + scaledHeight - selection.height;
-				else if (selection.height < 0 && selection.y + selection.height < marginY)
-					selection.y = marginY - selection.height;
+				if (selection.height > 0 && selection.y + selection.height > margin.y + scaledHeight)
+					selection.y = margin.y + scaledHeight - selection.height;
+				else if (selection.height < 0 && selection.y + selection.height < margin.y)
+					selection.y = margin.y - selection.height;
 
 			} else { // creating selection
-				var width = currPos.x - selection.x;
-				var height = currPos.y - selection.y;
+				let width = currPos.x - selection.x,
+					height = currPos.y - selection.y;
 
 				// check if selection end is going out of the image
 				selection.width = width > 0 ?
-					Math.min(width, marginX + scaledWidth - selection.x) :
-					Math.max(width, marginX - selection.x);
+					Math.min(width, margin.x + scaledWidth - selection.x) :
+					Math.max(width, margin.x - selection.x);
 				selection.height = height > 0 ?
-					Math.min(height, marginY + scaledHeight - selection.y) :
-					Math.max(height, marginY - selection.y);
+					Math.min(height, margin.y + scaledHeight - selection.y) :
+					Math.max(height, margin.y - selection.y);
 			}
 			update();
 		}
@@ -96,10 +96,11 @@ function onMouseMove(evt) {
  * Handles the mouse up event
  */
 function onMouseUp() {
-	mouseDown = false;
 	if (selection != null && selection.dragged)
 		selection.dragged = false;
-	update();
+	if (mouseDown)
+		update();
+	mouseDown = false;
 }
 
 /**
@@ -107,6 +108,6 @@ function onMouseUp() {
  */
 function onTouchStart(evt) {
 	evt.preventDefault();
-	var touches = evt.changedTouches;
+	let touches = evt.changedTouches;
 	selection = new Rectangle(touches[0].pageX, touches[0].pageY, 0, 0);
 }

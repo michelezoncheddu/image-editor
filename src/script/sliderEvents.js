@@ -4,7 +4,7 @@
  * Changes the slider background to follow the thumb
  */
 function onSliderChange(evt) {
-	var min = evt.target.min, max = evt.target.max, val = evt.target.value;
+	let min = evt.target.min, max = evt.target.max, val = evt.target.value;
 	$(evt.target).css('background-size', (val - min) * 100 / (max - min) + '% 100%');
 }
 
@@ -25,32 +25,32 @@ function onRotateChange() {
 	$('#degrees-value').html(angleInDegrees.toString() + '°');
 
 	// coordinates of 3 vertices to detect the overhang, and the pivot to rotate around the center
-	var topLeft = {
+	let topLeft = {
 		x: (canvas.width - scaledWidth) / 2,
 		y: (canvas.height - scaledHeight) / 2
-	};
-	var bottomLeft = {
+	},
+	bottomLeft = {
 		x: topLeft.x,
 		y: scaledHeight + topLeft.y
-	};
-	var topRight = {
+	},
+	topRight = {
 		x: scaledWidth + topLeft.x,
 		y: topLeft.y
-	};
-	var pivot = {
+	},
+	pivot = {
 		x: canvas.width / 2,
 		y: canvas.height / 2
 	};
 
-	var angle = Math.abs(angleInDegrees) < 90 ? degToRad(angleInDegrees) : degToRad(180 - angleInDegrees);
+	let angle = Math.abs(angleInDegrees) < 90 ? degToRad(angleInDegrees) : degToRad(180 - angleInDegrees);
 
-	var bottomLeftRot = rotatePoint(pivot, bottomLeft, angle);
-	var topLeftRot = rotatePoint(pivot, topLeft, angle);
-	var topRightRot = rotatePoint(pivot, topRight, angle);
+	let bottomLeftRot = rotatePoint(pivot, bottomLeft, angle),
+		topLeftRot = rotatePoint(pivot, topLeft, angle),
+		topRightRot = rotatePoint(pivot, topRight, angle);
 
 	// saves the further vertex in x and y axis
-	var deltaX = Math.min(bottomLeftRot.x, topLeftRot.x);
-	var deltaY = Math.min(topLeftRot.y, topRightRot.y);
+	let deltaX = Math.min(bottomLeftRot.x, topLeftRot.x),
+		deltaY = Math.min(topLeftRot.y, topRightRot.y);
 
 	/** 
 	 * Change the scaled resolution if:
@@ -59,13 +59,13 @@ function onRotateChange() {
 	 *   - the rotated image is overhanging the canvas (delta < 0) and needs to be scaled down OR
 	 *   - the rotated image needs to scale up to the original size (delta > 0), but not bigger
 	 */
-	if (scaled || (deltaY < 0 || deltaX < 0 || scaledHeight + deltaY <= image.height || scaledWidth + deltaX <= image.width)) {
+	if (image.scaled || (deltaY < 0 || deltaX < 0 || scaledHeight + deltaY <= image.height || scaledWidth + deltaX <= image.width)) {
 		if (deltaX < deltaY) {
 			scaledHeight += deltaX;
-			scaledWidth += (deltaX) * ratio;
+			scaledWidth += (deltaX) * image.ratio;
 		} else {
 			scaledHeight += deltaY;
-			scaledWidth += (deltaY) * ratio;
+			scaledWidth += (deltaY) * image.ratio;
 		}
 	}
 
