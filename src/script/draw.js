@@ -70,12 +70,13 @@ function drawImageRotated() {
 function drawImageMoved() {
 	context.save();
 
-	context.translate(deltaStart.x, deltaStart.y);
+	context.translate(canvas.width / 2, canvas.height / 2);
+	context.scale(zoom, zoom);
 	context.drawImage(image,
-		(canvas.width - (scaledWidth * zoom)) / 2,
-		(canvas.height - (scaledHeight * zoom)) / 2,
-		scaledWidth * zoom,
-		scaledHeight * zoom
+		deltaStart.x - (scaledWidth / 2),
+		deltaStart.y - (scaledHeight / 2),
+		scaledWidth,
+		scaledHeight
 	);
 
 	context.restore();

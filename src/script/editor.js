@@ -29,6 +29,7 @@ function init() {
 	canvas.onmouseenter = () => inside = true;
 	canvas.onmouseleave = () => inside = false;
 
+	$('#help').click(showHelp);
 	$('.tool-button').click(toolSelector);
 
 	// slider color progress
