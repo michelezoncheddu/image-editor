@@ -3,7 +3,7 @@
 /**
  * Initializes the editor state
  */
-function init() {
+function initializeEditor() {
 	canvas = $('#editor')[0];
 	canvas.widthPercentage = 0.65,
 	canvas.heightPercentage = 0.65
@@ -31,6 +31,7 @@ function init() {
 	canvas.onmouseleave = () => canvas.inside = false;
 
 	$('#help').click(showHelp);
+	$('#title').click(showCredits);
 	$('.tool-button').click(toolSelector);
 
 	// slider color progress

@@ -1,3 +1,4 @@
+
 body {
 	font-family: 'Muli', sans-serif;
 	background-color: #535353;
@@ -6,24 +7,30 @@ body {
 	margin: 0px;
 }
 
-.title {
+.header {
 	background-color: #262626;
-	width: 40%;
 	font-size: 1.25em;
-	padding: 1% 5%;
+	padding: 12px 0px;
 	margin-bottom: 2%;
 }
 
-.left {
+.header .left {
 	text-align: left;
+	margin-left: 5%;
 	float: left;
+}
+
+#title {
 	font-weight: bold;
 	color: #F2C44C;
 }
 
-.right {
+.header .right {
 	text-align: right;
-	float: right;
+	margin-right: 5%;
+}
+
+#help {
 	font-style: italic;
 }
 
@@ -36,12 +43,11 @@ body {
 	border-radius: 5px;
 	background-color: #262626;
 	font-size: 0px;
-	margin-left: 3px;
-	margin-right: 3px;
+	margin: 15px 3px;
 }
 
 .sliders-table {
-	margin: 0px auto;
+	margin: 5px auto;
 	margin-bottom: 5%;
 	width: 50%;
 	padding: 5px;
@@ -126,19 +132,21 @@ body {
 /* The popup */
 .popup .popuptext {
 	visibility: hidden;
-	width: 400px;
+	width: 200px;
 	background-color: white;
 	color: black;
 	text-align: center;
 	font-style: normal;
+	font-weight: bold;
 	font-size: 0.9em;
 	border-radius: 6px;
-	padding: 10px;
+	padding: 10px 5px;
 	position: absolute;
 	z-index: 1;
 	top: 200%;
 	left: 50%;
-	margin-left: -200px;
+	/* half width + double left padding */
+	margin-left: -110px; 
 }
 
 /* Popup arrow */
@@ -147,13 +155,11 @@ body {
 	position: absolute;
 	bottom: 100%;
 	left: 50%;
-	margin-left: -5px;
 	border-width: 5px;
 	border-style: solid;
 	border-color: transparent transparent white transparent;
 }
 
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
 .popup .show {
 	visibility: visible;
 	animation: fadeIn 1s

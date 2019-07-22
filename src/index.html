@@ -19,21 +19,28 @@
 		<script type="text/javascript" src="script/util.js"></script>
 	</head>
 
-	<body onload="init()">
-		<div class="title left">
-			image-editor
-		</div>
-		<div class="title right">
-			<span id="help" class="popup">
-				Need help?
-				<span class="popuptext" id="help-popup">
-					Load an image and choose a tool to start editing
+	<body onload="initializeEditor()">
+
+		<div class="header">
+			<div class="left">
+				<span id="title" class="popup">
+					image-editor
+					<span id="credits-popup" class="popuptext">
+						PI course final term by Michele Zoncheddu
+					</span>
 				</span>
-			</span>
-			- About this project
+			</div>
+			<div class="right">
+				<span id="help" class="popup">
+					Need help?
+					<span id="help-popup" class="popuptext">
+						Load an image and choose a tool to start editing
+					</span>
+				</span>
+			</div>
 		</div>
 
-		<canvas id="editor">Please update your browser</canvas><br><br>
+		<canvas id="editor">Please update your browser</canvas><br>
 
 		<div class="toolbar">
 			<input type='file' id="upload-hidden" class="hidden" onchange="loadFile(this)" />
@@ -50,7 +57,7 @@
 			<img id="crop"     class="tool-button" src="icons/crop.png" />
 			<img id="rotate"   class="tool-button" src="icons/rotate.png" />
 			<img id="filters"  class="tool-button" src="icons/filters.png" />
-		</div><br><br>
+		</div>
 
 		<div id="zoom-div" class="hidden">
 			<table class="sliders-table">

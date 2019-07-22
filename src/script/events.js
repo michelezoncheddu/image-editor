@@ -46,12 +46,15 @@ function onResize() {
 }
 
 /**
- * Opens the popup on click
+ * Shows the help popup on click
  */
 function showHelp() {
 	$('#help-popup')[0].classList.toggle('show');
 }
 
+/**
+ * Changes the help content
+ */
 function updateHelp() {
 	switch (currTool) {
 		case 'none':
@@ -77,4 +80,11 @@ function updateHelp() {
 		default:
 		$('#help-popup').html(';)');
 	}
+}
+
+/**
+ * Shows the credits popup on click
+ */
+function showCredits() {
+	$('#credits-popup')[0].classList.toggle('show');
 }
