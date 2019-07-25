@@ -50,10 +50,6 @@ function initializeEditor() {
 	$('#zoom-slider').trigger('input');
 	$('#exposure-slider').trigger('input');
 	$('#sepia-slider').trigger('input');
-	
-	// TEST
-	image.onload = () => (resetEditor(), setScaledSize(), update());
-	image.src = 'test_images/test.jpg';
 
 	// first draw
 	update();
